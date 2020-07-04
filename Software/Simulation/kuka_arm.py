@@ -45,7 +45,7 @@ def object_detection():
         x=0.885-0.0011*x
         y=0.422-0.0012*y
         if detection["name"]=="sphere":
-            y=y-0.02
+            y=y-0.025
         else:
             y=y-0.02
         #print(x,y)
@@ -65,6 +65,9 @@ while True:
         env._attempted_grasp = False
         env._env_step = 0
         env.terminated = 0
+        if len(centroids)==0:
+            print("Task Completed")
+            break
         x=centroids[i][0]
         y=centroids[i][1]
 
