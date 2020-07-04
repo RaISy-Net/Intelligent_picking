@@ -81,11 +81,12 @@ class KukaDiverseObjectEnv(KukaGymEnv):
     self._height = height
     self._numObjects = numObjects
     self._isTest = isTest
+    self._removal=[]
 
    
     self.cid = p.connect(p.GUI)         #changed to always give OpenGL simulation
     p.resetDebugVisualizerCamera(1.3, 180, -41, [0.52, -0.2, -0.33])  
-    
+    #p.resetDebugVisualizerCamera(0.35, -90, -90, [0.6, 0.1, -0.15])
     self.seed()
 
     if (self._isDiscrete):
@@ -131,7 +132,7 @@ class KukaDiverseObjectEnv(KukaGymEnv):
     p.stepSimulation()
 
     # Choose the objects in the bin.
-    #
+    #"cube_small.urdf","sphere_small.urdf"
     urdfList = ["cube_small.urdf","sphere_small.urdf","cube_small.urdf","sphere_small.urdf","cube_small.urdf","sphere_small.urdf"]
     self._objectUids = self._randomly_place_objects(urdfList)
     self._observation = self._get_observation()
@@ -171,7 +172,8 @@ class KukaDiverseObjectEnv(KukaGymEnv):
                                renderer=p.ER_BULLET_HARDWARE_OPENGL)
     rgb = img_arr[2]
     np_img_arr = np.reshape(rgb, (self._height, self._width, 4))
-    cv2.imshow("Image",np_img_arr)
+    #cv2.imshow("Image",np_img_arr)
+    #cv2.waitKey(0)
     return np_img_arr
 
   def step(self, action):
@@ -234,7 +236,8 @@ class KukaDiverseObjectEnv(KukaGymEnv):
     # If we are close to the bin, attempt grasp.
     state = p.getLinkState(self._kuka.kukaUid, self._kuka.kukaEndEffectorIndex)
     end_effector_pos = state[0]
-    if end_effector_pos[2] <= 0.1:
+    if end_effector_pos[2] <= 0.1:#0.1 for prev gripper
+      print("attempting grasp")
       finger_angle = 0.3
       for _ in range(500):
         grasp_action = [0, 0, 0, 0, finger_angle]
@@ -253,23 +256,32 @@ class KukaDiverseObjectEnv(KukaGymEnv):
         finger_angle -= 0.3 / 100.
         if finger_angle < 0:
           finger_angle = 0
-      for _ in range(500):
-        grasp_action = [0, 0, -0.001, 0, finger_angle]
-        self._kuka.applyAction(grasp_action)
-        p.stepSimulation()
-        time.sleep(self._timeStep)
-        finger_angle -= 0.3 / 100.
-      finger_angle=0.3
-      for _ in range(500):
-        grasp_action = [0, 0, 0.001, 0, finger_angle]
-        self._kuka.applyAction(grasp_action)
-        p.stepSimulation()
-        time.sleep(self._timeStep)
+      
+
+      #for _ in range(1000):
+        #grasp_action = [5, 0, -0.001, 0, finger_angle]
+        #self._kuka.applyAction(grasp_action)
+        #p.stepSimulation()
+        #time.sleep(self._timeStep)
+        #finger_angle -= 0.3 / 100.
+      #finger_angle=0.3
+      #for _ in range(10000):
+        #grasp_action = [-5, 0, 0.001, 0, finger_angle]
+        #self._kuka.applyAction(grasp_action)
+        #p.stepSimulation()
+        #time.sleep(self._timeStep)
       self._attempted_grasp = True  
     observation = self._get_observation()
     done = self._termination()
     reward = self._reward()
-
+    for body in self._removal:
+        p.removeBody(body)
+        self._objectUids.remove(body)
+    self._removal=[]
+    for _ in range(100):
+          grasp_action=[0,0,0,0,0]
+          self._kuka.applyAction(grasp_action)
+    
     debug = {'grasp_success': self._graspSuccess}
     return observation, reward, done, debug
 
@@ -286,6 +298,7 @@ class KukaDiverseObjectEnv(KukaGymEnv):
       if pos[2] > 0.2:
         self._graspSuccess += 1
         reward = 1
+        self._removal.append(uid)
         break
     return reward
 
