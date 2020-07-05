@@ -19,11 +19,14 @@ First Amazon Picking Challenge
 ](https://arxiv.org/pdf/1601.05484.pdf)
 * [Team Delft’s Robot Winner of the Amazon
 Picking Challenge 2016
-](https://arxiv.org/pdf/1610.05514.pdf)
+](https://arxiv.org/pdf/1610.05514.pdf) - Their implementation [GitHub](https://github.com/warehouse-picking-automation-challenges/team_delft)
 * [AN ANALYTICAL METHOD TO FIND WORKSPACE OF A ROBOTIC
 MANIPULATOR](https://pdfs.semanticscholar.org/e5f8/d98ce96b1dfcce05966bed52a85a215cf0a9.pdf)
 * [How I won the Flipkart ML challenge](https://towardsdatascience.com/how-i-won-the-flipkart-ml-challenge-fcf1fcc9e06a)
+* [Domain Randomization for Sim2Real Transfer](https://lilianweng.github.io/lil-log/2019/05/05/domain-randomization.html)
 
 
-# Blogs
-* []()
+# Other GitHub links
+* [MIT-Princeton Vision Toolbox for the APC 2016](https://github.com/andyzeng/apc-vision-toolbox)
+* [Motoman robots files](https://github.com/ros-industrial/motoman)
+* [Kawasaki Robotics files](https://github.com/Kawasaki-Robotics/khi_robot)
