@@ -457,15 +457,81 @@
     </joint>
 
     <!-- Attach the base of the gripper to the end of the arm -->
-    <joint name='gripper_to_arm' type='continuous'>
+    <joint name='gripper_to_arm' type='fixed'>
       <parent>lbr_iiwa_link_7</parent>
-      <child>base_link</child>
+      <child>dummy1</child>
       <axis>
         <xyz>0 0 1</xyz>
       </axis>
     </joint>
 
+  <link name='dummy1'>
+      <pose frame=''>0 0 1.51 0 0 0</pose>
+      <inertial>
+        <pose frame=''>0 0 0 0 0 0</pose>
+        <mass>0</mass>
+        <inertia>
+          <ixx>0.1</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.1</iyy>
+          <iyz>0</iyz>
+          <izz>0.1</izz>
+        </inertia>
+      </inertial>
+      <visual name='motor_visual'>
+        <pose frame=''>0 0 0.01 0 0 0</pose>
+        <geometry>
+      <box>
+            <size>0.01 0.01 0.01 </size>
+          </box>
+        </geometry>
+      </visual>
+    </link>
+
+    <joint name='dummy_to_dummy' type='fixed'>
+      <parent>dummy1</parent>
+      <child>dummy2</child>
+      <axis>
+        <xyz>0 0 1</xyz>
+      </axis>
+    </joint>
+
+
+  <link name='dummy2'>
+      <pose frame=''>0 0 1.5 0 0 0</pose>
+      <inertial>
+        <pose frame=''>0 0 0 0 0 0</pose>
+        <mass>0</mass>
+        <inertia>
+          <ixx>0.1</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.1</iyy>
+          <iyz>0</iyz>
+          <izz>0.1</izz>
+        </inertia>
+      </inertial>
+      <visual name='motor_visual'>
+        <pose frame=''>0 0 0.01 0 0 0</pose>
+        <geometry>
+      <box>
+            <size>0.01 0.01 0.01 </size>
+          </box>
+        </geometry>
+      </visual>
+    </link>
     
+
+
+
+    <joint name='dummy_to_grip' type='fixed'>
+      <parent>dummy2</parent>
+      <child>base_link</child>
+      <axis>
+        <xyz>0 0 1</xyz>
+      </axis>
+    </joint>
     <link name='base_link'>
       <pose frame=''>0 0 1.305 0 -0 0</pose>
       <inertial>

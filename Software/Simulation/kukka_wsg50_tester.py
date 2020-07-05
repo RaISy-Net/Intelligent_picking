@@ -1,11 +1,7 @@
 '''
-rough script to visualize
+test script for custom tweaked kuka_wisg50 gripper
 
 '''
-
-
-
-
 import pybullet as p
 import time
 import math
