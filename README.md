@@ -30,3 +30,10 @@ MANIPULATOR](https://pdfs.semanticscholar.org/e5f8/d98ce96b1dfcce05966bed52a85a2
 * [MIT-Princeton Vision Toolbox for the APC 2016](https://github.com/andyzeng/apc-vision-toolbox)
 * [Motoman robots files](https://github.com/ros-industrial/motoman)
 * [Kawasaki Robotics files](https://github.com/Kawasaki-Robotics/khi_robot)
+
+# Tools
+* [Robot arm calculator](https://www.societyofrobots.com/robot_arm_calculator.shtml)
+* [igus robo link designer](https://robolink-designer.igus.tools/construction)
+
+# Datasets
+* [CMU grocery dataset](http://www.cs.cmu.edu/~ehsiao/datasets.html)
