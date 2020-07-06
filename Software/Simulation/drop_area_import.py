@@ -10,22 +10,37 @@ p.connect(p.GUI)
 
 p.setAdditionalSearchPath(pybullet_data.getDataPath())
 p.loadURDF("plane.urdf", [0, 0, 0])
+p.setGravity(0, 0, -10)
 
-p.loadURDF("pick_drop_areas/traybox.urdf", [0, -4, 0])
-
-# import_drop_area function arguments are x-x position of drop area,y-y position of drop area,
-# z- z position of drop area, scale_x,scale_y,scale_z - scaling factors 
-import_drop_area(1,1,0.5,scale_x=0.5,scale_y=0.5,scale_z=0.5)
-
-# drop_area_tray=p.loadURDF("pick_drop_areas/traybox.urdf", [0, 0, 1.0])
 grip_list= p.loadSDF("./kukka_wsg50/kuka_with_wsg50.sdf")
 gripper1 = grip_list[0]
-p.resetBasePositionAndOrientation(gripper1,[0,4,0],p.getQuaternionFromEuler([0,0,1.57]))
-p.setGravity(0, 0, -10)
+
+
+Area_Halfdim = 0.3 # i in real case
+
+
+'''
+x,y,z -> robot base position
+scale_ ->scaling params
+Inter_area_dist ->distnace between the 2 areas, ideally 20 cm in our case
+pickAreaHeight  -> Height of the pick area, ideally 700 ~ 900 cm in our case
+'''
+MakeArena(x=0,y=0,z=0.05,
+	      scale_x=Area_Halfdim,scale_y=Area_Halfdim,scale_z=0,
+	      Inter_area_dist=0.5,pickAreaHeight=0.5)
+
+
 
 
 
 while 1:
+
+
+  p.resetBasePositionAndOrientation(gripper1,[0,-0.09,0.1],p.getQuaternionFromEuler([0,0,1.57]))
+  p.setJointMotorControlArray(gripper1,[0,1,2,3,4,5,6,10],
+                              controlMode=p.POSITION_CONTROL,
+                              targetPositions=np.zeros(8))
   p.stepSimulation()
-  time.sleep(1.0/100.0)
+
+  time.sleep(0.01)
 p.disconnect()
