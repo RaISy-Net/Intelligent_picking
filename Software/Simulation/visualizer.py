@@ -20,6 +20,7 @@ p.loadURDF("plane.urdf", [0, 0, 0])
 p.setGravity(0, 0, -10)
 
 
+
 #trailDuration is duration (in seconds) after debug lines will be removed automatically
 #use 0 for no-removal
 #trailDuration = 15
