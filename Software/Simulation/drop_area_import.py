@@ -5,6 +5,7 @@ import numpy as np
 from datetime import datetime
 import pybullet_data
 from drop_area import *
+from robot_frame import *
 
 p.connect(p.GUI)
 
@@ -16,7 +17,7 @@ grip_list= p.loadSDF("./kukka_wsg50/kuka_with_wsg50.sdf")
 gripper1 = grip_list[0]
 
 
-Area_Halfdim = 0.3 # i in real case
+Area_Halfdim = 1 # i in real case
 
 
 '''
@@ -28,6 +29,10 @@ pickAreaHeight  -> Height of the pick area, ideally 700 ~ 900 cm in our case
 MakeArena(x=0,y=0,z=0.05,
 	      scale_x=Area_Halfdim,scale_y=Area_Halfdim,scale_z=0,
 	      Inter_area_dist=0.5,pickAreaHeight=0.5)
+
+base1, base2 = MakeRobot(x=0,y=0,z=0.05,
+	      scale_x=Area_Halfdim,scale_y=Area_Halfdim,scale_z=0,
+	      Inter_area_dist=0.2,pickAreaHeight=0.9)
 
 
 
