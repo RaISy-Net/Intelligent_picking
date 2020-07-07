@@ -38,6 +38,7 @@ def MakeRobot(x,y,z=0.5,scale_x=1,scale_y=1,scale_z=0.5,Inter_area_dist=1,pickAr
 	p.createConstraint(upper_base1, -1, h_pole2, -1, p.JOINT_FIXED, [1,0,0], [-scale_x/40, -scale_x/40, 0], [(scale_x+0.1-scale_x/40),0,0])
 	p.createConstraint(upper_base2, -1, h_pole1, -1, p.JOINT_FIXED, [1,0,0], [scale_x/40, scale_x/40, 0], [-(scale_x+0.1-scale_x/40),0,0])
 	p.createConstraint(upper_base2, -1, h_pole2, -1, p.JOINT_FIXED, [1,0,0], [scale_x/40, -scale_x/40, 0], [-(scale_x+0.1-scale_x/40),0,0])
+<<<<<<< HEAD
 	p.createConstraint(strip1, -1, -1, -1, p.JOINT_FIXED, [0,0,0], [0,0, 0], [scale_x + 0.1,y ,z+scale_z])
 	p.createConstraint(strip2, -1, -1, -1, p.JOINT_FIXED, [0,0,0], [0,0, 0], [-scale_x - 0.1,y ,z+scale_z])
 	# p.createConstraint(base1, -1, strip1, -1, p.JOINT_PRISMATIC, [0,1,0], [0,0, -0.075], [0,0,0])
@@ -115,3 +116,12 @@ def MakeRobot(x,y,z=0.5,scale_x=1,scale_y=1,scale_z=0.5,Inter_area_dist=1,pickAr
 	# p.createConstraint(multi_head, -1, multi_link1, -1, p.JOINT_FIXED, [0,0,0], [0,0, -head_z], [0,0,l1/2])
 
 	return base1,base2
+=======
+	return base1,base2
+	
+
+
+
+
+
+>>>>>>> be889441982bcd8ee5f2e119d56feee3f52dcb84

@@ -13,8 +13,8 @@ p.setAdditionalSearchPath(pybullet_data.getDataPath())
 p.loadURDF("plane.urdf", [0, 0, 0])
 p.setGravity(0, 0, -10)
 
-# grip_list= p.loadSDF("./kukka_wsg50/kuka_with_wsg50.sdf")
-# gripper1 = grip_list[0]
+grip_list= p.loadSDF("./kukka_wsg50/kuka_with_wsg50.sdf")
+gripper1 = grip_list[0]
 
 
 Area_Halfdim = 1 # i in real case
@@ -30,9 +30,10 @@ MakeArena(x=0,y=0,z=0.05,
 	      scale_x=Area_Halfdim,scale_y=Area_Halfdim,scale_z=0,
 	      Inter_area_dist=0.5,pickAreaHeight=0.5)
 
-base1, base2 ,h= MakeRobot(x=0,y=0,z=0.05,
+base1, base2 = MakeRobot(x=0,y=0,z=0.05,
 	      scale_x=Area_Halfdim,scale_y=Area_Halfdim,scale_z=0,
 	      Inter_area_dist=0.2,pickAreaHeight=0.9)
+
 
 
 
@@ -40,10 +41,10 @@ base1, base2 ,h= MakeRobot(x=0,y=0,z=0.05,
 while 1:
 
 
-  # p.resetBasePositionAndOrientation(gripper1,[0,-0.09,0.1],p.getQuaternionFromEuler([0,0,1.57]))
-  # p.setJointMotorControlArray(gripper1,[0,1,2,3,4,5,6,10],
-                              # controlMode=p.POSITION_CONTROL,
-                              # targetPositions=np.zeros(8))
+  p.resetBasePositionAndOrientation(gripper1,[0,-0.09,0.1],p.getQuaternionFromEuler([0,0,1.57]))
+  p.setJointMotorControlArray(gripper1,[0,1,2,3,4,5,6,10],
+                              controlMode=p.POSITION_CONTROL,
+                              targetPositions=np.zeros(8))
   p.stepSimulation()
 
   time.sleep(0.01)

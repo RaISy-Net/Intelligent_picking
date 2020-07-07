@@ -1,4 +1,7 @@
+<<<<<<< HEAD
   
+=======
+>>>>>>> be889441982bcd8ee5f2e119d56feee3f52dcb84
 import pybullet as p
 import time
 import math
@@ -13,8 +16,13 @@ def MakeRobot(x,y,z=0.5,scale_x=1,scale_y=1,scale_z=0.5,Inter_area_dist=1,pickAr
 	strip_c = p.createCollisionShape(p.GEOM_BOX,halfExtents=[scale_x/20,(scale_y+(Inter_area_dist/2))*2,0.01])
 	strip_v = p.createVisualShape(p.GEOM_BOX,halfExtents=[scale_x/20,(scale_y+(Inter_area_dist/2))*2,0.01],rgbaColor=[0,0,0,1])
 	y_pick = y - scale_y - Inter_area_dist/2.0
+<<<<<<< HEAD
 	strip1 = p.createMultiBody(baseCollisionShapeIndex=strip_c,baseVisualShapeIndex=strip_v,basePosition=[scale_x + 0.1,0 ,z+scale_z])
 	strip2 = p.createMultiBody(baseCollisionShapeIndex=strip_c,baseVisualShapeIndex=strip_v,basePosition=[-scale_x - 0.1,0 ,z+scale_z])
+=======
+	strip1 = p.createMultiBody(baseCollisionShapeIndex=strip_c,baseVisualShapeIndex=strip_v,basePosition=[scale_x + 0.1,y ,z+scale_z])
+	strip2 = p.createMultiBody(baseCollisionShapeIndex=strip_c,baseVisualShapeIndex=strip_v,basePosition=[-scale_x - 0.1,y ,z+scale_z])
+>>>>>>> be889441982bcd8ee5f2e119d56feee3f52dcb84
 	base_c = p.createCollisionShape(p.GEOM_BOX,halfExtents=[scale_x/20,scale_x/20,0.07])
 	base_v = p.createVisualShape(p.GEOM_BOX,halfExtents=[scale_x/20,scale_x/20,0.07],rgbaColor=[1,0.51,0,1])
 	base1 = p.createMultiBody(baseCollisionShapeIndex=base_c,baseVisualShapeIndex=base_v,basePosition=[scale_x + 0.1,y ,z+scale_z+0.075])
@@ -39,4 +47,15 @@ def MakeRobot(x,y,z=0.5,scale_x=1,scale_y=1,scale_z=0.5,Inter_area_dist=1,pickAr
 	p.createConstraint(upper_base1, -1, h_pole2, -1, p.JOINT_FIXED, [1,0,0], [-scale_x/40, -0.03, 0], [(scale_x + 0.1)-(scale_x/40),0,0])
 	p.createConstraint(upper_base2, -1, h_pole1, -1, p.JOINT_FIXED, [1,0,0], [scale_x/40, 0.03, 0], [-(scale_x + 0.1)+(scale_x/40),0,0])
 	p.createConstraint(upper_base2, -1, h_pole2, -1, p.JOINT_FIXED, [1,0,0], [scale_x/40, -0.03, 0], [-(scale_x + 0.1)+(scale_x/40),0,0])
+<<<<<<< HEAD
 	return base1,base2,z+scale_z+0.15+0.6+pickAreaHeight+0.02
+=======
+	return base1,base2
+	
+
+
+
+
+
+
+>>>>>>> be889441982bcd8ee5f2e119d56feee3f52dcb84
