@@ -10,8 +10,7 @@ and Cross-Domain Image Matching](https://arxiv.org/pdf/1710.01330.pdf)
 * [Robotic Grasping of Novel Objects using Vision
 ](http://pr.cs.cornell.edu/grasping/IJRR_saxena_etal_roboticgraspingofnovelobjects.pdf)
 * [Deep Reinforcement Learning for Vision-Based Robotic Grasping:
-A Simulated Comparative Evaluation of Off-Policy Methods[
-](https://arxiv.org/pdf/1802.10264v2.pdf)
+A Simulated Comparative Evaluation of Off-Policy Methods](https://arxiv.org/pdf/1802.10264v2.pdf)
 * [Vision-based Robotic Grasp Detection From Object Localization, Object Pose Estimation To Grasp Estimation: A Review](https://arxiv.org/pdf/1905.06658.pdf)
 * [Robotic Grasping in Cluttered Environments-Stanford Videos](https://ai.stanford.edu/~asaxena/clutteredgrasping/)
 * [Analysis and Observations from the
