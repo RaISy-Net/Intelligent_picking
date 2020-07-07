@@ -5,7 +5,8 @@ import numpy as np
 from datetime import datetime
 import pybullet_data
 from drop_area import *
-from robot_frame import *
+from robot_frame_mass import *
+from bot_maker import *
 
 p.connect(p.GUI)
 
@@ -28,23 +29,29 @@ pickAreaHeight  -> Height of the pick area, ideally 700 ~ 900 cm in our case
 '''
 MakeArena(x=0,y=0,z=0.05,
 	      scale_x=Area_Halfdim,scale_y=Area_Halfdim,scale_z=0,
-	      Inter_area_dist=0.5,pickAreaHeight=0.5)
+	      Inter_area_dist=0.5,pickAreaHeight=0.9)
 
-base1, base2 ,h= MakeRobot(x=0,y=0,z=0.05,
+base1, base2 = MakeRobot(x=0,y=0,z=0.05,
 	      scale_x=Area_Halfdim,scale_y=Area_Halfdim,scale_z=0,
 	      Inter_area_dist=0.2,pickAreaHeight=0.9)
 
+# MakeBot(x=0,y=0,z=height,l1=0.2,l2=0.2)
+
+# print(height,"--------------")
 
 
 
+x=0
 while 1:
+	# x=x+0.01
+	# base1, base2 , height= MakeRobot(x=0,y=x,z=0.05,
+	#       scale_x=Area_Halfdim,scale_y=Area_Halfdim,scale_z=0,
+	#       Inter_area_dist=0.2,pickAreaHeight=0.9)
 
+	# MakeBot(x=0,y=x,z=height,l1=0.2,l2=0.2)
 
-  # p.resetBasePositionAndOrientation(gripper1,[0,-0.09,0.1],p.getQuaternionFromEuler([0,0,1.57]))
-  # p.setJointMotorControlArray(gripper1,[0,1,2,3,4,5,6,10],
-                              # controlMode=p.POSITION_CONTROL,
-                              # targetPositions=np.zeros(8))
-  p.stepSimulation()
-
-  time.sleep(0.01)
+	p.applyExternalForce(base1,-1,[0,20,0],[0,0,0],p.LINK_FRAME)
+	p.applyExternalForce(base2,-1,[0,20,0],[0,0,0],p.LINK_FRAME)
+	p.stepSimulation()
+	time.sleep(0.01)
 p.disconnect()
