@@ -38,7 +38,7 @@ def MakeRobot(x,y,z=0.5,scale_x=1,scale_y=1,scale_z=0.5,Inter_area_dist=1,pickAr
 	p.createConstraint(upper_base1, -1, h_pole2, -1, p.JOINT_FIXED, [1,0,0], [-scale_x/40, -scale_x/40, 0], [(scale_x+0.1-scale_x/40),0,0])
 	p.createConstraint(upper_base2, -1, h_pole1, -1, p.JOINT_FIXED, [1,0,0], [scale_x/40, scale_x/40, 0], [-(scale_x+0.1-scale_x/40),0,0])
 	p.createConstraint(upper_base2, -1, h_pole2, -1, p.JOINT_FIXED, [1,0,0], [scale_x/40, -scale_x/40, 0], [-(scale_x+0.1-scale_x/40),0,0])
-<<<<<<< HEAD
+
 	p.createConstraint(strip1, -1, -1, -1, p.JOINT_FIXED, [0,0,0], [0,0, 0], [scale_x + 0.1,y ,z+scale_z])
 	p.createConstraint(strip2, -1, -1, -1, p.JOINT_FIXED, [0,0,0], [0,0, 0], [-scale_x - 0.1,y ,z+scale_z])
 	# p.createConstraint(base1, -1, strip1, -1, p.JOINT_PRISMATIC, [0,1,0], [0,0, -0.075], [0,0,0])
@@ -47,8 +47,8 @@ def MakeRobot(x,y,z=0.5,scale_x=1,scale_y=1,scale_z=0.5,Inter_area_dist=1,pickAr
 
 
 	z=z+scale_z+0.15+0.6+pickAreaHeight-0.08
-	l1=0.2
-	l2=0.2
+	l1=0.1
+	l2=0.15
 	head_x=0.15
 	head_y=0.15
 	head_z=0.05
@@ -98,30 +98,23 @@ def MakeRobot(x,y,z=0.5,scale_x=1,scale_y=1,scale_z=0.5,Inter_area_dist=1,pickAr
 	multi_servo2=p.createMultiBody(baseMass=0.0001,baseCollisionShapeIndex=servo2_c,baseVisualShapeIndex=servo2_v,basePosition=[x,y,z-link1_h-link2_h-head_z-2.5*servo1_z-servo2_z])
 	# multi_d_bracket2=p.createMultiBody(baseMass=0.0001,baseCollisionShapeIndex=d_bracket2_c,baseVisualShapeIndex=d_bracket2_v,basePosition=[x-0.01,y,z-link1_h-link2_h-head_z-2.5*servo1_z-2.5*servo2_z])
 
-	gripper=p.loadSDF('gripper/wsg50_one_motor_gripper.sdf',globalScaling=1)
-	gripper=gripper[0]
+	# gripper=p.loadSDF('gripper/wsg50_one_motor_gripper.sdf')
+	# gripper=gripper[0]
 	# print(p.getLinkStates(gripper,[0,1,2,3,4,5,6,7,8,9]))
-	p.changeDynamics(gripper,-1,mass=0.0001)
-	for i in range(9):
-		p.changeDynamics(gripper,i,mass=0.0001)
-	p.resetBasePositionAndOrientation(gripper,[x,y,z-link1_h-link2_h-head_z-2.5*servo1_z-2.5*servo2_z], p.getQuaternionFromEuler([0,3.14,0]))
-	p.createConstraint(multi_head, -1,h_pole1, -1, p.JOINT_FIXED, [0,0,0], [0,0, 0], [0,0,-0.1])
+	# p.changeDynamics(gripper,-1,mass=0.0001)
+	# for i in range(9):
+	# 	p.changeDynamics(gripper,i,mass=0.0001)
+	# p.resetBasePositionAndOrientation(gripper,[x,y,z-link1_h-link2_h-head_z-2.5*servo1_z-2.5*servo2_z], p.getQuaternionFromEuler([0,3.14,0]))
+	p.createConstraint(multi_head, -1,h_pole1, -1, p.JOINT_PRISMATIC, [1,0,0], [0,0, 0], [0,0,-0.1])
 	p.createConstraint(multi_link1, -1,multi_head, -1, p.JOINT_FIXED, [0,0,0], [0,0, l1/2], [0,0,-head_z])
 	p.createConstraint(multi_link2, -1,multi_link1, -1, p.JOINT_FIXED, [0,0,0], [0,0, l2/2], [0,0,-l1/2])
 	p.createConstraint(multi_servo1, -1,multi_link2, -1, p.JOINT_FIXED, [0,0,0], [0,0, servo1_z], [0,0,-l2/2])
 	# p.createConstraint(multi_d_bracket1, -1,multi_servo1, -1, p.JOINT_FIXED, [0,0,0], [0,0, 0], [0,-0.05,-servo1_z])
 	p.createConstraint(multi_servo1, -1,multi_servo2, -1, p.JOINT_FIXED, [0,0,0], [0,0, -servo1_z], [0,0,servo2_z])
-	p.createConstraint(multi_servo2, -1,gripper, -1, p.JOINT_FIXED, [0,0,0], [0,0, -servo2_z], [0,0,0])
+	# p.createConstraint()
+	# p.createConstraint(gripper, -1,multi_servo2, -1, p.JOINT_FIXED, [0,0,0], [0,0, 0], [0,0,-servo2_z])
 
 	# p.createConstraint(multi_head, -1, multi_link1, -1, p.JOINT_FIXED, [0,0,0], [0,0, -head_z], [0,0,l1/2])
 
-	return base1,base2
-=======
-	return base1,base2
-	
+	return base1,base2,multi_link1,multi_link2,l2
 
-
-
-
-
->>>>>>> be889441982bcd8ee5f2e119d56feee3f52dcb84
