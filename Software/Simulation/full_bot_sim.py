@@ -32,7 +32,7 @@ MakeArena(x=0,y=0,z=0.05,
 	      scale_x=Area_Halfdim,scale_y=Area_Halfdim,scale_z=0,
 	      Inter_area_dist=0.5,pickAreaHeight=0.9)
 
-base1, base2 ,link2,l2= MakeRobot(x=0,y=0,z=0.05,
+base1, base2 ,link1,link2,l2= MakeRobot(x=0,y=0,z=0.05,
 	      scale_x=Area_Halfdim,scale_y=Area_Halfdim,scale_z=0,
 	      Inter_area_dist=0.2,pickAreaHeight=0.9)
 
