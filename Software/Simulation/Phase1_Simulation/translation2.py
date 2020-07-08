@@ -2,6 +2,7 @@ import pybullet as p
 import time
 import math
 import numpy as np
+import random
 from datetime import datetime
 import pybullet_data
 from drop_area import *
@@ -17,6 +18,19 @@ sphere = p.loadURDF('sphere_small.urdf',[0,0,0])
 extra = [];
 # grip_list= p.loadSDF("./kukka_wsg50/kuka_with_wsg50.sdf")
 # gripper1 = grip_list[0]
+for i in range(5):
+	urdf_no = str(random.randint(500,999))
+	p.loadURDF('random_urdfs/'+urdf_no+'/'+urdf_no+'.urdf',[-0.8+0.4*i,2.1,0.5])
+
+for i in range(12):
+	urdf_no = str(random.randint(100,500))
+	p.loadURDF('random_urdfs/'+urdf_no+'/'+urdf_no+'.urdf',[-0.8+0.5*(i%4),-0.5-0.3*(i%3),1.2])
+for i in range(6):
+	urdf_no = str(random.randint(500,999))
+	p.loadURDF('random_urdfs/'+urdf_no+'/'+urdf_no+'.urdf',[-0.8+0.5*(i%2),-1.5-0.3*(i%3),1.2])
+#to make the things fall down
+for i in range(50):
+	p.stepSimulation()
 
 
 Area_Halfdim = 1 # i in real case

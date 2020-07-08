@@ -7,7 +7,7 @@ import pybullet_data
 
 
 def MakeRobot(x,y,z=0.5,scale_x=1,scale_y=1,scale_z=0.5,Inter_area_dist=1,pickAreaHeight=0.9):
-	#p.resetDebugVisualizerCamera(2, 0, -89, [0,0,2])
+	#p.resetDebugVisualizerCamera(2, 0, -89, [0,0,2.5])
 	p.setAdditionalSearchPath(pybullet_data.getDataPath())
 	strip_c = p.createCollisionShape(p.GEOM_BOX,halfExtents=[scale_x/20,(scale_y+(Inter_area_dist/2))*2,0.01])
 	strip_v = p.createVisualShape(p.GEOM_BOX,halfExtents=[scale_x/20,(scale_y+(Inter_area_dist/2))*2,0.01],rgbaColor=[0,0,0,1])
@@ -53,7 +53,7 @@ def MakeRobot(x,y,z=0.5,scale_x=1,scale_y=1,scale_z=0.5,Inter_area_dist=1,pickAr
 	head_y=0.15
 	head_z=0.05
 	head_c=p.createCollisionShape(p.GEOM_BOX,halfExtents=[head_x,head_y,head_z])
-	head_v=p.createVisualShape(p.GEOM_BOX,halfExtents=[head_x,head_y,head_z],rgbaColor=[1,0,0,1])
+	head_v=p.createVisualShape(p.GEOM_BOX,halfExtents=[head_x,head_y,head_z],rgbaColor=[0.2,0.3,0.1,0,1])
 	link1_r=0.07
 	link1_h=l1
 	link1_c=p.createCollisionShape(p.GEOM_CYLINDER,radius=link1_r,height=link1_h)

@@ -2,18 +2,39 @@ import pybullet as p
 import time
 import math
 import numpy as np
+import random
 from datetime import datetime
 import pybullet_data
 from drop_area import *
 from robot_frame_mass import *
 from bot_maker import *
 
-p.connect(p.GUI)
+shift = [0, -0.02, 0]
 
+p.connect(p.GUI)
+urdfRoot=pybullet_data.getDataPath()
 p.setAdditionalSearchPath(pybullet_data.getDataPath())
 p.loadURDF("plane.urdf", [0, 0, 0])
 p.setGravity(0, 0, -10)
 sphere = p.loadURDF('sphere_small.urdf',[0.6,-1.5,1.2])
+
+for i in range(5):
+	urdf_no = str(random.randint(500,999))
+	p.loadURDF('random_urdfs/'+urdf_no+'/'+urdf_no+'.urdf',[-0.8+0.4*i,2.1,0.5])
+
+for i in range(12):
+	urdf_no = str(random.randint(100,500))
+	p.loadURDF('random_urdfs/'+urdf_no+'/'+urdf_no+'.urdf',[-0.8+0.5*(i%4),-0.5-0.3*(i%3),1.2])
+for i in range(6):
+	urdf_no = str(random.randint(500,999))
+	p.loadURDF('random_urdfs/'+urdf_no+'/'+urdf_no+'.urdf',[-0.8+0.5*(i%2),-1.5-0.3*(i%3),1.2])
+#to make the things fall down
+for i in range(50):
+	p.stepSimulation()
+
+
+
+
 extra = []
 
 # grip_list= p.loadSDF("./kukka_wsg50/kuka_with_wsg50.sdf")
@@ -52,7 +73,8 @@ while(i<2000):
 	time.sleep(0.01)
 	i += 1
 '''
-logg = p.startStateLogging(p.STATE_LOGGING_VIDEO_MP4,'filename2.mp4')
+
+#logg = p.startStateLogging(p.STATE_LOGGING_VIDEO_MP4,'filename2.mp4')
 while 1:
 	# x=x+0.01
 	# base1, base2 , height= MakeRobot(x=0,y=x,z=0.05,
@@ -222,7 +244,7 @@ while 1:
 		time.sleep(0.01)
 		i += 1		
 			
-	p.stopStateLogging(logg)
+	#p.stopStateLogging(logg)
 	while(1):
 		pass	
 	
