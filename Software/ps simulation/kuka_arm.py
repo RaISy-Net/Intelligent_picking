@@ -1,6 +1,6 @@
 from pybullet_envs.bullet.kukaGymEnv import KukaGymEnv
 import os
-from imageai.Detection.Custom import DetectionModelTrainer,CustomObjectDetection
+#from imageai.Detection.Custom import DetectionModelTrainer,CustomObjectDetection
 import cv2
 import random
 import os
@@ -17,11 +17,11 @@ from pkg_resources import parse_version
 import gym
 from kuka_discrete_obj_env1 import KukaDiverseObjectEnv
 
-detector=CustomObjectDetection()
-detector.setModelTypeAsYOLOv3()
-detector.setModelPath('detection_model-ex-004--loss-0004.076.h5')
-detector.setJsonPath('detection_config.json')
-detector.loadModel()
+#detector=CustomObjectDetection()
+#detector.setModelTypeAsYOLOv3()
+#detector.setModelPath('detection_model-ex-004--loss-0004.076.h5')
+#detector.setJsonPath('detection_config.json')
+#detector.loadModel()
 
 env=KukaDiverseObjectEnv()
 obs=env.reset()
@@ -57,12 +57,12 @@ i=0
 x=centroids[i][0]
 y=centroids[i][1]
 z=0
+print(x,y)
 while True:
-    print("new step")
     state = p.getLinkState(env._kuka.kukaUid, env._kuka.kukaEndEffectorIndex)
     actualEndEffectorPos = state[0]
     actualEndEffectorOrn = p.getEulerFromQuaternion(state[1])[2]
-    observation,reward,done,_=env.step([(x-actualEndEffectorPos[0])*20,(y-actualEndEffectorPos[1])*20,(0.4-actualEndEffectorPos[2]),0,[0,0,0,0]])
+    observation,reward,done,_=env.step([(x-actualEndEffectorPos[0])*10,(y-actualEndEffectorPos[1])*11,(0.4-actualEndEffectorPos[2]),0,[0,0,0,0]])
     if done==True:
         centroids=[]
         points()
@@ -77,6 +77,8 @@ while True:
             break
         x=centroids[i][0]
         y=centroids[i][1]
+        print(x,y)
+        #print(p.getLinkState(env._kuka.kukaUid, env._kuka.kukaEndEffectorIndex)[0])
 
     p.stepSimulation()
     #time.sleep(env._timeStep)

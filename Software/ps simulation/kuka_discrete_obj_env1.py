@@ -33,7 +33,7 @@ class KukaDiverseObjectEnv(KukaGymEnv):
                cameraRandom=0,
                width=512,
                height=512,
-               numObjects=5,
+               numObjects=9,
                isTest=False):
     """Initializes the KukaDiverseObjectEnv.
     Args:
@@ -105,8 +105,8 @@ class KukaDiverseObjectEnv(KukaGymEnv):
     """Environment reset called at the beginning of an episode.
     """
     # Set the camera settings.
-    look = [0, -0.55, 0.6]
-    cameraeyepos = [0, -0.55, 0.7]
+    look = [0, -0.5, 0.6]
+    cameraeyepos = [0, -0.5, 0.7]
     cameraup = [0, -1, 0]
     self._view_matrix = p.computeViewMatrix(cameraeyepos, look, cameraup)
     fov = 81
@@ -134,8 +134,8 @@ class KukaDiverseObjectEnv(KukaGymEnv):
 
     # Choose the objects in the bin.
     #"cube_small.urdf","sphere_small.urdf"
-    urdfList = ["cube_small.urdf","cube_small.urdf","cube_small.urdf","sphere_small.urdf","sphere_small.urdf","sphere_small.urdf"]
-    self._objectUids = self._randomly_place_objects(urdfList)
+    urdfList = self._get_random_object(self._numObjects,self._isTest)
+    self._objectUids = self._place_objects(urdfList)
     self._observation = self._get_observation()
     return np.array(self._observation)
 
@@ -152,7 +152,7 @@ class KukaDiverseObjectEnv(KukaGymEnv):
     for urdf_name in urdfList:
       xpos = 0.2 * random.random() * self._alpha
       self._alpha*=-1
-      ypos = -0.5 - 0.3 * (random.random())
+      ypos = -0.4 - 0.3 * (random.random())
       angle = np.pi / 2 + self._blockRandom * np.pi * random.random()
       orn = p.getQuaternionFromEuler([0, 0, angle])
       urdf_path = os.path.join(self._urdfRoot, urdf_name)
@@ -163,6 +163,26 @@ class KukaDiverseObjectEnv(KukaGymEnv):
       for _ in range(500):
         p.stepSimulation()
     return objectUids
+
+  def _place_objects(self, urdfList):
+      objectUids = []
+      xpos = -0.17
+      ypos = -0.3
+      count = 0
+      for urdf_name in urdfList:
+          angle = np.pi / 2 + self._blockRandom * np.pi * random.random()
+          orn = p.getQuaternionFromEuler([0,0,angle])
+          urdf_path=os.path.join(self._urdfRoot, urdf_name)
+          uid = p.loadURDF(urdf_path, [xpos, ypos, 0.5], [orn[0], orn[1], orn[2], orn[3]])
+          objectUids.append(uid)
+          for _ in range(500):
+              p.stepSimulation()
+          count+=1
+          ypos-=0.17
+          if count%3==0:
+              xpos+=0.17
+              ypos = -0.3
+      return objectUids
 
   def _get_observation(self):
     """Return the observation as an image.
@@ -240,8 +260,9 @@ class KukaDiverseObjectEnv(KukaGymEnv):
     # If we are close to the bin, attempt grasp.
     state = p.getLinkState(self._kuka.kukaUid, self._kuka.kukaEndEffectorIndex)
     end_effector_pos = state[0]
-    if end_effector_pos[2] <= 0.47:#0.1 for prev gripper
+    if end_effector_pos[2] <= 0.46:#0.1 for prev gripper
       print("attempting grasp")
+      print(end_effector_pos)
       motor_fing = np.pi/4
       hinge_fing = -np.pi/4
       #grab  config

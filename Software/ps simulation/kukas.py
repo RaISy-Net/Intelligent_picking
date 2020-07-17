@@ -26,7 +26,7 @@ class Kuka:
     self.useNullSpace = 1
     self.useOrientation = 1
     self.kukaEndEffectorIndex = 8
-    self.Area_Halfdim = 0.3
+    self.Area_Halfdim = 0.25
     #lower limits for null space
     self.ll = [-.967, -2, -2.96, 0.19, -2.96, -2.09, -3.05]
     #upper limits for null space
