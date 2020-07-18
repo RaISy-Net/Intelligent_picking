@@ -226,15 +226,15 @@ class KukaDiverseObjectEnv(KukaGymEnv):
       #print(depth_image.shape)
       depth_image[:,:,0] = depth
       #print(depth_image)
-      #cv2.imshow("depth",depth_image)
+      cv2.imshow("depth",depth_image)
       #cv2.waitKey(0)
       lower_bound=np.amin(depth_image[:,:,0])
       upper_bound=np.amax(depth_image[:,:,0])
       depth_image_new=np.zeros(np_img_arr.shape[:2], dtype=np.float64)
       depth_image_new[:,:] = depth
       depth_image_new[:,:] = depth_image_new[:,:]*(255/(upper_bound-lower_bound))-((255*lower_bound)/(upper_bound-lower_bound))
-      cv2.imwrite(r"C:/Users/yashs/OneDrive/Desktop/PS simulation/rgbd_images/depth"+str(a)+".png",depth_image_new)
-      cv2.imwrite(r"C:/Users/yashs/OneDrive/Desktop/PS simulation/rgbd_images/color"+str(a)+".png",np_img_arr)
+      cv2.imwrite(r"C:/Users/yashs/OneDrive/Desktop/PS simulation/simulation_images/depth"+str(a)+".jpeg",depth_image_new)
+      cv2.imwrite(r"C:/Users/yashs/OneDrive/Desktop/PS simulation/simulation_images/color"+str(a)+".jpeg",np_img_arr)
       
 
   def step(self, action):
@@ -390,10 +390,10 @@ class KukaDiverseObjectEnv(KukaGymEnv):
       A list of urdf filenames.
     """
     selected_objects_filenames = []
-    #numbers = [401, 510]
+    numbers = [503, 510]
     for i in range(num_objects):
-        urdf_no = str(random.randint(500,510))
-        #urdf_no = str(numbers[i])
+        #urdf_no = str(random.randint(500,510))
+        urdf_no = str(numbers[i])
         selected_objects_filenames.append('random_urdfs/'+urdf_no+'/'+urdf_no+'.urdf')
     return selected_objects_filenames
 
