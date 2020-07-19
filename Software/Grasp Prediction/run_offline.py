@@ -16,7 +16,7 @@ logging.basicConfig(level=logging.INFO)
 
 def parse_args():
     parser = argparse.ArgumentParser(description='Evaluate network')
-    parser.add_argument('--network', type=str, default='/home/nishantkr18/Intelligent_picking/Software/Grasp Prediction/trained-models/cornell-2/epoch_19_iou_0.98',
+    parser.add_argument('--network', type=str, default='/home/nishantkr18/Intelligent_picking/Software/Grasp Prediction/models-trained-on custom-data/epoch_notbest_17_iou_0.00',
                         help='Path to saved network to evaluate')
     parser.add_argument('--rgb_path', type=str, default='/home/nishantkr18/Intelligent_picking/Software/Grasp Prediction/test_images/color0.png',
                         help='RGB Image path')
