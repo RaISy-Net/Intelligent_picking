@@ -328,7 +328,9 @@ def run():
             tb.add_scalar('val_loss/' + n, l, epoch)
 
         # Save best performing network
+        
         iou = test_results['correct'] / (test_results['correct'] + test_results['failed'])
+        torch.save(net, os.path.join(save_folder, 'epoch_notregular_%02d_iou_%0.2f' % (epoch, iou)))
         if iou > best_iou or epoch == 0 or (epoch % 10) == 0:
             torch.save(net, os.path.join(save_folder, 'epoch_%02d_iou_%0.2f' % (epoch, iou)))
             best_iou = iou
