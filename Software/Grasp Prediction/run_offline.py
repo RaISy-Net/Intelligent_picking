@@ -16,11 +16,11 @@ logging.basicConfig(level=logging.INFO)
 
 def parse_args():
     parser = argparse.ArgumentParser(description='Evaluate network')
-    parser.add_argument('--network', type=str,
+    parser.add_argument('--network', type=str, default='/home/nishantkr18/Intelligent_picking/Software/Grasp Prediction/trained-models/cornell-2/epoch_19_iou_0.98',
                         help='Path to saved network to evaluate')
-    parser.add_argument('--rgb_path', type=str, default='cornell/08/pcd0845r.png',
+    parser.add_argument('--rgb_path', type=str, default='/home/nishantkr18/Intelligent_picking/Software/Grasp Prediction/test_images/color0.png',
                         help='RGB Image path')
-    parser.add_argument('--depth_path', type=str, default='cornell/08/pcd0845d.tiff',
+    parser.add_argument('--depth_path', type=str, default='/home/nishantkr18/Intelligent_picking/Software/Grasp Prediction/test_images/depth0.png',
                         help='Depth Image path')
     parser.add_argument('--use-depth', type=int, default=1,
                         help='Use Depth image for evaluation (1/0)')
