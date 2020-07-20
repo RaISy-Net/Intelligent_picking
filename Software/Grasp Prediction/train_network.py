@@ -53,11 +53,11 @@ def parse_args():
                         help='Dataset workers')
 
     # Training
-    parser.add_argument('--batch-size', type=int, default=4,
+    parser.add_argument('--batch-size', type=int, default=8,
                         help='Batch size')
-    parser.add_argument('--epochs', type=int, default=30,
+    parser.add_argument('--epochs', type=int, default=50,
                         help='Training epochs')
-    parser.add_argument('--batches-per-epoch', type=int, default=200,
+    parser.add_argument('--batches-per-epoch', type=int, default=1000,
                         help='Batches per Epoch')
     parser.add_argument('--optim', type=str, default='adam',
                         help='Optmizer for the training. (adam or SGD)')
@@ -298,10 +298,10 @@ def run():
         raise NotImplementedError('Optimizer {} is not implemented'.format(args.optim))
 
     # Print model architecture.
-    summary(net, (input_channels, 512, 512))
+    summary(net, (input_channels, 224, 224))
     f = open(os.path.join(save_folder, 'arch.txt'), 'w')
     sys.stdout = f
-    summary(net, (input_channels, 512, 512))
+    summary(net, (input_channels, 224, 224))
     sys.stdout = sys.__stdout__
     f.close()
 
@@ -328,9 +328,7 @@ def run():
             tb.add_scalar('val_loss/' + n, l, epoch)
 
         # Save best performing network
-        
         iou = test_results['correct'] / (test_results['correct'] + test_results['failed'])
-        torch.save(net, os.path.join(save_folder, 'epoch_notregular_%02d_iou_%0.2f' % (epoch, iou)))
         if iou > best_iou or epoch == 0 or (epoch % 10) == 0:
             torch.save(net, os.path.join(save_folder, 'epoch_%02d_iou_%0.2f' % (epoch, iou)))
             best_iou = iou

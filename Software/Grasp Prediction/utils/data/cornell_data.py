@@ -29,14 +29,14 @@ class CornellDataset(GraspDatasetBase):
             self.grasp_files = self.grasp_files[int(self.length * ds_rotate):] + self.grasp_files[
                                                                                  :int(self.length * ds_rotate)]
 
-        self.depth_files = ['/content/drive/My Drive/online/dataset/depth'+str(i)+'.png' for i in range(800)]
+        self.depth_files = ['/content/drive/My Drive/online/dataset/depth'+str(i)+'.tiff' for i in range(800)]
         self.rgb_files = ['/content/drive/My Drive/online/dataset/color'+str(i)+'.png' for i in range(800)]
 
     def _get_crop_attrs(self, idx):
         gtbbs = grasp.GraspRectangles.load_from_cornell_file(self.grasp_files[idx])
         center = gtbbs.center
-        left = max(0, min(center[1] - self.output_size // 2, 512 - self.output_size))
-        top = max(0, min(center[0] - self.output_size // 2, 512 - self.output_size))
+        left = max(0, min(center[1] - self.output_size // 2, 640 - self.output_size))
+        top = max(0, min(center[0] - self.output_size // 2, 480 - self.output_size))
         return center, left, top
 
     def get_gtbb(self, idx, rot=0, zoom=1.0):
@@ -51,7 +51,8 @@ class CornellDataset(GraspDatasetBase):
         depth_img = image.DepthImage.from_tiff(self.depth_files[idx])
         center, left, top = self._get_crop_attrs(idx)
         depth_img.rotate(rot, center)
-        depth_img.crop((top, left), (min(512, top + self.output_size), min(512, left + self.output_size)))
+        #depth_img.crop((top, left), (min(480, top + self.output_size), min(640, left + self.output_size)))
+        depth_img.resize((self.output_size,self.output_size))
         depth_img.normalise()
         depth_img.zoom(zoom)
         depth_img.resize((self.output_size, self.output_size))
@@ -61,7 +62,8 @@ class CornellDataset(GraspDatasetBase):
         rgb_img = image.Image.from_file(self.rgb_files[idx])
         center, left, top = self._get_crop_attrs(idx)
         rgb_img.rotate(rot, center)
-        rgb_img.crop((top, left), (min(512, top + self.output_size), min(512, left + self.output_size)))
+        #rgb_img.crop((top, left), (min(480, top + self.output_size), min(640, left + self.output_size)))
+        depth_img.resize((self.output_size,self.output_size))
         rgb_img.zoom(zoom)
         rgb_img.resize((self.output_size, self.output_size))
         if normalise:

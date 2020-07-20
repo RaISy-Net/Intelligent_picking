@@ -11,7 +11,7 @@ class CameraData:
     def __init__(self,
                  width=512,
                  height=512,
-                 output_size=512,
+                 output_size=224,
                  include_depth=True,
                  include_rgb=True
                  ):
@@ -44,16 +44,17 @@ class CameraData:
 
     def get_depth(self, img):
         depth_img = image.Image(img)
-        depth_img.crop(bottom_right=self.bottom_right, top_left=self.top_left)
+        #depth_img.crop(bottom_right=self.bottom_right, top_left=self.top_left)
         depth_img.normalise()
-        # depth_img.resize((self.output_size, self.output_size))
+        depth_img.resize((self.output_size, self.output_size))
+        print(depth_img.shape)
         depth_img.img = depth_img.img.transpose((2, 0, 1))
         return depth_img.img
 
     def get_rgb(self, img, norm=True):
         rgb_img = image.Image(img)
-        rgb_img.crop(bottom_right=self.bottom_right, top_left=self.top_left)
-        # rgb_img.resize((self.output_size, self.output_size))
+        #rgb_img.crop(bottom_right=self.bottom_right, top_left=self.top_left)
+        rgb_img.resize((self.output_size, self.output_size))
         if norm:
                 rgb_img.normalise()
                 rgb_img.img = rgb_img.img.transpose((2, 0, 1))
@@ -81,6 +82,6 @@ class CameraData:
         elif self.include_depth:
             x = self.numpy_to_torch(depth_img)
         elif self.include_rgb:
-            x = self.numpy_to_torch(np.expand_dims(rgb_img,0))
+            x = self.numpy_to_torch(np.expand_dims(rgb_img, 0))
 
         return x, depth_img, rgb_img

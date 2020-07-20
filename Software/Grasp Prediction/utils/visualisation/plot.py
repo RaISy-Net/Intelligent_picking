@@ -71,7 +71,6 @@ def plot_results(
 
     plt.pause(0.1)
     fig.canvas.draw()
-    return gs
 
 
 def plot_grasp(
@@ -129,7 +128,6 @@ def save_results(rgb_img, grasp_q_img, grasp_angle_img, depth_img=None, no_grasp
     :return:
     """
     gs = detect_grasps(grasp_q_img, grasp_angle_img, width_img=grasp_width_img, no_grasps=no_grasps)
-    print(gs)
 
     fig = plt.figure(figsize=(10, 10))
     plt.ion()
