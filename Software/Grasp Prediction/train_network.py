@@ -57,7 +57,7 @@ def parse_args():
                         help='Batch size')
     parser.add_argument('--epochs', type=int, default=50,
                         help='Training epochs')
-    parser.add_argument('--batches-per-epoch', type=int, default=1000,
+    parser.add_argument('--batches-per-epoch', type=int, default=800,
                         help='Batches per Epoch')
     parser.add_argument('--optim', type=str, default='adam',
                         help='Optmizer for the training. (adam or SGD)')
@@ -280,12 +280,13 @@ def run():
     logging.info('Loading Network...')
     input_channels = 1 * args.use_depth + 3 * args.use_rgb
     network = get_network(args.network)
-    net = network(
-        input_channels=input_channels,
-        dropout=args.use_dropout,
-        prob=args.dropout_prob,
-        channel_size=args.channel_size
-    )
+    #net = network(
+        #input_channels=input_channels,
+        #dropout=args.use_dropout,
+        #prob=args.dropout_prob,
+        #channel_size=args.channel_size
+    #)
+    net = torch.load('/content/drive/My Drive/online/grasp/epoch_30_iou_0.97')
 
     net = net.to(device)
     logging.info('Done')
@@ -329,7 +330,8 @@ def run():
 
         # Save best performing network
         iou = test_results['correct'] / (test_results['correct'] + test_results['failed'])
-        if iou > best_iou or epoch == 0 or (epoch % 10) == 0:
+        #torch.save(net, os.path.join(/content/drive/My Drive/online/models, 'epoch_just_%02d_iou_%0.2f' % (epoch, iou)))
+        if iou > best_iou or epoch == 0 or (epoch % 10) == 0 or epoch==49:
             torch.save(net, os.path.join(save_folder, 'epoch_%02d_iou_%0.2f' % (epoch, iou)))
             best_iou = iou
 
