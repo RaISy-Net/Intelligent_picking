@@ -17,7 +17,7 @@ Area_Halfdim=1
 
 def get_grasp_prediction(x,y,z,a):
     Robot.rgbd_images(x,y,z)
-    network = "trained-models/cornell-randsplit-rgbd-grconvnet3-drop1-ch16/epoch_30_iou_0.97"
+    network = "C:/Users/yashs/OneDrive/Desktop/Intelligent_picking-master/Software/ps simulation/Robot/trained-models/cornell-randsplit-rgbd-grconvnet3-drop1-ch16/epoch_30_iou_0.97"
     rgb_path = "C:/Users/yashs/OneDrive/Desktop/color"+".png"
     depth_path = "C:/Users/yashs/OneDrive/Desktop/depth"+".png"
     gs = predict_grasp_angle(network, rgb_path, depth_path)
@@ -30,7 +30,7 @@ def get_real_world_coord():
     x = end_effector_initpos[0]
     y = end_effector_initpos[1]
     z = end_effector_initpos[2]
-    a = 0.4896 - 0.4663*z
+    a = 0.001
     y = y - a*(1-gs[0].center[0]/112)
     x = x + a*(1-gs[0].center[1]/112)
     angle = gs[0].angle
@@ -41,28 +41,51 @@ def pick(xpos, ypos):
     Robot.suction_up()
     Robot.move_frame(ypos+0.06)
     Robot.move_head(xpos-0.03)
+    z_init = Robot.end_effector()[0][2]
+    print(z_init)
     x,y,angle = get_real_world_coord()
-    Robot.extend_wrist(0.05)
+    Robot.move_frame(y+0.06)
+    Robot.move_head(x-0.03)
+    Robot.extend_wrist(0.02)
+    print('rotating gripper')
     Robot.rotate_gripper(angle)
-    Robot.extend_wrist(0.08)
-    Robot.close_gripper(0.09)
+    z_init = Robot.end_effector()[0][2]
+    zpos = z_init - 1.06
+    Robot.extend_wrist(zpos)
+    Robot.close_gripper(0.10)
     Robot.contract_wrist(0.13)
 
 def place(xpos, ypos):
     Robot.move_frame(ypos+0.06)
     Robot.move_head(xpos-0.03)
     Robot.extend_arm()
-    Robot.extend_wrist(0.05)
+    #Robot.extend_wrist(0.05)
     Robot.open_gripper()
+    Robot.reset_gripper()
     Robot.contract_arm()
 
+x = -0.8
+y = 0.4
+
 Robot = robot()
-end_effector_initpos = Robot.end_effector()[0]
-print(end_effector_initpos)
-object = Robot._objectUids[11]
-pos = p.getBasePositionAndOrientation(object)[0]
-pick(pos[0], pos[1])
-place(0.8, 0.8)
+p.resetDebugVisualizerCamera(1.8 , 0, -41, [0, -1.4, 1])
+for i in range(25):
+    object = Robot._objectUids[i]
+    pos = p.getBasePositionAndOrientation(object)[0]  
+    pick(pos[0], pos[1])
+    for j in range(180):
+        p.resetDebugVisualizerCamera(1.8, j, -41, [0, -1.4+(2.8*j)/180, 1-j*0.8/180])
+        time.sleep(0.01)
+    place(x, y)
+    for j in range(180):
+        p.resetDebugVisualizerCamera(1.8 , 180-j, -41, [0, 1.4 - (2.8*j)/180, 0.2 + j*0.8/180])
+        time.sleep(0.01)
+    if i%5==4:
+        x = x+0.4
+        y = 0.4
+    else:
+        y = y+0.4
+
 
 time.sleep(10)
 
