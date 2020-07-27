@@ -44,8 +44,6 @@ def pick(xpos, ypos):
     z_init = Robot.end_effector()[0][2]
     print(z_init)
     x,y,angle = get_real_world_coord()
-    Robot.move_frame(y+0.06)
-    Robot.move_head(x-0.03)
     Robot.extend_wrist(0.02)
     print('rotating gripper')
     Robot.rotate_gripper(angle)
@@ -73,11 +71,11 @@ for i in range(25):
     object = Robot._objectUids[i]
     pos = p.getBasePositionAndOrientation(object)[0]  
     pick(pos[0], pos[1])
-    for j in range(180):
+    for j in range(181):
         p.resetDebugVisualizerCamera(1.8, j, -41, [0, -1.4+(2.8*j)/180, 1-j*0.8/180])
         time.sleep(0.01)
     place(x, y)
-    for j in range(180):
+    for j in range(181):
         p.resetDebugVisualizerCamera(1.8 , 180-j, -41, [0, 1.4 - (2.8*j)/180, 0.2 + j*0.8/180])
         time.sleep(0.01)
     if i%5==4:
