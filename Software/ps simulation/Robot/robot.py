@@ -304,7 +304,10 @@ class robot:
 	def move_frame_and_head(self, pos_frame ,pos_head):
 		kp=3
 		kd=0
+		ki=0.005
 		i=0
+		t=0
+		total_error=0
 		pos_head = -pos_head
 		init, ori = p.getBasePositionAndOrientation(self.bot)
 		j = 0
@@ -316,7 +319,8 @@ class robot:
 
 			while(1):
 				error=init[1]-pos_frame
-				j=kp*error+kd*(error-last_error)
+				total_error=total_error+error
+				j=kp*error+kd*(error-last_error)+ki*total_error
 				p.setJointMotorControl2(self.bot, 31,p.VELOCITY_CONTROL, targetVelocity = -j)
 				p.setJointMotorControl2(self.bot, 33,p.VELOCITY_CONTROL, targetVelocity = j)
 				p.setJointMotorControl2(self.bot, 35,p.VELOCITY_CONTROL, targetVelocity = j)
@@ -326,7 +330,8 @@ class robot:
 				p.setJointMotorControl2(self.bot, 53,p.VELOCITY_CONTROL, targetVelocity = +j)
 				p.setJointMotorControl2(self.bot, 55,p.VELOCITY_CONTROL, targetVelocity = -j)
 				init, ori = p.getBasePositionAndOrientation(self.bot)
-
+				# if init[1]>pos_frame-0.2 and init[1]<pos_frame+0.2:
+				# 	kp=30/2
 				increment=0.01
 				
 				currentPos = p.getJointState(self.bot, self.head)
@@ -344,7 +349,10 @@ class robot:
 					counter+=1
 				else:
 					counter=0
-
+				# print(init[1],'init')
+				# print(pos_frame,'pos_frame')
+				t=t+1
+				print(t)
 				if counter > 5:
 					j=0
 					print("y mein ruk gaya")
