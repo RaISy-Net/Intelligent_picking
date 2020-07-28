@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import torch.utils.data
 from PIL import Image
+import cv2
 
 from hardware.device import get_device
 from inference.post_process import post_process_output
@@ -14,48 +15,36 @@ from utils.visualisation.plot import plot_results, save_results
 logging.basicConfig(level=logging.INFO)
 
 
-def parse_args():
-    parser = argparse.ArgumentParser(description='Evaluate network')
-    parser.add_argument('--network', type=str, default='/home/nishantkr18/Intelligent_picking/Software/Grasp Prediction/models-trained-on custom-data/epoch_notbest_17_iou_0.00',
-                        help='Path to saved network to evaluate')
-    parser.add_argument('--rgb_path', type=str, default='/home/nishantkr18/Intelligent_picking/Software/Grasp Prediction/test_images/color0.png',
-                        help='RGB Image path')
-    parser.add_argument('--depth_path', type=str, default='/home/nishantkr18/Intelligent_picking/Software/Grasp Prediction/test_images/depth0.png',
-                        help='Depth Image path')
-    parser.add_argument('--use-depth', type=int, default=1,
-                        help='Use Depth image for evaluation (1/0)')
-    parser.add_argument('--use-rgb', type=int, default=1,
-                        help='Use RGB image for evaluation (1/0)')
-    parser.add_argument('--n-grasps', type=int, default=1,
-                        help='Number of grasps to consider per image')
-    parser.add_argument('--save', type=int, default=0,
-                        help='Save the results')
-    parser.add_argument('--cpu', dest='force_cpu', action='store_true', default=False,
-                        help='Force code to run in CPU mode')
-
-    args = parser.parse_args()
-    return args
 
 
-if __name__ == '__main__':
-    args = parse_args()
+def predict_grasp_angle(network, rgb_path, depth_path):
+    #args = parse_args()
+
+    #network = "trained-models/cornell-randsplit-rgbd-grconvnet3-drop1-ch16/epoch_30_iou_0.97"
+    #rgb_path = "C:/Users/yashs/OneDrive/Desktop/PS simulation/rgbd_images/color8.jpeg"
+    #depth_path = "C:/Users/yashs/OneDrive/Desktop/PS simulation/rgbd_images/depth8.jpeg"
+    use_depth = 1
+    use_rgb = 1 
+    n_grasps = 1
+    save = 0
+    force_cpu = False
 
     # Load image
     logging.info('Loading image...')
-    pic = Image.open(args.rgb_path, 'r')
+    pic = Image.open(rgb_path, 'r')
     rgb = np.array(pic)
-    pic = Image.open(args.depth_path, 'r')
+    pic = Image.open(depth_path, 'r')
     depth = np.expand_dims(np.array(pic), axis=2)
 
     # Load Network
     logging.info('Loading model...')
-    net = torch.load(args.network,map_location=torch.device('cpu'))
+    net = torch.load(network,map_location=torch.device('cpu'))
     logging.info('Done')
 
     # Get the compute device
-    device = get_device(args.force_cpu)
+    device = get_device(force_cpu)
 
-    img_data = CameraData(include_depth=args.use_depth, include_rgb=args.use_rgb)
+    img_data = CameraData(include_depth=use_depth, include_rgb=use_rgb)
 
     x, depth_img, rgb_img = img_data.get_data(rgb=rgb, depth=depth)
 
@@ -69,14 +58,13 @@ if __name__ == '__main__':
         #print(pred['cos'])
         #print(pred['sin'])
         #print(pred['width'])
-		
-        if args.save:
+        if save:
             save_results(
                 rgb_img=img_data.get_rgb(rgb, False),
                 depth_img=np.squeeze(img_data.get_depth(depth)),
                 grasp_q_img=q_img,
                 grasp_angle_img=ang_img,
-                no_grasps=args.n_grasps,
+                no_grasps=n_grasps,
                 grasp_width_img=width_img
             )
         else:
@@ -85,11 +73,16 @@ if __name__ == '__main__':
                          rgb_img=img_data.get_rgb(rgb, False),
                          grasp_q_img=q_img,
                          grasp_angle_img=ang_img,
-                         no_grasps=args.n_grasps,
+                         no_grasps=n_grasps,
                          grasp_width_img=width_img)
-            fig.savefig('img_result.pdf')
+            #fig.savefig('img_result.pdf')
             for g in gs:
             	print(g.center)
             	print(g.angle)
             	print(g.length)
             	print(g.width)
+            
+
+    return gs
+
+#predict_grasp_angle("C:/Users/yashs/Downloads/epoch_00_iou_0.01", "C:/Users/yashs/OneDrive/Desktop/Intelligent_picking-master/Software/ps simulation/Robot/simulation_images/color10.png", "C:/Users/yashs/OneDrive/Desktop/Intelligent_picking-master/Software/ps simulation/Robot/simulation_images/depth10.png")
