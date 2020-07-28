@@ -94,7 +94,7 @@ class robot:
 			p.setJointMotorControl2(self.bot, self.upper_arm,p.POSITION_CONTROL, targetPosition = currentPos[0]-(i/100))
 			p.stepSimulation()
 			time.sleep(1./240.)
-			i = i+0.001
+			i = i+0.01
 		p.setJointMotorControl2(self.bot, self.upper_arm,p.VELOCITY_CONTROL, targetVelocity = 0)
 		i = 0
 		currentPos_init = p.getJointState(self.bot, self.mid_arm)
@@ -104,7 +104,7 @@ class robot:
 			p.setJointMotorControl2(self.bot, self.mid_arm,p.POSITION_CONTROL, targetPosition = currentPos[0]-(i/100))
 			p.stepSimulation()
 			time.sleep(1./240.)
-			i = i+0.001
+			i = i+0.02
 		p.setJointMotorControl2(self.bot, self.mid_arm,p.VELOCITY_CONTROL, targetVelocity = 0)
 		i = 0
 		currentPos_init = p.getJointState(self.bot, self.wrist)
@@ -114,7 +114,7 @@ class robot:
 			p.setJointMotorControl2(self.bot, self.wrist,p.POSITION_CONTROL, targetPosition = currentPos[0]-(i/100))
 			p.stepSimulation()
 			time.sleep(1./240.)
-			i = i+0.001
+			i = i+0.02
 		p.setJointMotorControl2(self.bot, self.wrist,p.VELOCITY_CONTROL, targetVelocity = 0)
 
 			
@@ -128,7 +128,7 @@ class robot:
 			p.setJointMotorControl2(self.bot, self.wrist,p.POSITION_CONTROL, targetPosition = currentPos[0]+(i/100))
 			p.stepSimulation()
 			time.sleep(1./240.)
-			i = i+0.001
+			i = i+0.01
 		p.setJointMotorControl2(self.bot, self.wrist,p.VELOCITY_CONTROL, targetVelocity = 0)
 		i = 0
 		currentPos_init = p.getJointState(self.bot, self.mid_arm)
@@ -138,7 +138,7 @@ class robot:
 			p.setJointMotorControl2(self.bot, self.mid_arm,p.POSITION_CONTROL, targetPosition = currentPos[0]+(i/100))
 			p.stepSimulation()
 			time.sleep(1./240.)
-			i = i+0.001
+			i = i+0.01
 		p.setJointMotorControl2(self.bot, self.mid_arm,p.VELOCITY_CONTROL, targetVelocity = 0)
 		i = 0
 		currentPos_init = p.getJointState(self.bot, self.upper_arm)
@@ -148,7 +148,7 @@ class robot:
 			p.setJointMotorControl2(self.bot, self.upper_arm,p.POSITION_CONTROL, targetPosition = currentPos[0]+(i/100))
 			p.stepSimulation()
 			time.sleep(1./240.)
-			i = i+0.001
+			i = i+0.01
 		p.setJointMotorControl2(self.bot, self.upper_arm,p.VELOCITY_CONTROL, targetVelocity = 0)
 
 		
@@ -161,7 +161,7 @@ class robot:
 			p.setJointMotorControl2(self.bot, self.wrist,p.POSITION_CONTROL, targetPosition = currentPos[0]-(i/100))
 			p.stepSimulation()
 			time.sleep(1./240.)
-			i = i+0.001
+			i = i+0.005
 		p.setJointMotorControl2(self.bot, self.wrist,p.VELOCITY_CONTROL, targetVelocity = 0)
 
 
@@ -185,17 +185,17 @@ class robot:
 		if(currentPos[0] < pos):
 			while(currentPos[0]< pos):
 				currentPos = p.getJointState(self.bot, self.head)
-				p.setJointMotorControl2(self.bot, self.head,p.POSITION_CONTROL, targetPosition = currentPos[0]+(i/100))
+				p.setJointMotorControl2(self.bot, self.head,p.POSITION_CONTROL, targetPosition = currentPos[0]+(i/100), velocityGain = 1)
 				p.stepSimulation()
 				time.sleep(1./240.)
-				i = i+0.001
+				i = i+0.01
 		if(currentPos[0] > pos):
 			while(currentPos[0] > pos):
 				currentPos = p.getJointState(self.bot, self.head)
 				p.setJointMotorControl2(self.bot, self.head,p.POSITION_CONTROL, targetPosition = currentPos[0]-(i/100))
 				p.stepSimulation()
 				time.sleep(1./240.)
-				i = i+0.001
+				i = i+0.01
 		p.setJointMotorControl2(self.bot, self.head,p.VELOCITY_CONTROL, targetVelocity = 0)
 
 				
@@ -210,7 +210,7 @@ class robot:
 			p.stepSimulation()
 			time.sleep(1./240.)
 			i = i+0.001
-			if i>0.5:
+			if i>0.6:
 				print('not going further')
 				break
 		p.setJointMotorControl2(self.bot, self.gripper_plate,p.VELOCITY_CONTROL, targetVelocity = 0)
@@ -301,14 +301,78 @@ class robot:
 			return None
 
 
+	def move_frame_and_head(self, pos_frame ,pos_head):
+		kp=3
+		kd=0
+		i=0
+		pos_head = -pos_head
+		init, ori = p.getBasePositionAndOrientation(self.bot)
+		j = 0
+		# p.setJointMotorControl2(self.bot, self.head,p.VELOCITY_CONTROL, targetVelocity = 0)
+		if(1):
+			last_error=0
+			error=0
+			counter=0
 
+			while(1):
+				error=init[1]-pos_frame
+				j=kp*error+kd*(error-last_error)
+				p.setJointMotorControl2(self.bot, 31,p.VELOCITY_CONTROL, targetVelocity = -j)
+				p.setJointMotorControl2(self.bot, 33,p.VELOCITY_CONTROL, targetVelocity = j)
+				p.setJointMotorControl2(self.bot, 35,p.VELOCITY_CONTROL, targetVelocity = j)
+				p.setJointMotorControl2(self.bot, 37,p.VELOCITY_CONTROL, targetVelocity = -j)
+				p.setJointMotorControl2(self.bot, 49,p.VELOCITY_CONTROL, targetVelocity = +j)
+				p.setJointMotorControl2(self.bot, 51,p.VELOCITY_CONTROL, targetVelocity = -j)
+				p.setJointMotorControl2(self.bot, 53,p.VELOCITY_CONTROL, targetVelocity = +j)
+				p.setJointMotorControl2(self.bot, 55,p.VELOCITY_CONTROL, targetVelocity = -j)
+				init, ori = p.getBasePositionAndOrientation(self.bot)
+
+				increment=0.01
+				
+				currentPos = p.getJointState(self.bot, self.head)
+				if currentPos[0] < pos_head+0.02 and currentPos[0] > pos_head -0.02:
+					i=0
+					print("x mein ruk gaya")
+				p.setJointMotorControl2(self.bot, self.head,p.POSITION_CONTROL, targetPosition = currentPos[0]+(i/100))
+				i=i+increment
+				if currentPos[0]>pos_head:
+					increment=increment*-1
+
+				p.stepSimulation()
+				last_error=error
+				if init[1]>pos_frame-0.02 and init[1]<pos_frame+0.02:
+					counter+=1
+				else:
+					counter=0
+
+				if counter > 5:
+					j=0
+					print("y mein ruk gaya")
+
+				if counter > 5 and currentPos[0] < pos_head+0.02 and currentPos[0] > pos_head -0.02:
+					break
+				
+			k = 0
+			while(k<100):
+				p.setJointMotorControl2(self.bot, 31,p.VELOCITY_CONTROL, targetVelocity =0)
+				p.setJointMotorControl2(self.bot, 33,p.VELOCITY_CONTROL, targetVelocity =0)
+				p.setJointMotorControl2(self.bot, 35,p.VELOCITY_CONTROL, targetVelocity =0)
+				p.setJointMotorControl2(self.bot, 37,p.VELOCITY_CONTROL, targetVelocity =0)
+				p.setJointMotorControl2(self.bot, 49,p.VELOCITY_CONTROL, targetVelocity =0)
+				p.setJointMotorControl2(self.bot, 51,p.VELOCITY_CONTROL, targetVelocity =0)
+				p.setJointMotorControl2(self.bot, 53,p.VELOCITY_CONTROL, targetVelocity =0)
+				p.setJointMotorControl2(self.bot, 55,p.VELOCITY_CONTROL, targetVelocity =0)
+				p.stepSimulation()
+				time.sleep(1./240.)
+				k = k+1
+			return None
 			
 
 	def rotate_gripper(self, angle):
 		info = p.getJointState(self.bot,self.servo)
 		if(angle>0):
 			while(info[0]<angle):
-				p.setJointMotorControl2(self.bot, self.servo,p.VELOCITY_CONTROL, targetVelocity = 0.5, force = 0.09)
+				p.setJointMotorControl2(self.bot, self.servo,p.VELOCITY_CONTROL, targetVelocity = 0.8, force = 0.09)
 				info = p.getJointState(self.bot,self.servo)
 				p.stepSimulation()
 				time.sleep(1./240.)
@@ -317,7 +381,7 @@ class robot:
 			return None
 		if(angle<0):
 			while(info[0]>angle):
-				p.setJointMotorControl2(self.bot, self.servo,p.VELOCITY_CONTROL, targetVelocity = -0.5, force = 0.09)
+				p.setJointMotorControl2(self.bot, self.servo,p.VELOCITY_CONTROL, targetVelocity = -0.8, force = 0.09)
 				info = p.getJointState(self.bot,self.servo)
 				p.stepSimulation()
 				time.sleep(1./240.)
@@ -487,8 +551,8 @@ class robot:
 			#print(depth_image.shape)
 			depth_image[:,:,0] = depth
 			#print(depth_image)
-			cv2.imshow("depth",depth_image)
-			cv2.waitKey(0)
+			#cv2.imshow("depth",depth_image)
+			#cv2.waitKey(0)
 			lower_bound=np.amin(depth_image[:,:,0])
 			upper_bound=np.amax(depth_image[:,:,0])
 			depth_image_new=np.zeros(np_img_arr.shape[:2], dtype=np.float64)
@@ -500,6 +564,7 @@ class robot:
 if __name__ == "__main__":
 	bot = robot()
 	while(True):
+		bot.move_frame_and_head(0.8, 1)
 		bot.suction_down()
 		bot.suction_up()
 		bot.move_frame(-1)
