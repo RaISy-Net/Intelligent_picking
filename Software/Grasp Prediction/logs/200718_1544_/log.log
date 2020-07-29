@@ -1,9 +1,0 @@
-[15:44:19] {/home/ayush/Desktop/kuka/robotic-grasping-0.2.1/hardware/device.py:17} INFO - CUDA is *NOT* detected. Running with only CPU.
-[15:44:19] {train_network.py:241} INFO - Loading Cornell Dataset...
-[15:44:19] {train_network.py:249} INFO - Dataset size is 800
-[15:44:19] {train_network.py:258} INFO - Training size: 720
-[15:44:19] {train_network.py:259} INFO - Validation size: 80
-[15:44:19] {train_network.py:277} INFO - Done
-[15:44:19] {train_network.py:280} INFO - Loading Network...
-[15:44:19] {train_network.py:291} INFO - Done
-[15:56:50] {train_network.py:310} INFO - Beginning Epoch 00
