@@ -25,6 +25,7 @@ MANIPULATOR](https://pdfs.semanticscholar.org/e5f8/d98ce96b1dfcce05966bed52a85a2
 * [Domain Randomization for Sim2Real Transfer](https://lilianweng.github.io/lil-log/2019/05/05/domain-randomization.html)
 * [Amazon picking challenge - Cartman - Robot using 3D printer system](https://arxiv.org/pdf/1709.06283.pdf)
 * [Amazon picking challenge - MIT and Princeton](https://vision.princeton.edu/projects/2017/arc/)
+* Grasp Prediction on RGB-D images [[Paper](https://arxiv.org/abs/1909.04810)] [[Code](https://github.com/skumra/robotic-grasping)]
 
 
 # Papers on Grasping and Pose estimation
