@@ -245,7 +245,7 @@ class robot:
 			p.stepSimulation()
 			time.sleep(1./240.)
 			i = i+0.001
-			if i>0.7:
+			if i>0.6:
 				print('not going further')
 				break
 		p.setJointMotorControl2(self.bot, self.gripper_plate,p.VELOCITY_CONTROL, targetVelocity = 0)
