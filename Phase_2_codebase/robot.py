@@ -439,7 +439,7 @@ class robot:
 	def reset_gripper(self):
 		info = p.getJointState(self.bot,self.servo)
 		while(info[0]>0):
-			p.setJointMotorControl2(self.bot, self.servo,p.VELOCITY_CONTROL, targetVelocity = -1, force = 0.09)
+			p.setJointMotorControl2(self.bot, self.servo,p.VELOCITY_CONTROL, targetVelocity = -0.3, force = 0.09)
 			info = p.getJointState(self.bot,self.servo)
 			p.stepSimulation()
 			time.sleep(1./240.)
