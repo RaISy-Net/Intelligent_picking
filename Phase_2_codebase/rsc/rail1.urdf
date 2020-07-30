@@ -11,14 +11,14 @@
       <visual name="Cube.016">
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
-          <box size="4.2 0.35 0.01"/>
+          <box size="6.0 0.35 0.01"/>
         </geometry>
         <material name="Material.046"/>
       </visual>
       <collision name="Cube.016">
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
-          <box size="4.2 0.35 0.01"/>
+          <box size="6.0 0.35 0.01"/>
         </geometry>
       </collision>
     </link>
@@ -32,14 +32,14 @@
       <visual name="Cube.018">
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
-          <box size="4.2 0.01 0.05"/>
+          <box size="6.0 0.01 0.05"/>
         </geometry>
         <material name="Material.047"/>
       </visual>
       <collision name="Cube.018">
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
-          <box size="4.2 0.01 0.05"/>
+          <box size="6.0 0.01 0.05"/>
         </geometry>
       </collision>
     </link>
@@ -53,14 +53,14 @@
       <visual name="Cube.018">
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
-          <box size="4.2 0.01 0.05"/>
+          <box size="6.0 0.01 0.05"/>
         </geometry>
         <material name="Material.047"/>
       </visual>
       <collision name="Cube.018">
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
-          <box size="4.2 0.01 0.05"/>
+          <box size="6.0 0.01 0.05"/>
         </geometry>
       </collision>
     </link>
