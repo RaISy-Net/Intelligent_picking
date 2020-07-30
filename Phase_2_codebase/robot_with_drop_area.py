@@ -17,10 +17,10 @@ Area_Halfdim=1
 
 def get_grasp_prediction(x,y,z,a):
     Robot.rgbd_images(x,y,z)
-    network = "C:/Users/yashs/OneDrive/Documents/GitHub/Intelligent_picking/Phase_2_codebase/trained models/epoch_30_iou_0.97"
+    network = "./trained models/epoch_30_iou_0.97"
     #network = "C:/Users/yashs/OneDrive/Documents/GitHub/Intelligent_picking/Phase_2_codebase/trained models/epoch_00_iou_0.93"
-    rgb_path = "C:/Users/yashs/OneDrive/Desktop/color"+".png"
-    depth_path = "C:/Users/yashs/OneDrive/Desktop/depth"+".png"
+    rgb_path = "./CapturedImg/color"+".png"
+    depth_path = "./CapturedImg/depth"+".png"
     gs = predict_grasp_angle(network, rgb_path, depth_path)
     return gs
 
@@ -45,9 +45,11 @@ def pick(xpos, ypos):
     z_init = Robot.end_effector()[0][2]
     print(z_init)
     x,y,angle = get_real_world_coord()
-    Robot.extend_wrist(0.02)
-    print('rotating gripper')
     Robot.rotate_gripper(angle)
+    
+    print('rotating gripper')
+    Robot.extend_wrist(0.02)
+    
     z_init = Robot.end_effector()[0][2]
     zpos = z_init - 1.06
     Robot.extend_wrist(zpos)

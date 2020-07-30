@@ -16,13 +16,21 @@ class robot:
 	def __init__(self, urdfRoot = pybullet_data.getDataPath(), num_Objects = 25, blockRandom = 0.3):
 		p.connect(p.GUI)
 		p.loadURDF(os.path.join(pybullet_data.getDataPath(), "plane.urdf"), 0, 0, 0)
-		self.bot = p.loadURDF('bot.urdf',basePosition = [0,0,2])
-		self.rail1 = p.loadURDF('rail1.urdf',basePosition = [-1.25,0,0.2],baseOrientation = p.getQuaternionFromEuler([0,0,np.pi/2]))
-		self.rail2 = p.loadURDF('rail1.urdf',basePosition = [1.25,0,0.2],baseOrientation = p.getQuaternionFromEuler([0,0,np.pi/2]))
-		self.cam1 = p.loadURDF('cam1.urdf',basePosition = [1.5,-1,2],baseOrientation = p.getQuaternionFromEuler([0,0,np.pi/2]),useFixedBase = True)
-		self.cam2 = p.loadURDF('cam1.urdf',basePosition = [1.5,1,2],baseOrientation = p.getQuaternionFromEuler([0,0,np.pi/2]),useFixedBase = True)
+		self.bot = p.loadURDF('./rsc/bot.urdf',basePosition = [0,0,2])
+		self.rail1 = p.loadURDF('./rsc/rail1.urdf',basePosition = [-1.25,0,0.2],baseOrientation = p.getQuaternionFromEuler([0,0,np.pi/2]))
+		self.rail2 = p.loadURDF('./rsc/rail1.urdf',basePosition = [1.25,0,0.2],baseOrientation = p.getQuaternionFromEuler([0,0,np.pi/2]))
+		self.cam1 = p.loadURDF('./rsc/cam1.urdf',basePosition = [1.5,-1,2],baseOrientation = p.getQuaternionFromEuler([0,0,np.pi/2]),useFixedBase = True)
+		self.cam2 = p.loadURDF('./rsc/cam1.urdf',basePosition = [1.5,1,2],baseOrientation = p.getQuaternionFromEuler([0,0,np.pi/2]),useFixedBase = True)
 		p.setGravity(0,0,-10)
+		
+		fingers = [14,15,17,16]
+		for i in fingers:
+			p.changeDynamics(bodyUniqueId=self.bot,
+				             linkIndex=i,
+				             lateralFriction=1,
+				             restitution=0.5)
 		self.n = p.getNumJoints(self.bot)
+		
 		self.wrist = 11
 		self.mid_arm = 8
 		self.upper_arm = 5
@@ -314,8 +322,9 @@ class robot:
 
 
 	def move_frame_and_head(self, pos_frame ,pos_head):
+		#pos_frame = -1
 		kp=3
-		kd=0
+		kd=10
 		ki=0.005
 		i=0
 		t=0
@@ -337,6 +346,7 @@ class robot:
 				p.setJointMotorControl2(self.bot, 33,p.VELOCITY_CONTROL, targetVelocity = j)
 				p.setJointMotorControl2(self.bot, 35,p.VELOCITY_CONTROL, targetVelocity = j)
 				p.setJointMotorControl2(self.bot, 37,p.VELOCITY_CONTROL, targetVelocity = -j)
+
 				p.setJointMotorControl2(self.bot, 49,p.VELOCITY_CONTROL, targetVelocity = +j)
 				p.setJointMotorControl2(self.bot, 51,p.VELOCITY_CONTROL, targetVelocity = -j)
 				p.setJointMotorControl2(self.bot, 53,p.VELOCITY_CONTROL, targetVelocity = +j)
@@ -579,8 +589,8 @@ class robot:
 			depth_image_new=np.zeros(np_img_arr.shape[:2], dtype=np.float64)
 			depth_image_new[:,:] = depth
 			depth_image_new[:,:] = depth_image_new[:,:]*(255/(upper_bound-lower_bound))-((255*lower_bound)/(upper_bound-lower_bound))
-			cv2.imwrite(r"C:/Users/yashs/OneDrive/Desktop/depth"+".png",depth_image_new)
-			cv2.imwrite(r"C:/Users/yashs/OneDrive/Desktop/color"+".png",np_img_arr)
+			cv2.imwrite(r"./CapturedImg/depth"+".png",depth_image_new)
+			cv2.imwrite(r"./CapturedImg/color"+".png",np_img_arr)
 				
 if __name__ == "__main__":
 	bot = robot()
