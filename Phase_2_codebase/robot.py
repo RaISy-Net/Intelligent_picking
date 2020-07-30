@@ -21,8 +21,22 @@ class robot:
 		self.rail2 = p.loadURDF('./rsc/rail1.urdf',basePosition = [1.25,0,0.2],baseOrientation = p.getQuaternionFromEuler([0,0,np.pi/2]))
 		self.cam1 = p.loadURDF('./rsc/cam1.urdf',basePosition = [1.5,-1,2],baseOrientation = p.getQuaternionFromEuler([0,0,np.pi/2]),useFixedBase = True)
 		self.cam2 = p.loadURDF('./rsc/cam1.urdf',basePosition = [1.5,1,2],baseOrientation = p.getQuaternionFromEuler([0,0,np.pi/2]),useFixedBase = True)
+		self.cart1_link=29
+		self.cart2_link=47
 		p.setGravity(0,0,-10)
-		
+		#cart1 pos (1.2432089007861375, -0.3714641732884502, 0.10364430206356245)
+        #cart2 pos (-1.251821904661355, -0.3712655324423194, 0.10362405301399435)
+
+		p.createConstraint(self.rail1,-1,-1,-1,p.JOINT_FIXED,[1,0,0],[0,0,0],[-1.25,0,0.004989748675026239],childFrameOrientation=p.getQuaternionFromEuler([0,0,np.pi/2]))
+		p.createConstraint(self.rail2,-1,-1,-1,p.JOINT_FIXED,[1,0,0],[0,0,0],[ 1.25,0,0.004989748675026239],childFrameOrientation=p.getQuaternionFromEuler([0,0,np.pi/2]))
+
+		# p.createConstraint(self.bot,29,-1,-1,p.JOINT_PRISMATIC,[1,0,0],[0,0,0],[ 1.2432089007861375, -0.3714641732884502, 0.10364430206356245],childFrameOrientation=p.getQuaternionFromEuler([0,0,-np.pi/2]))
+		# p.createConstraint(self.bot,29,-1,-1,p.JOINT_PRISMATIC,[-1,0,0],[0,0,0],[ 1.2432089007861375, -0.3714641732884502, 0.10364430206356245],childFrameOrientation=p.getQuaternionFromEuler([0,0,-np.pi/2]))
+
+		# p.createConstraint(self.bot,47,-1,-1,p.JOINT_PRISMATIC,[1,0,0],[0,0,0],[ -1.251821904661355, -0.3714641732884502, 0.10364430206356245],childFrameOrientation=p.getQuaternionFromEuler([0,0,-np.pi/2]))
+		# p.createConstraint(self.bot,47,-1,-1,p.JOINT_PRISMATIC,[-1,0,0],[0,0,0],[ -1.251821904661355, -0.3714641732884502, 0.10364430206356245],childFrameOrientation=p.getQuaternionFromEuler([0,0,-np.pi/2]))
+		p.changeVisualShape(self.bot,29,rgbaColor=[0,1,0,1])
+		p.changeVisualShape(self.bot,47,rgbaColor=[0,1,0,1])
 		fingers = [14,15,17,16]
 		for i in fingers:
 			p.changeDynamics(bodyUniqueId=self.bot,
@@ -98,6 +112,7 @@ class robot:
 		cv2.imwrite("C:/Users/yashs/OneDrive/Desktop/object detection images/image"+str(a)+".jpeg", img)
 	
 	def extend_arm(self):
+		# print('k')
 		i = 0
 		j = 0
 		k = 0
@@ -322,7 +337,7 @@ class robot:
 
 
 	def move_frame_and_head(self, pos_frame ,pos_head):
-		#pos_frame = -1
+		# pos_frame = -1
 		kp=3
 		kd=10
 		ki=0.005
@@ -377,6 +392,8 @@ class robot:
 				if counter > 5:
 					j=0
 					print("y mein ruk gaya")
+					print(p.getLinkState(self.bot,self.cart1_link)[0])
+					print(p.getLinkState(self.bot,self.cart2_link)[0])
 
 				if counter > 5 and currentPos[0] < pos_head+0.02 and currentPos[0] > pos_head -0.02:
 					break
