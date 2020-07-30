@@ -17,7 +17,7 @@ Area_Halfdim=1
 
 def get_grasp_prediction(x,y,z,a):
     Robot.rgbd_images(x,y,z)
-    network = "./trained models/epoch_30_iou_0.97"
+    network = "./trained models/epoch_10_iou_1.00"
     #network = "C:/Users/yashs/OneDrive/Documents/GitHub/Intelligent_picking/Phase_2_codebase/trained models/epoch_00_iou_0.93"
     rgb_path = "./CapturedImg/color"+".png"
     depth_path = "./CapturedImg/depth"+".png"
