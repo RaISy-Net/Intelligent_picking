@@ -22,7 +22,7 @@ def get_grasp_prediction(x,y,z,a):
     rgb_path = "./CapturedImg/color"+".png"
     depth_path = "./CapturedImg/depth"+".png"
     gs = predict_grasp_angle(network, rgb_path, depth_path)
-    return gs
+    return gss
 
 def get_real_world_coord():
     end_effector_initpos = Robot.end_effector()[0]
@@ -84,13 +84,13 @@ for i in  range(25): #can use object indices as well (to select particular objec
     object = Robot._objectUids[i]
     pos = p.getBasePositionAndOrientation(object)[0]  
     pick(pos[0], pos[1])
-    for j in range(181):
-        p.resetDebugVisualizerCamera(2, j, -41, [0, -1.4+(2.8*j)/180, 1-j*0.8/180])
-        time.sleep(0.01)
+    # for j in range(181):
+    #     p.resetDebugVisualizerCamera(2, j, -41, [0, -1.4+(2.8*j)/180, 1-j*0.8/180])
+    #     time.sleep(0.01)
     place(x, y)
-    for j in range(181):
-        p.resetDebugVisualizerCamera(2 , 180-j, -41, [0, 1.4 - (2.8*j)/180, 0.2 + j*0.8/180])
-        time.sleep(0.01)
+    # for j in range(181):
+    #     p.resetDebugVisualizerCamera(2 , 180-j, -41, [0, 1.4 - (2.8*j)/180, 0.2 + j*0.8/180])
+    #     time.sleep(0.01)
     x = placing[count][0]
     y = placing[count][1]
     count+=1

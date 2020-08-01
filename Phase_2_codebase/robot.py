@@ -8,8 +8,11 @@ import numpy as np
 import pybullet as p
 import pybullet_data
 import distutils.dir_util
+import matplotlib.pyplot as plt
 from pkg_resources import parse_version
 from drop_area import *
+current_distance = []
+target_distance = []
 
 
 class robot:
@@ -29,14 +32,30 @@ class robot:
 
 		p.createConstraint(self.rail1,-1,-1,-1,p.JOINT_FIXED,[1,0,0],[0,0,0],[-1.25,0,0.004989748675026239],childFrameOrientation=p.getQuaternionFromEuler([0,0,np.pi/2]))
 		p.createConstraint(self.rail2,-1,-1,-1,p.JOINT_FIXED,[1,0,0],[0,0,0],[ 1.25,0,0.004989748675026239],childFrameOrientation=p.getQuaternionFromEuler([0,0,np.pi/2]))
+		p.changeDynamics(bodyUniqueId=self.rail1,
+				             linkIndex=-1,
+				             lateralFriction=0.6)
+		p.changeDynamics(bodyUniqueId=self.rail2,
+				             linkIndex=-1,
+				             lateralFriction=0.6)
+		self.n = p.getNumJoints(self.bot)
+		wheels = [31,33,35,37,49,51,53,55]
+		for i in wheels:
+			p.changeDynamics(bodyUniqueId=self.bot,
+				             linkIndex=i,
+				             lateralFriction=0.7,
+				             restitution=0.5)
+		'''
+		wheel_h = 0.14
+		p.createConstraint(self.bot,29,self.rail1,-1,p.JOINT_PRISMATIC,[1,0,0],[0,0,0],[ 0, 0 , wheel_h])
+		p.createConstraint(self.bot,29,self.rail1,-1,p.JOINT_PRISMATIC,[-1,0,0],[0,0,0],[0,0, wheel_h])
 
-		# p.createConstraint(self.bot,29,-1,-1,p.JOINT_PRISMATIC,[1,0,0],[0,0,0],[ 1.2432089007861375, -0.3714641732884502, 0.10364430206356245],childFrameOrientation=p.getQuaternionFromEuler([0,0,-np.pi/2]))
-		# p.createConstraint(self.bot,29,-1,-1,p.JOINT_PRISMATIC,[-1,0,0],[0,0,0],[ 1.2432089007861375, -0.3714641732884502, 0.10364430206356245],childFrameOrientation=p.getQuaternionFromEuler([0,0,-np.pi/2]))
-
-		# p.createConstraint(self.bot,47,-1,-1,p.JOINT_PRISMATIC,[1,0,0],[0,0,0],[ -1.251821904661355, -0.3714641732884502, 0.10364430206356245],childFrameOrientation=p.getQuaternionFromEuler([0,0,-np.pi/2]))
-		# p.createConstraint(self.bot,47,-1,-1,p.JOINT_PRISMATIC,[-1,0,0],[0,0,0],[ -1.251821904661355, -0.3714641732884502, 0.10364430206356245],childFrameOrientation=p.getQuaternionFromEuler([0,0,-np.pi/2]))
+		p.createConstraint(self.bot,47,self.rail2,-1,p.JOINT_PRISMATIC,[1,0,0],[0,0,0], [0, 0 , wheel_h])
+		p.createConstraint(self.bot,47,self.rail2,-1,p.JOINT_PRISMATIC,[-1,0,0],[0,0,0],[0,0, wheel_h])
+		
 		p.changeVisualShape(self.bot,29,rgbaColor=[0,1,0,1])
 		p.changeVisualShape(self.bot,47,rgbaColor=[0,1,0,1])
+		'''
 		fingers = [14,15,17,16]
 		for i in fingers:
 			p.changeDynamics(bodyUniqueId=self.bot,
@@ -339,7 +358,7 @@ class robot:
 	def move_frame_and_head(self, pos_frame ,pos_head):
 		# pos_frame = -1
 		kp=3
-		kd=10
+		kd=0
 		ki=0.005
 		i=0
 		t=0
@@ -347,15 +366,22 @@ class robot:
 		pos_head = -pos_head
 		init, ori = p.getBasePositionAndOrientation(self.bot)
 		j = 0
-		# p.setJointMotorControl2(self.bot, self.head,p.VELOCITY_CONTROL, targetVelocity = 0)
+
 		if(1):
 			last_error=0
 			error=0
 			counter=0
 
-			while(1):
-				error=init[1]-pos_frame
+			counter = 0
+
+
+			while(True):
+				counter+=1
+				target = pos_frame #(counter/2)*pos_frame
+
+				error=init[1]- target
 				total_error=total_error+error
+				print("error:",error)
 				j=kp*error+kd*(error-last_error)+ki*total_error
 				p.setJointMotorControl2(self.bot, 31,p.VELOCITY_CONTROL, targetVelocity = -j)
 				p.setJointMotorControl2(self.bot, 33,p.VELOCITY_CONTROL, targetVelocity = j)
@@ -388,7 +414,8 @@ class robot:
 				# print(init[1],'init')
 				# print(pos_frame,'pos_frame')
 				t=t+1
-				print(t)
+				# print(t,'Cart_1:',p.getLinkState(self.bot,self.cart1_link)[0],
+				# 	    'Cart_2:',p.getLinkState(self.bot,self.cart2_link)[0])
 				if counter > 5:
 					j=0
 					print("y mein ruk gaya")
@@ -397,6 +424,9 @@ class robot:
 
 				if counter > 5 and currentPos[0] < pos_head+0.02 and currentPos[0] > pos_head -0.02:
 					break
+				current_distance.append(init[1])
+				target_distance.append(target)
+
 				
 			k = 0
 			while(k<100):
@@ -611,28 +641,42 @@ class robot:
 				
 if __name__ == "__main__":
 	bot = robot()
-	while(True):
-		bot.move_frame_and_head(0.8, 1)
-		bot.suction_down()
-		bot.suction_up()
-		bot.move_frame(-1)
-		print(bot.end_effector())
-		bot.move_head(0.9)
-		print(bot.end_effector())
-		bot.extend_wrist(0.10)
-		print(bot.end_effector())
-		bot.close_gripper(0.06)
-		print(bot.end_effector())
-		bot.contract_wrist(0.10)
-		bot.move_head(0)
-		bot.move_frame(0)
-		bot.extend_arm()
-		print(bot.end_effector())
-		bot.open_gripper()
-		bot.rotate_gripper(1.5707)
-		bot.reset_gripper()
-		bot.rotate_camera(1)
-		bot.reset_camera()
-		while(True):
-			p.stepSimulation()
-			time.sleep(1./240.)
+	#while(True):
+	bot.move_frame_and_head(0.2, 1)
+	bot.move_frame_and_head(0.4, 1)
+	bot.move_frame_and_head(0.6, 1)
+	bot.move_frame_and_head(0.8, 1)
+	bot.move_frame_and_head(1.0, 1)
+	plt.plot(np.arange(len(current_distance)),current_distance,label="Actual_pos")
+	plt.plot(np.arange(len(current_distance)),target_distance,label="Desired_state")
+	#plt.plot(np.arange(len(current_distance)),current_distance)
+	plt.legend()
+	plt.show()
+
+
+
+
+		#bot.move_frame_and_head(-0.8, 1)
+		# bot.suction_down()
+		# bot.suction_up()
+		# bot.move_frame(-1)
+		# #print(bot.end_effector())
+		# bot.move_head(0.9)
+		# #print(bot.end_effector())
+		# bot.extend_wrist(0.10)
+		# print(bot.end_effector())
+		# bot.close_gripper(0.06)
+		# #print(bot.end_effector())
+		# bot.contract_wrist(0.10)
+		# bot.move_head(0)
+		# bot.move_frame(0)
+		# bot.extend_arm()
+		# #print(bot.end_effector())
+		# bot.open_gripper()
+		# bot.rotate_gripper(1.5707)
+		# bot.reset_gripper()
+		# bot.rotate_camera(1)
+		# bot.reset_camera()
+		# # #while(True):
+		# p.stepSimulation()
+		# time.sleep(1./240.)
