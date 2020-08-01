@@ -22,7 +22,7 @@ def get_grasp_prediction(x,y,z,a):
     rgb_path = "./CapturedImg/color"+".png"
     depth_path = "./CapturedImg/depth"+".png"
     gs = predict_grasp_angle(network, rgb_path, depth_path)
-    return gss
+    return gs
 
 def get_real_world_coord():
     end_effector_initpos = Robot.end_effector()[0]
@@ -39,13 +39,22 @@ def get_real_world_coord():
     return x,y,angle
 
 def pick(xpos, ypos):
+    # flag to be activated by the score
+    grabScore = 0.9
     Robot.move_frame_and_head(ypos+0.06, xpos-0.03)
+    x,y,angle = get_real_world_coord()
+    
+    if(grabScore >= 0.5):
+        Robot.rotate_gripper(angle)
+    else:
+        Robot.move_frame_and_head(ypos+0.06, xpos-0.03-0.135)
+
     #Robot.move_frame(ypos+0.06)
     #Robot.move_head(xpos-0.03)
     z_init = Robot.end_effector()[0][2]
     print(z_init)
-    x,y,angle = get_real_world_coord()
-    Robot.rotate_gripper(angle)
+
+
     
     print('rotating gripper')
     Robot.extend_wrist(0.02)
@@ -70,8 +79,8 @@ x = -0.8
 y = 0.4
 
 Robot = robot()
-for i in range(10):
-    Robot.reset(i)
+# for i in range(10):
+#     Robot.reset(i)
 p.resetDebugVisualizerCamera(2 , 0, -41, [0, -1.4, 1])
 Robot.suction_up()
 object_indices = [1, 5, 13, 16, 21]   #to select which object to go to

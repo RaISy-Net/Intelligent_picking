@@ -375,7 +375,7 @@ class robot:
 			return None
 
 
-	def move_frame_and_head(self, pos_frame ,pos_head):
+	def move_frame_and_head(self, pos_frame ,pos_head,):
 		# pos_frame = -1
 		kp=3
 		kd=0
@@ -417,16 +417,20 @@ class robot:
 				# 	kp=30/2
 				increment=0.01
 				
-				currentPos = p.getJointState(self.bot, self.head)
+				currentPos = list(p.getJointState(self.bot, self.head))
 				if currentPos[0]>pos_head:
 					increment=-0.01
 				if currentPos[0] < pos_head+0.01 and currentPos[0] > pos_head -0.01:
 					i=0
 					print("x mein ruk gaya")
+
 				p.setJointMotorControl2(self.bot, self.head,p.POSITION_CONTROL, targetPosition = currentPos[0]+(i/100))
 				i=i+increment
+
 				p.stepSimulation()
+				
 				last_error=error
+
 				if init[1]>pos_frame-0.01 and init[1]<pos_frame+0.01:
 					counter+=1
 				else:
@@ -435,7 +439,7 @@ class robot:
 				# print(pos_frame,'pos_frame')
 				t=t+1
 				# print(t,'Cart_1:',p.getLinkState(self.bot,self.cart1_link)[0],
-				# 	    'Cart_2:',p.getLinkState(self.bot,self.cart2_link)[0])
+				# 	      'Cart_2:',p.getLinkState(self.bot,self.cart2_link)[0])
 				if counter > 5:
 					j=0
 					print("y mein ruk gaya")
