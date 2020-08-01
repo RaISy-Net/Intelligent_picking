@@ -77,7 +77,7 @@ class robot:
 		self.overhead_camera(1)
 
 		self._numObjects = num_Objects
-		urdfList = self._get_random_object()
+		urdfList = self.get_objects()
 		self._objectUids = self._place_objects(urdfList)
 
 		for _ in range(500):
@@ -90,20 +90,40 @@ class robot:
 	def reset(self,a):
 		p.resetSimulation()
 		p.loadURDF(os.path.join(pybullet_data.getDataPath(), "plane.urdf"), 0, 0, 0)
-		self.bot = p.loadURDF('bot.urdf',basePosition = [0,0,2])
-		self.rail1 = p.loadURDF('rail1.urdf',basePosition = [-1.25,0,0.2],baseOrientation = p.getQuaternionFromEuler([0,0,np.pi/2]))
-		self.rail2 = p.loadURDF('rail1.urdf',basePosition = [1.25,0,0.2],baseOrientation = p.getQuaternionFromEuler([0,0,np.pi/2]))
-		self.cam1 = p.loadURDF('cam1.urdf',basePosition = [1.5,-1,2],baseOrientation = p.getQuaternionFromEuler([0,0,np.pi/2]),useFixedBase = True)
-		self.cam2 = p.loadURDF('cam1.urdf',basePosition = [1.5,1,2],baseOrientation = p.getQuaternionFromEuler([0,0,np.pi/2]),useFixedBase = True)
+		self.bot = p.loadURDF('./rsc/bot.urdf',basePosition = [0,0,2])
+		self.rail1 = p.loadURDF('./rsc/rail1.urdf',basePosition = [-1.25,0,0.2],baseOrientation = p.getQuaternionFromEuler([0,0,np.pi/2]))
+		self.rail2 = p.loadURDF('./rsc/rail1.urdf',basePosition = [1.25,0,0.2],baseOrientation = p.getQuaternionFromEuler([0,0,np.pi/2]))
+		self.cam1 = p.loadURDF('./rsc/cam1.urdf',basePosition = [1.5,-1,2],baseOrientation = p.getQuaternionFromEuler([0,0,np.pi/2]),useFixedBase = True)
+		self.cam2 = p.loadURDF('./rsc/cam1.urdf',basePosition = [1.5,1,2],baseOrientation = p.getQuaternionFromEuler([0,0,np.pi/2]),useFixedBase = True)
+		self.cart1_link=29
+		self.cart2_link=47
 		p.setGravity(0,0,-10)
-		self.n = p.getNumJoints(self.bot)
+		#cart1 pos (1.2432089007861375, -0.3714641732884502, 0.10364430206356245)
+        #cart2 pos (-1.251821904661355, -0.3712655324423194, 0.10362405301399435)
+
+		p.createConstraint(self.rail1,-1,-1,-1,p.JOINT_FIXED,[1,0,0],[0,0,0],[-1.25,0,0.004989748675026239],childFrameOrientation=p.getQuaternionFromEuler([0,0,np.pi/2]))
+		p.createConstraint(self.rail2,-1,-1,-1,p.JOINT_FIXED,[1,0,0],[0,0,0],[ 1.25,0,0.004989748675026239],childFrameOrientation=p.getQuaternionFromEuler([0,0,np.pi/2]))
+
+		# p.createConstraint(self.bot,29,-1,-1,p.JOINT_PRISMATIC,[1,0,0],[0,0,0],[ 1.2432089007861375, -0.3714641732884502, 0.10364430206356245],childFrameOrientation=p.getQuaternionFromEuler([0,0,-np.pi/2]))
+		# p.createConstraint(self.bot,29,-1,-1,p.JOINT_PRISMATIC,[-1,0,0],[0,0,0],[ 1.2432089007861375, -0.3714641732884502, 0.10364430206356245],childFrameOrientation=p.getQuaternionFromEuler([0,0,-np.pi/2]))
+
+		# p.createConstraint(self.bot,47,-1,-1,p.JOINT_PRISMATIC,[1,0,0],[0,0,0],[ -1.251821904661355, -0.3714641732884502, 0.10364430206356245],childFrameOrientation=p.getQuaternionFromEuler([0,0,-np.pi/2]))
+		# p.createConstraint(self.bot,47,-1,-1,p.JOINT_PRISMATIC,[-1,0,0],[0,0,0],[ -1.251821904661355, -0.3714641732884502, 0.10364430206356245],childFrameOrientation=p.getQuaternionFromEuler([0,0,-np.pi/2]))
+		p.changeVisualShape(self.bot,29,rgbaColor=[0,1,0,1])
+		p.changeVisualShape(self.bot,47,rgbaColor=[0,1,0,1])
+		fingers = [14,15,17,16]
+		for i in fingers:
+			p.changeDynamics(bodyUniqueId=self.bot,
+				             linkIndex=i,
+				             lateralFriction=1,
+				             restitution=0.5)
 
 		MakeArena(x=0,y=0,z=0.05,
 	      scale_x=self.Area_Halfdim,scale_y=self.Area_Halfdim,scale_z=0,
 	      Inter_area_dist=0.5,pickAreaHeight=0.90)
 		
 		#self._numObjects = num_Objects
-		urdfList = self._get_random_object()
+		urdfList = self.get_objects()
 		self._objectUids = self._place_objects(urdfList)
 		for _ in range(500):
 			p.stepSimulation()
@@ -509,6 +529,39 @@ class robot:
 			urdf_no = str(random.choice(numbers))
 			#urdf_no = str(numbers[i])
 			selected_objects_filenames.append('random_urdfs/'+urdf_no+'/'+urdf_no+'.urdf')
+		return selected_objects_filenames
+
+	def get_objects(self):
+		selected_objects_filenames = ['random_urdfs/018/018.urdf',
+									  'random_urdfs/178/178.urdf',
+									  'teddy_vhacd.urdf',
+									  'random_urdfs/622/622.urdf',
+									  'random_urdfs/502/502.urdf',
+									  
+									  'random_urdfs/002/002.urdf',
+									  'cube_small.urdf',
+									  'random_urdfs/184/184.urdf',
+									  'random_urdfs/504/504.urdf',
+									  'random_urdfs/459/459.urdf',
+
+									  'random_urdfs/505/505.urdf',
+									  'random_urdfs/001/001.urdf',
+									  'random_urdfs/789/789.urdf',
+									  'lego/lego.urdf',
+									  'random_urdfs/996/996.urdf',
+
+									  'jenga/jenga.urdf',
+									  'random_urdfs/767/767.urdf',
+									  'sphere_small.urdf',
+									  'random_urdfs/330/330.urdf',
+									  'random_urdfs/793/793.urdf',
+
+									  'random_urdfs/000/000.urdf',
+									  'random_urdfs/506/506.urdf',
+									  'random_urdfs/503/503.urdf',
+									  'duck_vhacd.urdf',
+									  'random_urdfs/004/004.urdf',]
+
 		return selected_objects_filenames
 
 	def _place_objects(self, urdfList):
