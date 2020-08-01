@@ -70,8 +70,8 @@ x = -0.8
 y = 0.4
 
 Robot = robot()
-#for i in range(10):
-    #Robot.reset(i)
+for i in range(10):
+    Robot.reset(i)
 p.resetDebugVisualizerCamera(2 , 0, -41, [0, -1.4, 1])
 Robot.suction_up()
 object_indices = [1, 5, 13, 16, 21]   #to select which object to go to
