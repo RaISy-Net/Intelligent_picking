@@ -75,7 +75,7 @@ def predict_grasp_angle(network, rgb_path, depth_path):
                          grasp_angle_img=ang_img,
                          no_grasps=n_grasps,
                          grasp_width_img=width_img)
-            #fig.savefig('img_result.pdf')
+            fig.savefig('img_result.pdf')
             for g in gs:
             	print(g.center)
             	print(g.angle)

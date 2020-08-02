@@ -69,12 +69,12 @@ class robot:
 		p.changeVisualShape(self.bot,45,rgbaColor=[0,1,0,1])
 		'''
 
-		fingers = [14,15,17,16]
+		fingers = [14,15]
 
 		for i in fingers:
 			p.changeDynamics(bodyUniqueId=self.bot,
 				             linkIndex=i,
-				             lateralFriction=1,
+				             lateralFriction=2,
 				             restitution=0.5)
 		self.n = p.getNumJoints(self.bot)
 
@@ -291,7 +291,7 @@ class robot:
 			if i>0.6:
 				print("not going further")
 				break
-		p.setJointMotorControl2(self.bot, self.plate_left,p.VELOCITY_CONTROL, targetVelocity = 0.09, force = 1)
+		p.setJointMotorControl2(self.bot, self.plate_left,p.VELOCITY_CONTROL, targetVelocity = 0.2, force = 10)
 		#p.setJointMotorControl2(self.bot, self.plate_right,p.VELOCITY_CONTROL, targetVelocity = -0.09, force = 2)
 
 

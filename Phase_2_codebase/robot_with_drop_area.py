@@ -34,7 +34,7 @@ def get_real_world_coord():
     a = 0.005
     y = y - a*(1-gs[0].center[0]/112)
     x = x + a*(1-gs[0].center[1]/112)
-    score = 0.5
+    score = 1.5
     angle = gs[0].angle
     print(x,y)
     return x,y,angle,score
@@ -59,7 +59,7 @@ def pick(xpos, ypos, object, threshold=1):
         Robot.rotate_gripper(angle)
         Robot.move_frame_and_head(y+0.06, x-0.03)
         z_init = Robot.end_effector()[0][2]
-        zpos = z_init - 1.06
+        zpos = z_init - 1.055
         Robot.extend_wrist(zpos)
         Robot.close_gripper(0.10)
         Robot.contract_wrist(0.13)
@@ -93,7 +93,7 @@ suction = 0
 print(Robot.end_effector())
 time.sleep(2)
 print(Robot.end_effector())
-for i in  range(1,25): #can use object indices as well (to select particular object)
+for i in  range(7,25): #can use object indices as well (to select particular object)
     object = Robot._objectUids[i]
     pos = p.getBasePositionAndOrientation(object)[0]  
     suction, cons = pick(pos[0], pos[1], object)
