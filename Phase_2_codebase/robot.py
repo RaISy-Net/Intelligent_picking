@@ -8,11 +8,8 @@ import numpy as np
 import pybullet as p
 import pybullet_data
 import distutils.dir_util
-import matplotlib.pyplot as plt
 from pkg_resources import parse_version
 from drop_area import *
-current_distance = []
-target_distance = []
 
 
 class robot:
@@ -24,10 +21,24 @@ class robot:
 		self.rail2 = p.loadURDF('./rsc/rail1.urdf',basePosition = [1.25,0,0.2],baseOrientation = p.getQuaternionFromEuler([0,0,np.pi/2]))
 		self.cam1 = p.loadURDF('./rsc/cam1.urdf',basePosition = [1.5,-1,2],baseOrientation = p.getQuaternionFromEuler([0,0,np.pi/2]),useFixedBase = True)
 		self.cam2 = p.loadURDF('./rsc/cam1.urdf',basePosition = [1.5,1,2],baseOrientation = p.getQuaternionFromEuler([0,0,np.pi/2]),useFixedBase = True)
+		p.setGravity(0,0,-10)
+		self.n = p.getNumJoints(self.bot)
+		self.wrist = 11
+		self.mid_arm = 8
+		self.upper_arm = 5
+		self.head = 0
+		self.plate_left = 15
+		self.plate_right = 14
+		self.servo = 13
+		self.camera = 17
+		self.end_effect = 13
+		self.suction = 22
+		for i in range(self.n):
+			print(i)
+			print(p.getJointInfo(self.bot,i))
 		self.cart1_link=29
 		self.cart2_link=47
-		self.suction_cup=25
-		p.setGravity(0,0,-10)
+		self.suction_cup=23
 		#cart1 pos (1.2432089007861375, -0.3714641732884502, 0.10364430206356245)
         #cart2 pos (-1.251821904661355, -0.3712655324423194, 0.10362405301399435)
 
@@ -40,7 +51,7 @@ class robot:
 				             linkIndex=-1,
 				             lateralFriction=0.6)
 		self.n = p.getNumJoints(self.bot)
-		wheels = [31,33,35,37,49,51,53,55]
+		wheels = [29,31,33,35,47,49,51,53]
 		for i in wheels:
 			p.changeDynamics(bodyUniqueId=self.bot,
 				             linkIndex=i,
@@ -48,36 +59,24 @@ class robot:
 				             restitution=0.5)
 		'''
 		wheel_h = 0.14
-		p.createConstraint(self.bot,29,self.rail1,-1,p.JOINT_PRISMATIC,[1,0,0],[0,0,0],[ 0, 0 , wheel_h])
-		p.createConstraint(self.bot,29,self.rail1,-1,p.JOINT_PRISMATIC,[-1,0,0],[0,0,0],[0,0, wheel_h])
+		p.createConstraint(self.bot,27,self.rail1,-1,p.JOINT_PRISMATIC,[1,0,0],[0,0,0],[ 0, 0 , wheel_h])
+		p.createConstraint(self.bot,27,self.rail1,-1,p.JOINT_PRISMATIC,[-1,0,0],[0,0,0],[0,0, wheel_h])
 
-		p.createConstraint(self.bot,47,self.rail2,-1,p.JOINT_PRISMATIC,[1,0,0],[0,0,0], [0, 0 , wheel_h])
-		p.createConstraint(self.bot,47,self.rail2,-1,p.JOINT_PRISMATIC,[-1,0,0],[0,0,0],[0,0, wheel_h])
+		p.createConstraint(self.bot,45,self.rail2,-1,p.JOINT_PRISMATIC,[1,0,0],[0,0,0], [0, 0 , wheel_h])
+		p.createConstraint(self.bot,45,self.rail2,-1,p.JOINT_PRISMATIC,[-1,0,0],[0,0,0],[0,0, wheel_h])
 		
-		p.changeVisualShape(self.bot,29,rgbaColor=[0,1,0,1])
-		p.changeVisualShape(self.bot,47,rgbaColor=[0,1,0,1])
+		p.changeVisualShape(self.bot,27,rgbaColor=[0,1,0,1])
+		p.changeVisualShape(self.bot,45,rgbaColor=[0,1,0,1])
 		'''
+
 		fingers = [14,15,17,16]
+
 		for i in fingers:
 			p.changeDynamics(bodyUniqueId=self.bot,
 				             linkIndex=i,
 				             lateralFriction=1,
 				             restitution=0.5)
 		self.n = p.getNumJoints(self.bot)
-		
-		self.wrist = 11
-		self.mid_arm = 8
-		self.upper_arm = 5
-		self.head = 0
-		self.gripper_plate = 16
-		self.servo = 13
-		self.camera = 19
-		self.end_effect = 13
-		self.suction = 24
-		
-		for i in range(self.n):
-			print(i)
-			print(p.getJointInfo(self.bot,i))
 
 		for _ in range(500):
 			p.stepSimulation()
@@ -117,6 +116,7 @@ class robot:
 		self.cam2 = p.loadURDF('./rsc/cam1.urdf',basePosition = [1.5,1,2],baseOrientation = p.getQuaternionFromEuler([0,0,np.pi/2]),useFixedBase = True)
 		self.cart1_link=29
 		self.cart2_link=47
+		self.suction_cup=25
 		p.setGravity(0,0,-10)
 		#cart1 pos (1.2432089007861375, -0.3714641732884502, 0.10364430206356245)
         #cart2 pos (-1.251821904661355, -0.3712655324423194, 0.10362405301399435)
@@ -277,32 +277,41 @@ class robot:
 
 	def close_gripper(self, size):
 		i = 0
-		currentPos_init = p.getJointState(self.bot, self.gripper_plate)
-		currentPos = p.getJointState(self.bot, self.gripper_plate)
-		while(currentPos[0]>currentPos_init[0] - size):
-			currentPos = p.getJointState(self.bot, self.gripper_plate)
-			p.setJointMotorControl2(self.bot, self.gripper_plate,p.POSITION_CONTROL, targetPosition = currentPos[0]-(i/100))
+		currentPos_init = p.getJointState(self.bot, self.plate_left)
+		currentPos = p.getJointState(self.bot, self.plate_left)
+		#currentPos_right = p.getJointState(self.bot, self.plate_right)
+		while(currentPos[0]<size):
+			currentPos = p.getJointState(self.bot, self.plate_left)
+			#currentPos_right = p.getJointState(self.bot, self.plate_right)
+			p.setJointMotorControl2(self.bot, self.plate_left,p.POSITION_CONTROL, targetPosition = currentPos[0]+(i/100))
+			#p.setJointMotorControl2(self.bot, self.plate_right,p.POSITION_CONTROL, targetPosition = currentPos_right[0]-(i/100))
 			p.stepSimulation()
 			time.sleep(1./240.)
 			i = i+0.001
 			if i>0.6:
-				print('not going further')
+				print("not going further")
 				break
-		p.setJointMotorControl2(self.bot, self.gripper_plate,p.VELOCITY_CONTROL, targetVelocity = 0)
+		p.setJointMotorControl2(self.bot, self.plate_left,p.VELOCITY_CONTROL, targetVelocity = 0.09, force = 1)
+		#p.setJointMotorControl2(self.bot, self.plate_right,p.VELOCITY_CONTROL, targetVelocity = -0.09, force = 2)
 
 
 	def open_gripper(self):
 		i = 0
-		currentPos_init = p.getJointState(self.bot, self.gripper_plate)
-		currentPos = p.getJointState(self.bot, self.gripper_plate)
-		while(currentPos[0]<0):
-			currentPos = p.getJointState(self.bot, self.gripper_plate)
-			p.setJointMotorControl2(self.bot, self.gripper_plate,p.POSITION_CONTROL, targetPosition = currentPos[0]+(i/100))
+		p.setJointMotorControl2(self.bot, self.plate_left,p.VELOCITY_CONTROL, targetVelocity = 0)
+		#p.setJointMotorControl2(self.bot, self.plate_right,p.VELOCITY_CONTROL, targetVelocity = 0)
+		currentPos_init = p.getJointState(self.bot, self.plate_left)
+		currentPos = p.getJointState(self.bot, self.plate_left)
+		#currentPos_right = p.getJointState(self.bot, self.plate_right)
+		while(currentPos[0]>0):
+			currentPos = p.getJointState(self.bot, self.plate_left)
+			#currentPos_right = p.getJointState(self.bot, self.plate_right)
+			p.setJointMotorControl2(self.bot, self.plate_left,p.POSITION_CONTROL, targetPosition = currentPos[0]-(i/100))
+			#p.setJointMotorControl2(self.bot, self.plate_right,p.POSITION_CONTROL, targetPosition = currentPos_right[0]+(i/100))
 			p.stepSimulation()
 			time.sleep(1./240.)
 			i = i+0.001
-		p.setJointMotorControl2(self.bot, self.gripper_plate,p.VELOCITY_CONTROL, targetVelocity = 0)
-
+		p.setJointMotorControl2(self.bot, self.plate_left,p.VELOCITY_CONTROL, targetVelocity = 0)
+		#p.setJointMotorControl2(self.bot, self.plate_right,p.VELOCITY_CONTROL, targetVelocity = 0)
 
 
 	def move_frame(self, pos):
@@ -376,25 +385,10 @@ class robot:
 			return None
 
 
-	def suction_force(self, object):
-		pos_cup=p.getLinkState(self.bot,self.suction_cup)[0]
-		orn_cup=p.getLinkState(self.bot,self.suction_cup)[1]
-		pos_obj,orn_obj=p.getBasePositionAndOrientation(object)
-		# print(pos_obj,'-------------------------------------------')
-		euler_orn=p.getEulerFromQuaternion(orn_cup)
-		for _ in range(50):
-			p.applyExternalForce(object,-1,[euler_orn[0],euler_orn[1],euler_orn[2]+10],[pos_cup[0],pos_cup[1],pos_cup[2]],p.WORLD_FRAME)
-			p.stepSimulation()
-			time.sleep(1.0/240.0)
-			pos_obj,orn_obj=p.getBasePositionAndOrientation(object)
-		cons=p.createConstraint(object,-1,self.bot,self.suction_cup,p.JOINT_FIXED,[0,0,1],[0,0,0],[pos_obj[0]-pos_cup[0],pos_obj[1]-pos_cup[1],pos_obj[2]-pos_cup[2]])
-		return cons
-		
-
-	def move_frame_and_head(self, pos_frame ,pos_head,):
+	def move_frame_and_head(self, pos_frame ,pos_head):
 		# pos_frame = -1
 		kp=3
-		kd=0
+		kd=10
 		ki=0.005
 		i=0
 		t=0
@@ -402,51 +396,50 @@ class robot:
 		pos_head = -pos_head
 		init, ori = p.getBasePositionAndOrientation(self.bot)
 		j = 0
-
+		# p.setJointMotorControl2(self.bot, self.head,p.VELOCITY_CONTROL, targetVelocity = 0)
 		if(1):
 			last_error=0
 			error=0
 			counter=0
 
-			counter = 0
-
-
-			while(True):
-				counter+=1
-				target = pos_frame #(counter/2)*pos_frame
-
-				error=init[1]- target
+			while(1):
+				error=init[1]-pos_frame
+				if error>3 or error<-3:
+					error = error/4.5
+				elif error>2.2 or error<-2.2:
+					error = error/3.5
+				elif error>1.4 or error<-1.4:
+					error = error/2.5
+				elif error>0.8 or error<-0.8:
+					error = error/2
+				else:
+					error = error
 				total_error=total_error+error
-				print("error:",error)
 				j=kp*error+kd*(error-last_error)+ki*total_error
-				p.setJointMotorControl2(self.bot, 31,p.VELOCITY_CONTROL, targetVelocity = -j)
+				p.setJointMotorControl2(self.bot, 29,p.VELOCITY_CONTROL, targetVelocity = -j)
+				p.setJointMotorControl2(self.bot, 31,p.VELOCITY_CONTROL, targetVelocity = j)
 				p.setJointMotorControl2(self.bot, 33,p.VELOCITY_CONTROL, targetVelocity = j)
-				p.setJointMotorControl2(self.bot, 35,p.VELOCITY_CONTROL, targetVelocity = j)
-				p.setJointMotorControl2(self.bot, 37,p.VELOCITY_CONTROL, targetVelocity = -j)
+				p.setJointMotorControl2(self.bot, 35,p.VELOCITY_CONTROL, targetVelocity = -j)
 
-				p.setJointMotorControl2(self.bot, 49,p.VELOCITY_CONTROL, targetVelocity = +j)
-				p.setJointMotorControl2(self.bot, 51,p.VELOCITY_CONTROL, targetVelocity = -j)
-				p.setJointMotorControl2(self.bot, 53,p.VELOCITY_CONTROL, targetVelocity = +j)
-				p.setJointMotorControl2(self.bot, 55,p.VELOCITY_CONTROL, targetVelocity = -j)
+				p.setJointMotorControl2(self.bot, 47,p.VELOCITY_CONTROL, targetVelocity = +j)
+				p.setJointMotorControl2(self.bot, 49,p.VELOCITY_CONTROL, targetVelocity = -j)
+				p.setJointMotorControl2(self.bot, 51,p.VELOCITY_CONTROL, targetVelocity = +j)
+				p.setJointMotorControl2(self.bot, 53,p.VELOCITY_CONTROL, targetVelocity = -j)
 				init, ori = p.getBasePositionAndOrientation(self.bot)
 				# if init[1]>pos_frame-0.2 and init[1]<pos_frame+0.2:
 				# 	kp=30/2
 				increment=0.01
 				
-				currentPos = list(p.getJointState(self.bot, self.head))
+				currentPos = p.getJointState(self.bot, self.head)
 				if currentPos[0]>pos_head:
 					increment=-0.01
 				if currentPos[0] < pos_head+0.01 and currentPos[0] > pos_head -0.01:
 					i=0
 					print("x mein ruk gaya")
-
 				p.setJointMotorControl2(self.bot, self.head,p.POSITION_CONTROL, targetPosition = currentPos[0]+(i/100))
 				i=i+increment
-
 				p.stepSimulation()
-				
 				last_error=error
-
 				if init[1]>pos_frame-0.01 and init[1]<pos_frame+0.01:
 					counter+=1
 				else:
@@ -454,8 +447,7 @@ class robot:
 				# print(init[1],'init')
 				# print(pos_frame,'pos_frame')
 				t=t+1
-				# print(t,'Cart_1:',p.getLinkState(self.bot,self.cart1_link)[0],
-				# 	      'Cart_2:',p.getLinkState(self.bot,self.cart2_link)[0])
+				print(t)
 				if counter > 5:
 					j=0
 					print("y mein ruk gaya")
@@ -464,20 +456,17 @@ class robot:
 
 				if counter > 5 and currentPos[0] < pos_head+0.02 and currentPos[0] > pos_head -0.02:
 					break
-				current_distance.append(init[1])
-				target_distance.append(target)
-
 				
 			k = 0
 			while(k<100):
+				p.setJointMotorControl2(self.bot, 29,p.VELOCITY_CONTROL, targetVelocity =0)
 				p.setJointMotorControl2(self.bot, 31,p.VELOCITY_CONTROL, targetVelocity =0)
 				p.setJointMotorControl2(self.bot, 33,p.VELOCITY_CONTROL, targetVelocity =0)
 				p.setJointMotorControl2(self.bot, 35,p.VELOCITY_CONTROL, targetVelocity =0)
-				p.setJointMotorControl2(self.bot, 37,p.VELOCITY_CONTROL, targetVelocity =0)
+				p.setJointMotorControl2(self.bot, 47,p.VELOCITY_CONTROL, targetVelocity =0)
 				p.setJointMotorControl2(self.bot, 49,p.VELOCITY_CONTROL, targetVelocity =0)
 				p.setJointMotorControl2(self.bot, 51,p.VELOCITY_CONTROL, targetVelocity =0)
 				p.setJointMotorControl2(self.bot, 53,p.VELOCITY_CONTROL, targetVelocity =0)
-				p.setJointMotorControl2(self.bot, 55,p.VELOCITY_CONTROL, targetVelocity =0)
 				p.stepSimulation()
 				time.sleep(1./240.)
 				k = k+1
@@ -509,7 +498,7 @@ class robot:
 	def reset_gripper(self):
 		info = p.getJointState(self.bot,self.servo)
 		while(info[0]>0):
-			p.setJointMotorControl2(self.bot, self.servo,p.VELOCITY_CONTROL, targetVelocity = -0.3, force = 0.09)
+			p.setJointMotorControl2(self.bot, self.servo,p.VELOCITY_CONTROL, targetVelocity = -0.8, force = 0.09)
 			info = p.getJointState(self.bot,self.servo)
 			p.stepSimulation()
 			time.sleep(1./240.)
@@ -536,15 +525,13 @@ class robot:
 		
 	def end_effector(self):
 		return p.getLinkState(self.bot,self.end_effect)
-		
-		
+	
 
 	def suction_down(self):
-		i = 0.01
+		i = 0.005
 		currentPos_init = p.getJointState(self.bot, self.suction)
 		currentPos = p.getJointState(self.bot, self.suction)
-		count=0
-		while(currentPos[0]>-0.05):
+		while(currentPos[0]>-0.09):
 			currentPos = p.getJointState(self.bot, self.suction)
 			p.setJointMotorControl2(self.bot, self.suction,p.POSITION_CONTROL, targetPosition = currentPos[0]-i)
 			p.stepSimulation()
@@ -554,7 +541,7 @@ class robot:
 		
 
 	def suction_up(self):
-		i = 0.01
+		i = 0.005
 		currentPos_init = p.getJointState(self.bot, self.suction)
 		currentPos = p.getJointState(self.bot, self.suction)
 		while(currentPos[0]<0):
@@ -564,6 +551,27 @@ class robot:
 			time.sleep(1./240.)
 		p.setJointMotorControl2(self.bot, self.suction,p.VELOCITY_CONTROL, targetVelocity = 0)
 
+	def suction_force(self, object):
+		pos_cup=p.getLinkState(self.bot,self.suction_cup)[0]
+		orn_cup=p.getLinkState(self.bot,self.suction_cup)[1]
+		pos_obj,orn_obj=p.getBasePositionAndOrientation(object)
+		# print(pos_obj,'-------------------------------------------')
+		euler_orn=p.getEulerFromQuaternion(orn_cup)
+		for _ in range(2):
+			p.applyExternalForce(object,-1,[euler_orn[0],euler_orn[1],euler_orn[2]+10],[pos_cup[0],pos_cup[1],pos_cup[2]],p.WORLD_FRAME)
+			p.stepSimulation()
+			time.sleep(1.0/240.0)
+			pos_obj,orn_obj=p.getBasePositionAndOrientation(object)
+		cons=p.createConstraint(object,-1,self.bot,self.suction_cup,p.JOINT_FIXED,[0,0,1],[0,0,0],[pos_obj[0]-pos_cup[0],pos_obj[1]-pos_cup[1],pos_obj[2]-pos_cup[2]])
+		return cons
+
+	def remove_suction_force(self, cons):
+		p.removeConstraint(cons)
+		for i in range(10):
+			p.stepSimulation()
+
+	def move_suction_cup(self, pos_frame, pos_head):
+		self.move_frame_and_head(pos_frame+0.06, pos_head-0.15)
 
 	def _get_random_object(self):
 		"""Randomly choose an object urdf from the random_urdfs directory.
@@ -584,7 +592,7 @@ class robot:
 
 	def get_objects(self):
 		selected_objects_filenames = ['random_urdfs/018/018.urdf',
-									  'random_urdfs/178/178.urdf',
+									  'random_urdfs/934/934.urdf',
 									  'teddy_vhacd.urdf',
 									  'random_urdfs/622/622.urdf',
 									  'random_urdfs/502/502.urdf',
@@ -597,7 +605,7 @@ class robot:
 
 									  'random_urdfs/505/505.urdf',
 									  'random_urdfs/001/001.urdf',
-									  'random_urdfs/789/789.urdf',
+									  'random_urdfs/173/173.urdf',
 									  'lego/lego.urdf',
 									  'random_urdfs/996/996.urdf',
 
@@ -715,42 +723,28 @@ class robot:
 				
 if __name__ == "__main__":
 	bot = robot()
-	#while(True):
-	bot.move_frame_and_head(0.2, 1)
-	bot.move_frame_and_head(0.4, 1)
-	bot.move_frame_and_head(0.6, 1)
-	bot.move_frame_and_head(0.8, 1)
-	bot.move_frame_and_head(1.0, 1)
-	plt.plot(np.arange(len(current_distance)),current_distance,label="Actual_pos")
-	plt.plot(np.arange(len(current_distance)),target_distance,label="Desired_state")
-	#plt.plot(np.arange(len(current_distance)),current_distance)
-	plt.legend()
-	plt.show()
-
-
-
-
-		#bot.move_frame_and_head(-0.8, 1)
-		# bot.suction_down()
-		# bot.suction_up()
-		# bot.move_frame(-1)
-		# #print(bot.end_effector())
-		# bot.move_head(0.9)
-		# #print(bot.end_effector())
-		# bot.extend_wrist(0.10)
-		# print(bot.end_effector())
-		# bot.close_gripper(0.06)
-		# #print(bot.end_effector())
-		# bot.contract_wrist(0.10)
-		# bot.move_head(0)
-		# bot.move_frame(0)
-		# bot.extend_arm()
-		# #print(bot.end_effector())
-		# bot.open_gripper()
-		# bot.rotate_gripper(1.5707)
-		# bot.reset_gripper()
-		# bot.rotate_camera(1)
-		# bot.reset_camera()
-		# # #while(True):
-		# p.stepSimulation()
-		# time.sleep(1./240.)
+	while(True):
+		bot.move_frame_and_head(0.8, 1)
+		bot.suction_down()
+		bot.suction_up()
+		bot.move_frame(-1)
+		print(bot.end_effector())
+		bot.move_head(0.9)
+		print(bot.end_effector())
+		bot.extend_wrist(0.10)
+		print(bot.end_effector())
+		bot.close_gripper(0.06)
+		print(bot.end_effector())
+		bot.contract_wrist(0.10)
+		bot.move_head(0)
+		bot.move_frame(0)
+		bot.extend_arm()
+		print(bot.end_effector())
+		bot.open_gripper()
+		bot.rotate_gripper(1.5707)
+		bot.reset_gripper()
+		bot.rotate_camera(1)
+		bot.reset_camera()
+		while(True):
+			p.stepSimulation()
+			time.sleep(1./240.)
