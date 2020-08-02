@@ -38,6 +38,24 @@ def get_real_world_coord():
     print(x,y)
     return x,y,angle
 
+def pick_suction(xpos, ypos, object):
+    # flag to be activated by the score
+    grabScore = 0.9
+    Robot.move_frame_and_head(ypos+0.06, xpos-0.03)
+    x,y,angle = get_real_world_coord()
+    
+    # if(grabScore >= 0.5):
+    #     Robot.rotate_gripper(angle)
+    # else:
+    Robot.move_frame_and_head(ypos+0.06, xpos-0.03-0.135)
+
+    Robot.suction_down()
+    Robot.close_gripper(0.10)
+    cons=Robot.suction_force(object)
+    return cons
+    
+    
+    
 def pick(xpos, ypos):
     # flag to be activated by the score
     grabScore = 0.9
@@ -62,16 +80,22 @@ def pick(xpos, ypos):
     z_init = Robot.end_effector()[0][2]
     zpos = z_init - 1.06
     Robot.extend_wrist(zpos)
+    # Robot.suction_up()
     Robot.close_gripper(0.10)
     Robot.contract_wrist(0.13)
+    return -1
 
-def place(xpos, ypos):
+
+def place(xpos, ypos, cons):
     Robot.move_frame_and_head(ypos+0.06, xpos-0.03)
     #Robot.move_frame(ypos+0.06)
     #Robot.move_head(xpos-0.03)
     Robot.extend_arm()
     #Robot.extend_wrist(0.05)
-    Robot.open_gripper()
+    if cons==-1:
+    	Robot.open_gripper()
+    else:
+    	p.removeConstraint(cons)
     Robot.reset_gripper()
     Robot.contract_arm()
 
@@ -92,11 +116,11 @@ for i in  range(25): #can use object indices as well (to select particular objec
     print(i)
     object = Robot._objectUids[i]
     pos = p.getBasePositionAndOrientation(object)[0]  
-    pick(pos[0], pos[1])
+    cons=pick_suction(pos[0], pos[1], object)
     # for j in range(181):
     #     p.resetDebugVisualizerCamera(2, j, -41, [0, -1.4+(2.8*j)/180, 1-j*0.8/180])
     #     time.sleep(0.01)
-    place(x, y)
+    place(x, y, cons)
     # for j in range(181):
     #     p.resetDebugVisualizerCamera(2 , 180-j, -41, [0, 1.4 - (2.8*j)/180, 0.2 + j*0.8/180])
     #     time.sleep(0.01)

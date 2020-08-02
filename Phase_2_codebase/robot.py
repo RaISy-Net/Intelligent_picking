@@ -26,6 +26,7 @@ class robot:
 		self.cam2 = p.loadURDF('./rsc/cam1.urdf',basePosition = [1.5,1,2],baseOrientation = p.getQuaternionFromEuler([0,0,np.pi/2]),useFixedBase = True)
 		self.cart1_link=29
 		self.cart2_link=47
+		self.suction_cup=25
 		p.setGravity(0,0,-10)
 		#cart1 pos (1.2432089007861375, -0.3714641732884502, 0.10364430206356245)
         #cart2 pos (-1.251821904661355, -0.3712655324423194, 0.10362405301399435)
@@ -375,6 +376,21 @@ class robot:
 			return None
 
 
+	def suction_force(self, object):
+		pos_cup=p.getLinkState(self.bot,self.suction_cup)[0]
+		orn_cup=p.getLinkState(self.bot,self.suction_cup)[1]
+		pos_obj,orn_obj=p.getBasePositionAndOrientation(object)
+		# print(pos_obj,'-------------------------------------------')
+		euler_orn=p.getEulerFromQuaternion(orn_cup)
+		for _ in range(50):
+			p.applyExternalForce(object,-1,[euler_orn[0],euler_orn[1],euler_orn[2]+10],[pos_cup[0],pos_cup[1],pos_cup[2]],p.WORLD_FRAME)
+			p.stepSimulation()
+			time.sleep(1.0/240.0)
+			pos_obj,orn_obj=p.getBasePositionAndOrientation(object)
+		cons=p.createConstraint(object,-1,self.bot,self.suction_cup,p.JOINT_FIXED,[0,0,1],[0,0,0],[pos_obj[0]-pos_cup[0],pos_obj[1]-pos_cup[1],pos_obj[2]-pos_cup[2]])
+		return cons
+		
+
 	def move_frame_and_head(self, pos_frame ,pos_head,):
 		# pos_frame = -1
 		kp=3
@@ -524,10 +540,11 @@ class robot:
 		
 
 	def suction_down(self):
-		i = 0.001
+		i = 0.01
 		currentPos_init = p.getJointState(self.bot, self.suction)
 		currentPos = p.getJointState(self.bot, self.suction)
-		while(currentPos[0]>-0.09):
+		count=0
+		while(currentPos[0]>-0.05):
 			currentPos = p.getJointState(self.bot, self.suction)
 			p.setJointMotorControl2(self.bot, self.suction,p.POSITION_CONTROL, targetPosition = currentPos[0]-i)
 			p.stepSimulation()
@@ -537,7 +554,7 @@ class robot:
 		
 
 	def suction_up(self):
-		i = 0.001
+		i = 0.01
 		currentPos_init = p.getJointState(self.bot, self.suction)
 		currentPos = p.getJointState(self.bot, self.suction)
 		while(currentPos[0]<0):
