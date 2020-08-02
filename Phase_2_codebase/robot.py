@@ -557,7 +557,7 @@ class robot:
 		pos_obj,orn_obj=p.getBasePositionAndOrientation(object)
 		# print(pos_obj,'-------------------------------------------')
 		euler_orn=p.getEulerFromQuaternion(orn_cup)
-		for _ in range(2):
+		for _ in range(10):
 			p.applyExternalForce(object,-1,[euler_orn[0],euler_orn[1],euler_orn[2]+10],[pos_cup[0],pos_cup[1],pos_cup[2]],p.WORLD_FRAME)
 			p.stepSimulation()
 			time.sleep(1.0/240.0)
