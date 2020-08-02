@@ -34,12 +34,12 @@ def get_real_world_coord():
     a = 0.005
     y = y - a*(1-gs[0].center[0]/112)
     x = x + a*(1-gs[0].center[1]/112)
-    score = 1.5
+    score = gs[0].quality
     angle = gs[0].angle
     print(x,y)
     return x,y,angle,score
 
-def pick(xpos, ypos, object, threshold=1):
+def pick(xpos, ypos, object, threshold=0.75):
     Robot.move_frame_and_head(ypos+0.06, xpos-0.03)
     z_init = Robot.end_effector()[0][2]
     x,y,angle,score = get_real_world_coord()

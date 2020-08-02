@@ -30,7 +30,7 @@ def plot_results(
     :return:
     """
     gs = detect_grasps(grasp_q_img, grasp_angle_img, width_img=grasp_width_img, no_grasps=no_grasps)
-    return gs
+    
 
     plt.ion()
     plt.clf()
@@ -72,6 +72,7 @@ def plot_results(
 
     plt.pause(0.1)
     fig.canvas.draw()
+    return gs
     
 
 
