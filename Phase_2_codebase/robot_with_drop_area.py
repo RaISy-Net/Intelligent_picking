@@ -59,7 +59,7 @@ def pick(xpos, ypos, object, threshold=0.75):
         Robot.rotate_gripper(angle)
         Robot.move_frame_and_head(y+0.06, x-0.03)
         z_init = Robot.end_effector()[0][2]
-        zpos = z_init - 1.055
+        zpos = z_init - 1.052
         Robot.extend_wrist(zpos)
         Robot.close_gripper(0.10)
         Robot.contract_wrist(0.13)

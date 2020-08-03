@@ -558,7 +558,7 @@ class robot:
 		pos_obj,orn_obj=p.getBasePositionAndOrientation(object)
 		# print(pos_obj,'-------------------------------------------')
 		euler_orn=p.getEulerFromQuaternion(orn_cup)
-		for _ in range(10):
+		for _ in range(30):
 			p.applyExternalForce(object,-1,[euler_orn[0],euler_orn[1],euler_orn[2]+10],[pos_cup[0],pos_cup[1],pos_cup[2]],p.WORLD_FRAME)
 			p.stepSimulation()
 			time.sleep(1.0/240.0)
@@ -601,26 +601,27 @@ class robot:
 									  'random_urdfs/002/002.urdf',
 									  'cube_small.urdf',
 									  'random_urdfs/184/184.urdf',
-									  'random_urdfs/504/504.urdf',
+									  'random_urdfs/173/173.urdf',
 									  'random_urdfs/459/459.urdf',
 
 									  'random_urdfs/505/505.urdf',
 									  'random_urdfs/001/001.urdf',
-									  'random_urdfs/173/173.urdf',
 									  'lego/lego.urdf',
+									  'random_urdfs/504/504.urdf',
 									  'random_urdfs/996/996.urdf',
 
-									  'jenga/jenga.urdf',
-									  'random_urdfs/767/767.urdf',
 									  'sphere_small.urdf',
+									  'random_urdfs/767/767.urdf',
+									  'jenga/jenga.urdf',
 									  'random_urdfs/330/330.urdf',
-									  'random_urdfs/793/793.urdf',
+									  'random_urdfs/004/004.urdf',
+								
 
 									  'random_urdfs/000/000.urdf',
 									  'random_urdfs/506/506.urdf',
 									  'random_urdfs/503/503.urdf',
 									  'duck_vhacd.urdf',
-									  'random_urdfs/004/004.urdf',]
+									  'random_urdfs/507/507.urdf']
 
 		return selected_objects_filenames
 
