@@ -456,7 +456,7 @@ class robot:
 
 				if counter > 5 and currentPos[0] < pos_head+0.02 and currentPos[0] > pos_head -0.02:
 					break
-				
+			pos,orn=p.getBasePositionAndOrientation(self.bot)	
 			k = 0
 			while(k<100):
 				p.setJointMotorControl2(self.bot, 29,p.VELOCITY_CONTROL, targetVelocity =0)
@@ -467,6 +467,7 @@ class robot:
 				p.setJointMotorControl2(self.bot, 49,p.VELOCITY_CONTROL, targetVelocity =0)
 				p.setJointMotorControl2(self.bot, 51,p.VELOCITY_CONTROL, targetVelocity =0)
 				p.setJointMotorControl2(self.bot, 53,p.VELOCITY_CONTROL, targetVelocity =0)
+				p.resetBasePositionAndOrientation(self.bot,pos,orn)
 				p.stepSimulation()
 				time.sleep(1./240.)
 				k = k+1
