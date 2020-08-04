@@ -39,20 +39,20 @@ def get_real_world_coord():
     print(x,y)
     return x,y,angle,score
 
-def pick(xpos, ypos, object, threshold=0.75):
+def pick(xpos, ypos, object, threshold=0.9):
     Robot.move_frame_and_head(ypos+0.06, xpos-0.03)
     z_init = Robot.end_effector()[0][2]
     x,y,angle,score = get_real_world_coord()
     if score<threshold:
-        if z_init>1.1859:
-            zpos = z_init - 1.1859
+        if z_init>1.185:
+            zpos = z_init - 1.181
             Robot.extend_wrist(zpos)
         Robot.move_suction_cup(ypos, xpos)
         Robot.suction_down()
         cons = Robot.suction_force(object)
         Robot.suction_up()
-        if z_init>1.1859:
-            zpos = z_init - 1.1859
+        if z_init>1.185:
+            zpos = z_init - 1.181
             Robot.contract_wrist(zpos)
         return 1, cons
     else:
@@ -80,33 +80,30 @@ def place(xpos, ypos, suction, cons):
         Robot.contract_arm()
         Robot.reset_gripper()
 
-x = -0.8
-y = 0.4
 
 Robot = robot()
 p.resetDebugVisualizerCamera(2 , 0, -41, [0, -1.4, 1])
 Robot.suction_up()
-object_indices = [1, 5, 13, 16, 21]   #to select which object to go to
+object_indices = [2, 6, 13, 15, 24]   #to select which object to go to
 count=0
-placing = [[-0.4, 0.8], [0, 0.4], [0.4, 1.2], [0.8, 0.8]]
+placing = [[-0.8, 0.8],[-0.4, 0.8], [0, 0.4], [0.4, 1.2], [0.8, 0.4]]
 suction = 0
 print(Robot.end_effector())
 time.sleep(2)
-print(Robot.end_effector())
-for i in  range(7,25): #can use object indices as well (to select particular object)
+for i in  object_indices: #can use object indices as well (to select particular object)
     object = Robot._objectUids[i]
     pos = p.getBasePositionAndOrientation(object)[0]  
     suction, cons = pick(pos[0], pos[1], object)
     for j in range(181):
         p.resetDebugVisualizerCamera(2, j, -41, [0, -1.4+(2.8*j)/180, 1-j*0.8/180])
         time.sleep(0.01)
+    x = placing[count][0]
+    y = placing[count][1]
+    count+=1
     place(x, y, suction, cons)
     for j in range(181):
         p.resetDebugVisualizerCamera(2 , 180-j, -41, [0, 1.4 - (2.8*j)/180, 0.2 + j*0.8/180])
         time.sleep(0.01)
-    x = placing[count][0]
-    y = placing[count][1]
-    count+=1
-
+    
 time.sleep(10)
 

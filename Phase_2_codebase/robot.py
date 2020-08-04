@@ -594,12 +594,12 @@ class robot:
 	def get_objects(self):
 		selected_objects_filenames = ['random_urdfs/018/018.urdf',
 									  'random_urdfs/934/934.urdf',
-									  'teddy_vhacd.urdf',
+									  'random_urdfs/507/507.urdf',
 									  'random_urdfs/622/622.urdf',
 									  'random_urdfs/502/502.urdf',
 									  
 									  'random_urdfs/002/002.urdf',
-									  'cube_small.urdf',
+									  'jenga/jenga.urdf',
 									  'random_urdfs/184/184.urdf',
 									  'random_urdfs/173/173.urdf',
 									  'random_urdfs/459/459.urdf',
@@ -612,16 +612,15 @@ class robot:
 
 									  'sphere_small.urdf',
 									  'random_urdfs/767/767.urdf',
-									  'jenga/jenga.urdf',
+									  'cube_small.urdf',
 									  'random_urdfs/330/330.urdf',
-									  'random_urdfs/004/004.urdf',
+									  'random_urdfs/008/008.urdf',
 								
-
 									  'random_urdfs/000/000.urdf',
 									  'random_urdfs/506/506.urdf',
 									  'random_urdfs/503/503.urdf',
-									  'duck_vhacd.urdf',
-									  'random_urdfs/507/507.urdf']
+									  'teddy_vhacd.urdf',
+									  'duck_vhacd.urdf']
 
 		return selected_objects_filenames
 
