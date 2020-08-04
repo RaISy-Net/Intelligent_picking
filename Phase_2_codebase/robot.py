@@ -559,11 +559,11 @@ class robot:
 		# print(pos_obj,'-------------------------------------------')
 		euler_orn=p.getEulerFromQuaternion(orn_cup)
 		for _ in range(20):
-			p.applyExternalForce(object,-1,[euler_orn[0],euler_orn[1],euler_orn[2]+10],[pos_cup[0],pos_cup[1],pos_cup[2]],p.WORLD_FRAME)
+			p.applyExternalForce(object,-1,[euler_orn[0],euler_orn[1],euler_orn[2]+2.5],[pos_cup[0],pos_cup[1],pos_cup[2]],p.WORLD_FRAME)
 			p.stepSimulation()
 			time.sleep(1.0/240.0)
 			pos_obj,orn_obj=p.getBasePositionAndOrientation(object)
-			if pos_obj[2]>pos_cup[2]-0.03:
+			if pos_obj[2]>pos_cup[2]-0.02:
 				break
 		cons=p.createConstraint(object,-1,self.bot,self.suction_cup,p.JOINT_FIXED,[0,0,1],[0,0,0],[pos_obj[0]-pos_cup[0],pos_obj[1]-pos_cup[1],pos_obj[2]-pos_cup[2]])
 		return cons
