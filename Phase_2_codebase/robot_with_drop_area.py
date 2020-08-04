@@ -71,14 +71,11 @@ def place(xpos, ypos, suction, cons):
         Robot.extend_arm()
         Robot.remove_suction_force(cons)
         Robot.contract_arm()
-        Robot.reset_gripper()
     else:
         Robot.move_frame_and_head(ypos+0.06, xpos-0.03)
         Robot.extend_arm()
         Robot.open_gripper()
-        Robot.reset_gripper()
         Robot.contract_arm()
-        Robot.reset_gripper()
 
 
 Robot = robot()

@@ -478,7 +478,7 @@ class robot:
 		info = p.getJointState(self.bot,self.servo)
 		if(angle>0):
 			while(info[0]<angle):
-				p.setJointMotorControl2(self.bot, self.servo,p.VELOCITY_CONTROL, targetVelocity = 0.8, force = 0.09)
+				p.setJointMotorControl2(self.bot, self.servo,p.VELOCITY_CONTROL, targetVelocity = 1.5, force = 0.15)
 				info = p.getJointState(self.bot,self.servo)
 				p.stepSimulation()
 				time.sleep(1./240.)
@@ -487,7 +487,7 @@ class robot:
 			return None
 		if(angle<0):
 			while(info[0]>angle):
-				p.setJointMotorControl2(self.bot, self.servo,p.VELOCITY_CONTROL, targetVelocity = -0.8, force = 0.09)
+				p.setJointMotorControl2(self.bot, self.servo,p.VELOCITY_CONTROL, targetVelocity = -1.5, force = 0.15)
 				info = p.getJointState(self.bot,self.servo)
 				p.stepSimulation()
 				time.sleep(1./240.)
@@ -558,11 +558,13 @@ class robot:
 		pos_obj,orn_obj=p.getBasePositionAndOrientation(object)
 		# print(pos_obj,'-------------------------------------------')
 		euler_orn=p.getEulerFromQuaternion(orn_cup)
-		for _ in range(30):
+		for _ in range(20):
 			p.applyExternalForce(object,-1,[euler_orn[0],euler_orn[1],euler_orn[2]+10],[pos_cup[0],pos_cup[1],pos_cup[2]],p.WORLD_FRAME)
 			p.stepSimulation()
 			time.sleep(1.0/240.0)
 			pos_obj,orn_obj=p.getBasePositionAndOrientation(object)
+			if pos_obj[2]>pos_cup[2]-0.03:
+				break
 		cons=p.createConstraint(object,-1,self.bot,self.suction_cup,p.JOINT_FIXED,[0,0,1],[0,0,0],[pos_obj[0]-pos_cup[0],pos_obj[1]-pos_cup[1],pos_obj[2]-pos_cup[2]])
 		return cons
 
