@@ -498,11 +498,18 @@ class robot:
 			
 	def reset_gripper(self):
 		info = p.getJointState(self.bot,self.servo)
-		while(info[0]>0):
-			p.setJointMotorControl2(self.bot, self.servo,p.VELOCITY_CONTROL, targetVelocity = -0.8, force = 0.09)
-			info = p.getJointState(self.bot,self.servo)
-			p.stepSimulation()
-			time.sleep(1./240.)
+		if info[0]>0:
+			while(info[0]>0):
+				p.setJointMotorControl2(self.bot, self.servo,p.VELOCITY_CONTROL, targetVelocity = -0.8, force = 0.09)
+				info = p.getJointState(self.bot,self.servo)
+				p.stepSimulation()
+				time.sleep(1./240.)
+		else:
+			while(info[0]<0):
+				p.setJointMotorControl2(self.bot, self.servo,p.VELOCITY_CONTROL, targetVelocity = 0.8, force = 0.09)
+				info = p.getJointState(self.bot,self.servo)
+				p.stepSimulation()
+				time.sleep(1./240.)
 		p.setJointMotorControl2(self.bot, self.servo,p.VELOCITY_CONTROL, targetVelocity = 0, force = 0.09)
 				
 				
@@ -545,11 +552,13 @@ class robot:
 		i = 0.005
 		currentPos_init = p.getJointState(self.bot, self.suction)
 		currentPos = p.getJointState(self.bot, self.suction)
+		step = 0
 		while(currentPos[0]<0):
 			currentPos = p.getJointState(self.bot, self.suction)
 			p.setJointMotorControl2(self.bot, self.suction,p.POSITION_CONTROL, targetPosition = currentPos[0]+i)
 			p.stepSimulation()
 			time.sleep(1./240.)
+			step+=1
 		p.setJointMotorControl2(self.bot, self.suction,p.VELOCITY_CONTROL, targetVelocity = 0)
 
 	def suction_force(self, object):
@@ -558,14 +567,23 @@ class robot:
 		pos_obj,orn_obj=p.getBasePositionAndOrientation(object)
 		# print(pos_obj,'-------------------------------------------')
 		euler_orn=p.getEulerFromQuaternion(orn_cup)
-		for _ in range(20):
-			p.applyExternalForce(object,-1,[euler_orn[0],euler_orn[1],euler_orn[2]+2.5],[pos_cup[0],pos_cup[1],pos_cup[2]],p.WORLD_FRAME)
+		for _ in range(200):
+			print("lag raha")
+			p.applyExternalForce(object,-1,[euler_orn[0],euler_orn[1],euler_orn[2]+5],[pos_cup[0],pos_cup[1],pos_cup[2]],p.WORLD_FRAME)
 			p.stepSimulation()
 			time.sleep(1.0/240.0)
 			pos_obj,orn_obj=p.getBasePositionAndOrientation(object)
-			if pos_obj[2]>pos_cup[2]-0.02:
+			if pos_obj[2]>pos_cup[2]-0.01:
+				print("hogaya")
 				break
+		#cons = p.createConstraint(self.bot,)
 		cons=p.createConstraint(object,-1,self.bot,self.suction_cup,p.JOINT_FIXED,[0,0,1],[0,0,0],[pos_obj[0]-pos_cup[0],pos_obj[1]-pos_cup[1],pos_obj[2]-pos_cup[2]])
+		for i in range(50):
+			print("horaha")
+			info = p.getJointState(self.bot,self.servo)
+			p.setJointMotorControl2(self.bot, self.servo, p.POSITION_CONTROL, targetPosition = 0)
+			p.stepSimulation()
+		self.reset_gripper()
 		return cons
 
 	def remove_suction_force(self, cons):
@@ -601,24 +619,24 @@ class robot:
 									  'random_urdfs/502/502.urdf',
 									  
 									  'random_urdfs/002/002.urdf',
-									  'jenga/jenga.urdf',
+									  'random_urdfs/000/000.urdf',
 									  'random_urdfs/184/184.urdf',
 									  'random_urdfs/173/173.urdf',
-									  'random_urdfs/459/459.urdf',
+									  'cube_small.urdf',
 
 									  'random_urdfs/505/505.urdf',
-									  'random_urdfs/001/001.urdf',
+									  'random_urdfs/767/767.urdf',
 									  'lego/lego.urdf',
 									  'random_urdfs/504/504.urdf',
 									  'random_urdfs/996/996.urdf',
 
 									  'sphere_small.urdf',
-									  'random_urdfs/767/767.urdf',
-									  'cube_small.urdf',
+									  'random_urdfs/001/001.urdf',
+									  'jenga/jenga.urdf',
 									  'random_urdfs/330/330.urdf',
 									  'random_urdfs/008/008.urdf',
 								
-									  'random_urdfs/000/000.urdf',
+									  'random_urdfs/459/459.urdf',
 									  'random_urdfs/506/506.urdf',
 									  'random_urdfs/503/503.urdf',
 									  'teddy_vhacd.urdf',

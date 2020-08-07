@@ -2,6 +2,8 @@ import warnings
 from datetime import datetime
 
 import matplotlib.pyplot as plt
+import matplotlib
+#matplotlib.use("WX")
 import numpy as np
 
 from utils.dataset_processing.grasp import detect_grasps
@@ -69,7 +71,7 @@ def plot_results(
     ax.set_title('Width')
     ax.axis('off')
     plt.colorbar(plot)
-
+    fig.canvas.manager.window.wm_geometry("500x500+500+100")
     plt.pause(0.1)
     fig.canvas.draw()
     return gs
