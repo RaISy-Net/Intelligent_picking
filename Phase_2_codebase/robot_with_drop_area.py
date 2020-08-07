@@ -49,6 +49,7 @@ def pick(xpos, ypos, object, threshold=0.9):
             zpos = z_init - 1.181
             Robot.extend_wrist(zpos)
         Robot.move_suction_cup(ypos, xpos)
+        Robot.close_gripper(0.09, 1)
         Robot.suction_down()
         cons = Robot.suction_force(object)
         Robot.suction_up()
@@ -76,6 +77,7 @@ def place(xpos, ypos, suction, cons):
         time.sleep(1)
         Robot.remove_suction_force(cons)
         Robot.contract_arm()
+        Robot.open_gripper()
     else:
         Robot.move_frame_and_head(ypos+0.06, xpos-0.03)
         Robot.extend_arm()
@@ -119,11 +121,11 @@ def grab_drop_suck(xpos, ypos, object):
 Robot = robot()
 p.resetDebugVisualizerCamera(2 , 0, -41, [0, -1.4, 1])
 Robot.suction_up()
-object_indices = [6, 3, 5, 9, 11, 13, 15, 19, 22, 24]   #to select which object to go to
+object_indices = [2, 3, 5, 7, 11, 13, 15, 19, 22, 24]   #to select which object to go to
 count=0
 placing = [[-0.8, 0.4],[-0.8, 0.8], [-0.4, 0.4], [-0.4, 0.8], [0, 0.4], [0, 0.8], [0.4, 0.4], [0.4, 0.8], [0.8, 0.4], [0.8, 0.4]]
 suction = 0
-time.sleep(5)
+time.sleep(30)
 print(Robot.end_effector())
 for i in  object_indices: #can use object indices as well (to select particular object)
     object = Robot._objectUids[i]

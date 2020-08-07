@@ -71,7 +71,7 @@ def plot_results(
     ax.set_title('Width')
     ax.axis('off')
     plt.colorbar(plot)
-    fig.canvas.manager.window.wm_geometry("500x500+500+100")
+    fig.canvas.manager.window.wm_geometry("500x500+20+20")
     plt.pause(0.1)
     fig.canvas.draw()
     return gs
