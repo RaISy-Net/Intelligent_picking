@@ -483,7 +483,7 @@ class robot:
 				p.stepSimulation()
 				time.sleep(1./240.)
 				print(info[0])
-			p.setJointMotorControl2(self.bot, self.servo,p.VELOCITY_CONTROL, targetVelocity = 0, force = 0.09)
+			p.setJointMotorControl2(self.bot, self.servo,p.VELOCITY_CONTROL, targetVelocity = 0, force = 1000)
 			return None
 		if(angle<0):
 			while(info[0]>angle):
@@ -492,7 +492,7 @@ class robot:
 				p.stepSimulation()
 				time.sleep(1./240.)
 				print(info[0])
-			p.setJointMotorControl2(self.bot, self.servo,p.VELOCITY_CONTROL, targetVelocity = 0, force = 0.09)
+			p.setJointMotorControl2(self.bot, self.servo,p.VELOCITY_CONTROL, targetVelocity = 0, force = 1000)
 			return None
 		
 			

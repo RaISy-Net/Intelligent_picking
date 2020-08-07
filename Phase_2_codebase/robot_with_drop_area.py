@@ -119,7 +119,7 @@ def grab_drop_suck(xpos, ypos, object):
 Robot = robot()
 p.resetDebugVisualizerCamera(2 , 0, -41, [0, -1.4, 1])
 Robot.suction_up()
-object_indices = [2, 3, 5, 9, 11, 13, 15, 19, 22, 24]   #to select which object to go to
+object_indices = [6, 3, 5, 9, 11, 13, 15, 19, 22, 24]   #to select which object to go to
 count=0
 placing = [[-0.8, 0.4],[-0.8, 0.8], [-0.4, 0.4], [-0.4, 0.8], [0, 0.4], [0, 0.8], [0.4, 0.4], [0.4, 0.8], [0.8, 0.4], [0.8, 0.4]]
 suction = 0
