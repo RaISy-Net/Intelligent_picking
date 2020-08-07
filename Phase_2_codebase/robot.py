@@ -578,7 +578,7 @@ class robot:
 				break
 		#cons = p.createConstraint(self.bot,)
 		cons=p.createConstraint(object,-1,self.bot,self.suction_cup,p.JOINT_FIXED,[0,0,1],[0,0,0],[pos_obj[0]-pos_cup[0],pos_obj[1]-pos_cup[1],pos_obj[2]-pos_cup[2]])
-		for i in range(50):
+		for i in range(75):
 			print("horaha")
 			info = p.getJointState(self.bot,self.servo)
 			p.setJointMotorControl2(self.bot, self.servo, p.POSITION_CONTROL, targetPosition = 0)
