@@ -2,8 +2,6 @@ import warnings
 from datetime import datetime
 
 import matplotlib.pyplot as plt
-import matplotlib
-#matplotlib.use("WX")
 import numpy as np
 
 from utils.dataset_processing.grasp import detect_grasps
@@ -36,7 +34,7 @@ def plot_results(
 
     plt.ion()
     plt.clf()
-    ax = fig.add_subplot(2, 3, 1)
+    ax = fig.add_subplot(1, 5, 1)
     ax.imshow(rgb_img)
     ax.set_title('RGB')
     ax.axis('off')
@@ -47,35 +45,34 @@ def plot_results(
         ax.set_title('Depth')
         ax.axis('off')
 
-    ax = fig.add_subplot(2, 3, 3)
+    ax = fig.add_subplot(1, 5, 2)
     ax.imshow(rgb_img)
     for g in gs:
         g.plot(ax)
     ax.set_title('Grasp')
     ax.axis('off')
 
-    ax = fig.add_subplot(2, 3, 4)
+    ax = fig.add_subplot(1, 5, 3)
     plot = ax.imshow(grasp_q_img, cmap='jet', vmin=0, vmax=1)
     ax.set_title('Q')
     ax.axis('off')
     plt.colorbar(plot)
 
-    ax = fig.add_subplot(2, 3, 5)
+    ax = fig.add_subplot(1, 5, 4)
     plot = ax.imshow(grasp_angle_img, cmap='hsv', vmin=-np.pi / 2, vmax=np.pi / 2)
     ax.set_title('Angle')
     ax.axis('off')
     plt.colorbar(plot)
 
-    ax = fig.add_subplot(2, 3, 6)
+    ax = fig.add_subplot(1, 5, 5)
     plot = ax.imshow(grasp_width_img, cmap='jet', vmin=0, vmax=100)
     ax.set_title('Width')
     ax.axis('off')
     plt.colorbar(plot)
-    fig.canvas.manager.window.wm_geometry("500x500+20+20")
+
     plt.pause(0.1)
     fig.canvas.draw()
     return gs
-    
 
 
 def plot_grasp(
@@ -121,7 +118,7 @@ def plot_grasp(
         fig.savefig('results/{}.png'.format(time))
 
 
-def save_results(rgb_img, grasp_q_img, grasp_angle_img, depth_img=None, no_grasps=1, grasp_width_img=None):
+def save_results(x,rgb_img, grasp_q_img, grasp_angle_img, depth_img=None, no_grasps=1, grasp_width_img=None):
     """
     Plot the output of a network
     :param rgb_img: RGB Image
@@ -133,7 +130,7 @@ def save_results(rgb_img, grasp_q_img, grasp_angle_img, depth_img=None, no_grasp
     :return:
     """
     gs = detect_grasps(grasp_q_img, grasp_angle_img, width_img=grasp_width_img, no_grasps=no_grasps)
-
+    '''
     fig = plt.figure(figsize=(10, 10))
     plt.ion()
     plt.clf()
@@ -154,8 +151,8 @@ def save_results(rgb_img, grasp_q_img, grasp_angle_img, depth_img=None, no_grasp
         ax.set_title('Depth')
         ax.axis('off')
         fig.savefig('results/depth.png')
-
-    fig = plt.figure(figsize=(10, 10))
+    '''
+    fig = plt.figure(figsize=(5, 5))
     plt.ion()
     plt.clf()
     ax = plt.subplot(111)
@@ -164,8 +161,9 @@ def save_results(rgb_img, grasp_q_img, grasp_angle_img, depth_img=None, no_grasp
         g.plot(ax)
     ax.set_title('Grasp')
     ax.axis('off')
-    fig.savefig('results/grasp.png')
-
+    fig.savefig('results/grasp'+str(x)+'.png')
+    plt.close()
+    '''
     fig = plt.figure(figsize=(10, 10))
     plt.ion()
     plt.clf()
@@ -198,3 +196,4 @@ def save_results(rgb_img, grasp_q_img, grasp_angle_img, depth_img=None, no_grasp
 
     fig.canvas.draw()
     plt.close(fig)
+    '''

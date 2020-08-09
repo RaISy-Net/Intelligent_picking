@@ -68,7 +68,8 @@ def predict_grasp_angle(network, rgb_path, depth_path):
                 grasp_width_img=width_img
             )
         else:
-            fig = plt.figure(figsize=(10, 10))
+            fig = plt.figure(figsize=(7, 2))
+            fig.canvas.manager.window.wm_geometry("+330+440")
             gs=plot_results(fig=fig,
                          rgb_img=img_data.get_rgb(rgb, False),
                          grasp_q_img=q_img,

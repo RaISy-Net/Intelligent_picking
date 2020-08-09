@@ -16,12 +16,15 @@ class robot:
 	def __init__(self, urdfRoot = pybullet_data.getDataPath(), num_Objects = 25, blockRandom = 0.3):
 		p.connect(p.GUI)
 		p.loadURDF(os.path.join(pybullet_data.getDataPath(), "plane.urdf"), 0, 0, 0)
+		
 		self.bot = p.loadURDF('./rsc/bot.urdf',basePosition = [0,0,1.7])
 		self.rail1 = p.loadURDF('./rsc/rail1.urdf',basePosition = [-1.25,0,0.01],baseOrientation = p.getQuaternionFromEuler([0,0,np.pi/2]), useFixedBase = True)
 		self.rail2 = p.loadURDF('./rsc/rail1.urdf',basePosition = [1.25,0,0.01],baseOrientation = p.getQuaternionFromEuler([0,0,np.pi/2]), useFixedBase = True)
 		self.cam1 = p.loadURDF('./rsc/cam1.urdf',basePosition = [1.5,-1,2],baseOrientation = p.getQuaternionFromEuler([0,0,np.pi/2]),useFixedBase = True)
 		self.cam2 = p.loadURDF('./rsc/cam1.urdf',basePosition = [1.5,1,2],baseOrientation = p.getQuaternionFromEuler([0,0,np.pi/2]),useFixedBase = True)
+		
 		p.setGravity(0,0,-10)
+		
 		self.n = p.getNumJoints(self.bot)
 		self.wrist = 11
 		self.mid_arm = 8
@@ -39,12 +42,13 @@ class robot:
 		for i in range(self.n):
 			print(i)
 			print(p.getJointInfo(self.bot,i))
+		
 		#self.cart1_link=29
 		#self.cart2_link=47
 		self.suction_cup=23
 		#cart1 pos (1.2432089007861375, -0.3714641732884502, 0.10364430206356245)
         #cart2 pos (-1.251821904661355, -0.3712655324423194, 0.10362405301399435)
-
+		
 		p.createConstraint(self.rail1,-1,-1,-1,p.JOINT_FIXED,[1,0,0],[0,0,0],[-1.25,0,0.004989748675026239],childFrameOrientation=p.getQuaternionFromEuler([0,0,np.pi/2]))
 		p.createConstraint(self.rail2,-1,-1,-1,p.JOINT_FIXED,[1,0,0],[0,0,0],[ 1.25,0,0.004989748675026239],childFrameOrientation=p.getQuaternionFromEuler([0,0,np.pi/2]))
 		p.changeDynamics(bodyUniqueId=self.rail1,
@@ -54,12 +58,13 @@ class robot:
 				             linkIndex=-1,
 				             lateralFriction=0.6)
 		self.n = p.getNumJoints(self.bot)
-		wheels = [38,41,44,47,64,67,70,73]
+		wheels = [38,41,44,47,73,76,79,82]
 		for i in wheels:
 			p.changeDynamics(bodyUniqueId=self.bot,
 				             linkIndex=i,
 				             lateralFriction=0.7,
 				             restitution=0.5)
+		
 		'''
 		wheel_h = 0.14
 		p.createConstraint(self.bot,27,self.rail1,-1,p.JOINT_PRISMATIC,[1,0,0],[0,0,0],[ 0, 0 , wheel_h])
@@ -71,7 +76,7 @@ class robot:
 		p.changeVisualShape(self.bot,27,rgbaColor=[0,1,0,1])
 		p.changeVisualShape(self.bot,45,rgbaColor=[0,1,0,1])
 		'''
-
+		
 		fingers = [14,15]
 
 		for i in fingers:
@@ -80,7 +85,7 @@ class robot:
 				             lateralFriction=2,
 				             restitution=0.5)
 		self.n = p.getNumJoints(self.bot)
-
+		
 		for _ in range(500):
 			p.stepSimulation()
 		
@@ -92,21 +97,27 @@ class robot:
 		self._width = 1024
 		self._height = 1024
 		
-		MakeArena(x=0,y=0,z=0.05,
-	      scale_x=self.Area_Halfdim,scale_y=self.Area_Halfdim,scale_z=0,
-	      Inter_area_dist=0.5,pickAreaHeight=0.90)
+		#MakeArena(x=0,y=0,z=0.05,
+	      #scale_x=self.Area_Halfdim,scale_y=self.Area_Halfdim,scale_z=0,
+	      #Inter_area_dist=0.5,pickAreaHeight=0.90)
 		
 		self.overhead_camera(1)
 
-		self._numObjects = num_Objects
-		urdfList = self.get_objects()
-		self._objectUids = self._place_objects(urdfList)
+		#self._numObjects = num_Objects
+		#urdfList = self.get_objects()
+		#self._objectUids = self._place_objects(urdfList)
 
 		for _ in range(500):
 			p.stepSimulation()
 		print("done")
 		img = self.overhead_camera(0)
 		img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+		#p.configureDebugVisualizer(p.COV_ENABLE_SHADOWS, 0)
+		#highlight = p.createVisualShape(p.GEOM_BOX, halfExtents = [1, 2.25, 1.05], rgbaColor = [0, 1, 0, 0.3], visualFramePosition = [0,0,0])
+		#highlight2 = p.createVisualShape(p.GEOM_BOX, halfExtents = [1.6, 1.2, 1.1], rgbaColor = [0, 1, 0, 0.3], visualFramePosition = [0,0,0])
+		#p.createMultiBody(baseVisualShapeIndex = highlight, basePosition = [0,0,0])
+		#p.createMultiBody(baseVisualShapeIndex = highlight, basePosition = [0,1.3,0])
+		#p.resetDebugVisualizerCamera(4, 90, -89.999,[0,0,1])
 		cv2.imwrite("C:/Users/yashs/OneDrive/Desktop/object detection images/image0.jpeg", img)
 
 	def reset(self,a):
@@ -422,15 +433,15 @@ class robot:
 					error = error
 				total_error=total_error+error
 				j=kp*error+kd*(error-last_error)+ki*total_error
-				p.setJointMotorControl2(self.bot, 38,p.VELOCITY_CONTROL, targetVelocity = -j)
-				p.setJointMotorControl2(self.bot, 41,p.VELOCITY_CONTROL, targetVelocity = j)
+				p.setJointMotorControl2(self.bot, 38,p.VELOCITY_CONTROL, targetVelocity = j)
+				p.setJointMotorControl2(self.bot, 41,p.VELOCITY_CONTROL, targetVelocity = -j)
 				p.setJointMotorControl2(self.bot, 44,p.VELOCITY_CONTROL, targetVelocity = j)
 				p.setJointMotorControl2(self.bot, 47,p.VELOCITY_CONTROL, targetVelocity = -j)
 
-				p.setJointMotorControl2(self.bot, 64,p.VELOCITY_CONTROL, targetVelocity = +j)
-				p.setJointMotorControl2(self.bot, 67,p.VELOCITY_CONTROL, targetVelocity = -j)
-				p.setJointMotorControl2(self.bot, 70,p.VELOCITY_CONTROL, targetVelocity = +j)
 				p.setJointMotorControl2(self.bot, 73,p.VELOCITY_CONTROL, targetVelocity = -j)
+				p.setJointMotorControl2(self.bot, 76,p.VELOCITY_CONTROL, targetVelocity = +j)
+				p.setJointMotorControl2(self.bot, 79,p.VELOCITY_CONTROL, targetVelocity = +j)
+				p.setJointMotorControl2(self.bot, 82,p.VELOCITY_CONTROL, targetVelocity = -j)
 				init, ori = p.getBasePositionAndOrientation(self.bot)
 				# if init[1]>pos_frame-0.2 and init[1]<pos_frame+0.2:
 				# 	kp=30/2
@@ -469,10 +480,10 @@ class robot:
 				p.setJointMotorControl2(self.bot, 41,p.VELOCITY_CONTROL, targetVelocity =0)
 				p.setJointMotorControl2(self.bot, 44,p.VELOCITY_CONTROL, targetVelocity =0)
 				p.setJointMotorControl2(self.bot, 47,p.VELOCITY_CONTROL, targetVelocity =0)
-				p.setJointMotorControl2(self.bot, 64,p.VELOCITY_CONTROL, targetVelocity =0)
-				p.setJointMotorControl2(self.bot, 67,p.VELOCITY_CONTROL, targetVelocity =0)
-				p.setJointMotorControl2(self.bot, 70,p.VELOCITY_CONTROL, targetVelocity =0)
 				p.setJointMotorControl2(self.bot, 73,p.VELOCITY_CONTROL, targetVelocity =0)
+				p.setJointMotorControl2(self.bot, 76,p.VELOCITY_CONTROL, targetVelocity =0)
+				p.setJointMotorControl2(self.bot, 79,p.VELOCITY_CONTROL, targetVelocity =0)
+				p.setJointMotorControl2(self.bot, 82,p.VELOCITY_CONTROL, targetVelocity =0)
 				p.resetBasePositionAndOrientation(self.bot,pos,orn)
 				p.stepSimulation()
 				time.sleep(1./240.)
@@ -601,7 +612,7 @@ class robot:
 			p.stepSimulation()
 
 	def move_suction_cup(self, pos_frame, pos_head):
-		self.move_frame_and_head(pos_frame+0.06, pos_head-0.15)
+		self.move_frame_and_head(pos_frame+0.06, pos_head-0.17)
 
 	def _get_random_object(self):
 		"""Randomly choose an object urdf from the random_urdfs directory.
@@ -621,7 +632,7 @@ class robot:
 		return selected_objects_filenames
 
 	def get_objects(self):
-		selected_objects_filenames = ['random_urdfs/018/018.urdf',
+		selected_objects_filenames = ['lego/lego.urdf',
 									  'random_urdfs/934/934.urdf',
 									  'random_urdfs/507/507.urdf',
 									  'random_urdfs/622/622.urdf',
@@ -635,20 +646,20 @@ class robot:
 
 									  'random_urdfs/505/505.urdf',
 									  'random_urdfs/767/767.urdf',
-									  'lego/lego.urdf',
+									  'random_urdfs/018/018.urdf',
 									  'random_urdfs/504/504.urdf',
 									  'random_urdfs/996/996.urdf',
 
 									  'sphere_small.urdf',
 									  'random_urdfs/001/001.urdf',
+									  'teddy_vhacd.urdf',
 									  'jenga/jenga.urdf',
 									  'random_urdfs/330/330.urdf',
-									  'random_urdfs/008/008.urdf',
-								
+									  					
 									  'random_urdfs/459/459.urdf',
 									  'random_urdfs/506/506.urdf',
 									  'random_urdfs/503/503.urdf',
-									  'teddy_vhacd.urdf',
+									  'random_urdfs/008/008.urdf',
 									  'duck_vhacd.urdf']
 
 		return selected_objects_filenames
@@ -658,15 +669,33 @@ class robot:
 		xpos = -0.8
 		ypos = -0.45
 		count = 0
+		count2 = 0
+		counter = 0
+		x = 0
+		y = 0 
 		#xpos = random.uniform(-0.8, 0.8)
 		#ypos = random.uniform(-0.45, -2.05)
+		object_indices = [2, 3, 5, 7, 11, 13, 15, 17]
+		positions = [[-0.8, 0.4],[-0.8, 0.8], [-0.4, 0.4], [-0.4, 0.8], [0, 0.4], [0, 0.8], [0.4, 0.4], [0.4, 0.8]]
 		for urdf_name in urdfList:
 			#xpos = random.uniform(-0.8, 0.8)
 			#ypos = random.uniform(-0.45, -2.05)
 			angle = np.pi / 2 + self._blockRandom * np.pi * random.random()
 			orn = p.getQuaternionFromEuler([0,0,angle])
 			urdf_path=os.path.join(self._urdfRoot, urdf_name)
+			#if count in object_indices:
+				#x = xpos
+				#y = ypos
+				#xpos = positions[count2][0]
+				#ypos = positions[count2][1]
+				#count2+=1
+				#counter = 1
+			#else:
+				#counter = 0
 			uid = p.loadURDF(urdf_path, [xpos, ypos, 1], [orn[0], orn[1], orn[2], orn[3]])
+			#if counter==1:
+				#xpos = x
+				#ypos = y
 			objectUids.append(uid)
 			count+=1
 			ypos-=0.4
