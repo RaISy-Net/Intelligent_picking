@@ -23,7 +23,7 @@ payload at the end effector whose costs are around INR 10,000 per unit. However 
 
 
 <p align="center">
-   <img width="250" height="250" src="https://github.com/RaISy-Net/Intelligent_picking/blob/master/ReadmeImages/OD.jpeg.jpg">
+   <img width="1000" height="250" src="https://github.com/RaISy-Net/Intelligent_picking/blob/master/ReadmeImages/OD.jpeg.jpg">
    <img width="500" height="250" src="https://github.com/RaISy-Net/Intelligent_picking/blob/master/ReadmeImages/Ge.png">
    <img width="250" height="250" src="https://github.com/RaISy-Net/Intelligent_picking/blob/master/ReadmeImages/ge2.png">
 </p>
