@@ -20,14 +20,12 @@ payload at the end effector whose costs are around INR 10,000 per unit. However 
 
 <p align="center">
    <img width="250" height="250" src="https://github.com/RaISy-Net/Intelligent_picking/blob/master/ReadmeImages/sp.png">
-</p>
-<p align="center">
-<img width="250" height="250" src="https://github.com/RaISy-Net/Intelligent_picking/blob/master/ReadmeImages/OD.jpeg.jpg">
-</p>   
+
 
 <p align="center">
+   <img width="250" height="250" src="https://github.com/RaISy-Net/Intelligent_picking/blob/master/ReadmeImages/OD.jpeg.jpg">
    <img width="250" height="250" src="https://github.com/RaISy-Net/Intelligent_picking/blob/master/ReadmeImages/Ge.png">
-      <img width="250" height="250" src="https://github.com/RaISy-Net/Intelligent_picking/blob/master/ReadmeImages/ge2.png">
+   <img width="250" height="250" src="https://github.com/RaISy-Net/Intelligent_picking/blob/master/ReadmeImages/ge2.png">
 </p>
 
 For a more deatailed explanation of our work, check out our Phase 2 Report submission - [Repot.pdf](https://github.com/RaISy-Net/Intelligent_picking/blob/master/Phase_2_submission/Docs/X%20Ash%20A%20-%2012_IIT%20(BHU)%20Varanasi_Intelligent_Picking_-_Round_3.pdf)
