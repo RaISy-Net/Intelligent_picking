@@ -1,9 +1,29 @@
 # Intelligent_picking
-- solution for flipkart robotics grid challenge
-- kuka_arm is main script for running the simulator
+- solution for Flipkart Grid 2.0 - Robotics Challenge
 
+(add video link)
 
-# Papers & Blogs
+# Introduction :
+The problem of pick and place has been one of the actively studied area and a canonical problem in robotics. The Amazon Robotics Challenge (ARC) has a rich tradition for the fabrication of highly robust and competitive warehouse robots that do classify and segregate objects apart from just pick and place.The advent of Deep Reinforcement Learning as a reliable alternate for learning robot controllers has greatly increased the dexterity and robustness of these arms.The given problem statement of Flipkart Grid 2.0, is quite unique, unparalleled, challenging, and demands a great amount of customization and design improvements in terms of both hardware and software. The enormous dimension of the arena and the relatively heavier payload entirely eliminates the possibility of using any pre-existing methodologies. Also fabricating a robot from scratch at the given price point makes the challenge event the more exciting.Thus, we are sharing a solution for the above task, with all our experiments and results which according to the best of our knowledge the most cost-efficient, simplistic yet robust approach
+
+# Hardware Design
+(add images of our robtot, workspace,contro arch)
+* Our robot is greatly inspired by cartman, owing to its cost-efficient cartesian design which could cover the entire work area in a stable fashion.
+* The generic 6 DOF robot arm, requires high torque motors at every joint to support the
+payload at the end effector whose costs are around INR 10,000 per unit. However the torque to be applied per joint is drastically decreased due to our design and thus we are unaffected by the above limitation.
+
+# Software Pipeline
+(just add images of pipeline and results of detection)
+
+For a more deatailed report, check out our phase 2 submission (link)
+# Ongoing Work:
+* Having validated our solution in Pybullet Simulator, we are now moving on to build a real world prototype that closely resembles our idea within tha given budget of INR 50,000
+* We are actively working in addressing the the problems like simulation to reality transfer of out approach and customization of the pipeline for our pipeline for the fabricated hardware
+
+Any contributions/ suggestions are most welcome. 
+
+# References:
+## Papers & Blogs
 * [Robotic Pick-and-Place of Novel Objects
 in Clutter with Multi-Affordance Grasping
 and Cross-Domain Image Matching](https://arxiv.org/pdf/1710.01330.pdf)
@@ -28,7 +48,7 @@ MANIPULATOR](https://pdfs.semanticscholar.org/e5f8/d98ce96b1dfcce05966bed52a85a2
 * Grasp Prediction on RGB-D images [[Paper](https://arxiv.org/abs/1909.04810)] [[Code](https://github.com/skumra/robotic-grasping)]
 
 
-# Papers on Grasping and Pose estimation
+## Papers on Grasping and Pose estimation
 * [RefineNet for object segmentation](https://arxiv.org/pdf/1611.06612.pdf)
 * [Light weight RefineNet for object segmentation from RGB-D images](https://paperswithcode.com/paper/light-weight-refinenet-for-real-time-semantic)
 * [Training COCO dataset to master object segmentation - MEDIUM](https://towardsdatascience.com/master-the-coco-dataset-for-semantic-image-segmentation-part-1-of-2-732712631047)
@@ -40,7 +60,7 @@ MANIPULATOR](https://pdfs.semanticscholar.org/e5f8/d98ce96b1dfcce05966bed52a85a2
 
 
 
-# Other GitHub links
+## Other GitHub links
 * [MIT-Princeton Vision Toolbox for the APC 2016](https://github.com/andyzeng/apc-vision-toolbox)
 * [Motoman robots files](https://github.com/ros-industrial/motoman)
 * [Kawasaki Robotics files](https://github.com/Kawasaki-Robotics/khi_robot)
