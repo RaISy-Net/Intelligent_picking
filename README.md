@@ -8,9 +8,9 @@ The problem of pick and place has been one of the actively studied area and a ca
 
 # Hardware Design
 <p align="center">
-   <img width="250" height="458" src="https://github.com/RaISy-Net/Intelligent_picking/blob/master/ReadmeImages/ro.png">
-   <img width="250" height="458" src="https://github.com/RaISy-Net/Intelligent_picking/blob/master/ReadmeImages/ws.png">
-   <img width="250" height="458" src="https://github.com/RaISy-Net/Intelligent_picking/blob/master/ReadmeImages/ca.png">
+   <img width="250" height="250" src="https://github.com/RaISy-Net/Intelligent_picking/blob/master/ReadmeImages/ro.png">
+   <img width="250" height="250" src="https://github.com/RaISy-Net/Intelligent_picking/blob/master/ReadmeImages/ws.png">
+   <img width="250" height="250" src="https://github.com/RaISy-Net/Intelligent_picking/blob/master/ReadmeImages/ca.png">
 </p>
 (add images of our robtot, workspace,contro arch)
 * Our robot is greatly inspired by cartman, owing to its cost-efficient cartesian design which could cover the entire work area in a stable fashion.
