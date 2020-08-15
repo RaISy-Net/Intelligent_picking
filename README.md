@@ -41,7 +41,10 @@ payload at the end effector whose costs are around INR 10,000 per unit. However 
 
 * We are actively working in addressing the the problems like **simulation to reality transfer** of our approach and customization of the pipeline for our pipeline for the fabricated hardware.
 
-**Any contributions/ suggestions are most welcome.Do contact the contributors with your valuable queries** 
+
+**1. Any contributions/ suggestions are most welcome. Do contact the contributors with your valuable queries.** 
+
+**2. For clarfications about running our code, feel free to contact us.** 
 
 # References:
 ## Papers & Blogs
