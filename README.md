@@ -12,7 +12,7 @@ The problem of pick and place has been one of the actively studied area and a ca
    <img width="400" height="300" src="https://github.com/RaISy-Net/Intelligent_picking/blob/master/ReadmeImages/ca.png">
 </p>
 
-* Our robot is greatly inspired by cartman, owing to its cost-efficient cartesian design which could cover the entire work area in a stable fashion.
+* Our robot is greatly inspired by [cartman](https://arxiv.org/pdf/1709.06283.pdf), owing to its cost-efficient cartesian design which could cover the entire work area in a stable fashion.
 * The generic 6 DOF robot arm, requires high torque motors at every joint to support the
 payload at the end effector whose costs are around INR 10,000 per unit. However, the torque to be applied per joint is drastically decreased due to our design and thus we are unaffected by the above limitation.
 
