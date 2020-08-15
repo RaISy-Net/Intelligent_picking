@@ -12,12 +12,24 @@ The problem of pick and place has been one of the actively studied area and a ca
    <img width="250" height="250" src="https://github.com/RaISy-Net/Intelligent_picking/blob/master/ReadmeImages/ws.png">
    <img width="250" height="250" src="https://github.com/RaISy-Net/Intelligent_picking/blob/master/ReadmeImages/ca.png">
 </p>
-(add images of our robtot, workspace,contro arch)
+
 * Our robot is greatly inspired by cartman, owing to its cost-efficient cartesian design which could cover the entire work area in a stable fashion.
 * The generic 6 DOF robot arm, requires high torque motors at every joint to support the
 payload at the end effector whose costs are around INR 10,000 per unit. However the torque to be applied per joint is drastically decreased due to our design and thus we are unaffected by the above limitation.
 
 # Software Pipeline
+<p align="center">
+   <img width="250" height="250" src="https://github.com/RaISy-Net/Intelligent_picking/blob/master/ReadmeImages/sp.png">
+</p>
+<p align="center">
+<img width="250" height="250" src="https://github.com/RaISy-Net/Intelligent_picking/blob/master/ReadmeImages/OD.jpeg.jpg">
+</p>   
+
+<p align="center">
+   <img width="250" height="250" src="https://github.com/RaISy-Net/Intelligent_picking/blob/master/ReadmeImages/Ge.png">
+      <img width="250" height="250" src="https://github.com/RaISy-Net/Intelligent_picking/blob/master/ReadmeImages/ge.png">
+</p>
+
 (just add images of pipeline and results of detection)
 
 For a more deatailed explanation of our work, check out our Phase 2 Report submission - [Repot.pdf](https://github.com/RaISy-Net/Intelligent_picking/blob/master/Phase_2_submission/Docs/X%20Ash%20A%20-%2012_IIT%20(BHU)%20Varanasi_Intelligent_Picking_-_Round_3.pdf)
