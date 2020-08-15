@@ -1,7 +1,7 @@
 # Intelligent_picking
 - solution for Flipkart Grid 2.0 - Robotics Challenge
 
-A brief Overview of our approach could be found in this video - **[VIDEO SUBMISSION]**(https://www.youtube.com/watch?v=IlN6-pN3mRA&feature=youtu.be)
+A brief Overview of our approach could be found in this video - **[VIDEO SUBMISSION](https://www.youtube.com/watch?v=IlN6-pN3mRA&feature=youtu.be)**
 
 # Introduction :
 The problem of pick and place has been one of the actively studied area and a canonical problem in robotics. The Amazon Robotics Challenge (ARC) has a rich tradition for the fabrication of highly robust and competitive warehouse robots that do classify and segregate objects apart from just pick and place.The advent of Deep Reinforcement Learning as a reliable alternate for learning robot controllers has greatly increased the dexterity and robustness of these arms.The given problem statement of Flipkart Grid 2.0, is quite unique, unparalleled, challenging, and demands a great amount of customization and design improvements in terms of both hardware and software. The enormous dimension of the arena and the relatively heavier payload entirely eliminates the possibility of using any pre-existing methodologies. Also fabricating a robot from scratch at the given price point makes the challenge event the more exciting.Thus, we are sharing a solution for the above task, with all our experiments and results which according to the best of our knowledge the most cost-efficient, simplistic yet robust approach
