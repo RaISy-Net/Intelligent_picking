@@ -9,7 +9,7 @@ The problem of pick and place has been one of the actively studied area and a ca
 <p align="center">
    <img width="300" height="300" src="https://github.com/RaISy-Net/Intelligent_picking/blob/master/ReadmeImages/ro.png">
    <img width="300" height="300" src="https://github.com/RaISy-Net/Intelligent_picking/blob/master/ReadmeImages/ws.png">
-   <img width="300" height="300" src="https://github.com/RaISy-Net/Intelligent_picking/blob/master/ReadmeImages/ca.png">
+   <img width="400" height="300" src="https://github.com/RaISy-Net/Intelligent_picking/blob/master/ReadmeImages/ca.png">
 </p>
 
 * Our robot is greatly inspired by cartman, owing to its cost-efficient cartesian design which could cover the entire work area in a stable fashion.
@@ -20,7 +20,9 @@ payload at the end effector whose costs are around INR 10,000 per unit. However 
 
 <p align="center">
    <img width="1000" height="350" src="https://github.com/RaISy-Net/Intelligent_picking/blob/master/ReadmeImages/sp.png">
+</p>
 
+<br />
 
 <p align="center">
    <img width="250" height="250" src="https://github.com/RaISy-Net/Intelligent_picking/blob/master/ReadmeImages/OD.jpeg.jpg">
