@@ -1,5 +1,4 @@
-# Intelligent_picking
-- solution for Flipkart Grid 2.0 - Robotics Challenge
+# Intelligent Picking
 
 A brief Overview of our approach could be found in this video - **[VIDEO SUBMISSION](https://www.youtube.com/watch?v=IlN6-pN3mRA&feature=youtu.be)**
 
@@ -18,6 +17,7 @@ The problem of pick and place has been one of the actively studied area and a ca
 payload at the end effector whose costs are around INR 10,000 per unit. However the torque to be applied per joint is drastically decreased due to our design and thus we are unaffected by the above limitation.
 
 # Software Pipeline
+
 <p align="center">
    <img width="250" height="250" src="https://github.com/RaISy-Net/Intelligent_picking/blob/master/ReadmeImages/sp.png">
 </p>
@@ -34,8 +34,10 @@ For a more deatailed explanation of our work, check out our Phase 2 Report submi
 
 
 # Ongoing Work:
-* Having validated our solution in Pybullet Simulator, we are now moving on to build a real world prototype that closely resembles our idea within tha given budget of INR 50,000
-* We are actively working in addressing the the problems like simulation to reality transfer of out approach and customization of the pipeline for our pipeline for the fabricated hardware
+
+* Having validated our solution in **Pybullet** Simulator, we are now moving on to build a real world prototype that closely resembles our idea within the given budget of **INR 50,000**
+
+* We are actively working in addressing the the problems like **simulation to reality transfer** of our approach and customization of the pipeline for our pipeline for the fabricated hardware.
 
 Any contributions/ suggestions are most welcome. 
 
