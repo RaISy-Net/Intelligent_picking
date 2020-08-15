@@ -1,7 +1,7 @@
 # Intelligent_picking
 - solution for Flipkart Grid 2.0 - Robotics Challenge
 
-(add video link)
+A brief Overview of our approach could be found in this video - [VIDEO SUBMISSION](https://www.youtube.com/watch?v=IlN6-pN3mRA&feature=youtu.be)
 
 # Introduction :
 The problem of pick and place has been one of the actively studied area and a canonical problem in robotics. The Amazon Robotics Challenge (ARC) has a rich tradition for the fabrication of highly robust and competitive warehouse robots that do classify and segregate objects apart from just pick and place.The advent of Deep Reinforcement Learning as a reliable alternate for learning robot controllers has greatly increased the dexterity and robustness of these arms.The given problem statement of Flipkart Grid 2.0, is quite unique, unparalleled, challenging, and demands a great amount of customization and design improvements in terms of both hardware and software. The enormous dimension of the arena and the relatively heavier payload entirely eliminates the possibility of using any pre-existing methodologies. Also fabricating a robot from scratch at the given price point makes the challenge event the more exciting.Thus, we are sharing a solution for the above task, with all our experiments and results which according to the best of our knowledge the most cost-efficient, simplistic yet robust approach
@@ -15,7 +15,7 @@ payload at the end effector whose costs are around INR 10,000 per unit. However 
 # Software Pipeline
 (just add images of pipeline and results of detection)
 
-For a more deatailed report, check out our phase 2 submission (link)
+For a more deatailed explanation of our work, check out our Phase 2 Report submission - [Repot.pdf](https://github.com/RaISy-Net/Intelligent_picking/blob/master/Phase_2_submission/Docs/X%20Ash%20A%20-%2012_IIT%20(BHU)%20Varanasi_Intelligent_Picking_-_Round_3.pdf)
 # Ongoing Work:
 * Having validated our solution in Pybullet Simulator, we are now moving on to build a real world prototype that closely resembles our idea within tha given budget of INR 50,000
 * We are actively working in addressing the the problems like simulation to reality transfer of out approach and customization of the pipeline for our pipeline for the fabricated hardware
