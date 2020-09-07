@@ -13,10 +13,11 @@ from drop_area import *
 
 
 class robot:
-	def __init__(self, urdfRoot = pybullet_data.getDataPath(), num_Objects = 25, blockRandom = 0.3):
+	def __init__(self, urdfRoot = pybullet_data.getDataPath(), num_Objects = 25, blockRandom = 0.3):		
 		p.connect(p.GUI)
 		p.loadURDF(os.path.join(pybullet_data.getDataPath(), "plane.urdf"), 0, 0, 0)
 		
+		#loading the robot parts
 		self.bot = p.loadURDF('./rsc/bot.urdf',basePosition = [0,0,1.7])
 		self.rail1 = p.loadURDF('./rsc/rail1.urdf',basePosition = [-1.25,0,0.01],baseOrientation = p.getQuaternionFromEuler([0,0,np.pi/2]), useFixedBase = True)
 		self.rail2 = p.loadURDF('./rsc/rail1.urdf',basePosition = [1.25,0,0.01],baseOrientation = p.getQuaternionFromEuler([0,0,np.pi/2]), useFixedBase = True)
@@ -24,7 +25,7 @@ class robot:
 		self.cam2 = p.loadURDF('./rsc/cam1.urdf',basePosition = [1.5,1,2],baseOrientation = p.getQuaternionFromEuler([0,0,np.pi/2]),useFixedBase = True)
 		
 		p.setGravity(0,0,-10)
-		
+		#defining the link numbers
 		self.n = p.getNumJoints(self.bot)
 		self.wrist = 11
 		self.mid_arm = 8
@@ -36,6 +37,7 @@ class robot:
 		self.camera = 18
 		self.end_effect = 13
 		self.suction = 23
+		self.suction_cup = 23
 		self.cart2_link = 36
 		self.cart1_link = 62
 		i = 0
@@ -43,12 +45,7 @@ class robot:
 			print(i)
 			print(p.getJointInfo(self.bot,i))
 		
-		#self.cart1_link=29
-		#self.cart2_link=47
-		self.suction_cup=23
-		#cart1 pos (1.2432089007861375, -0.3714641732884502, 0.10364430206356245)
-        #cart2 pos (-1.251821904661355, -0.3712655324423194, 0.10362405301399435)
-		
+		#constraining the rails to increase the stability of the bot
 		p.createConstraint(self.rail1,-1,-1,-1,p.JOINT_FIXED,[1,0,0],[0,0,0],[-1.25,0,0.004989748675026239],childFrameOrientation=p.getQuaternionFromEuler([0,0,np.pi/2]))
 		p.createConstraint(self.rail2,-1,-1,-1,p.JOINT_FIXED,[1,0,0],[0,0,0],[ 1.25,0,0.004989748675026239],childFrameOrientation=p.getQuaternionFromEuler([0,0,np.pi/2]))
 		p.changeDynamics(bodyUniqueId=self.rail1,
@@ -58,37 +55,23 @@ class robot:
 				             linkIndex=-1,
 				             lateralFriction=0.6)
 		self.n = p.getNumJoints(self.bot)
+		#changing the friction values of the wheels of the carts
 		wheels = [38,41,44,47,73,76,79,82]
 		for i in wheels:
 			p.changeDynamics(bodyUniqueId=self.bot,
 				             linkIndex=i,
 				             lateralFriction=0.7,
 				             restitution=0.5)
-		
-		'''
-		wheel_h = 0.14
-		p.createConstraint(self.bot,27,self.rail1,-1,p.JOINT_PRISMATIC,[1,0,0],[0,0,0],[ 0, 0 , wheel_h])
-		p.createConstraint(self.bot,27,self.rail1,-1,p.JOINT_PRISMATIC,[-1,0,0],[0,0,0],[0,0, wheel_h])
-
-		p.createConstraint(self.bot,45,self.rail2,-1,p.JOINT_PRISMATIC,[1,0,0],[0,0,0], [0, 0 , wheel_h])
-		p.createConstraint(self.bot,45,self.rail2,-1,p.JOINT_PRISMATIC,[-1,0,0],[0,0,0],[0,0, wheel_h])
-		
-		p.changeVisualShape(self.bot,27,rgbaColor=[0,1,0,1])
-		p.changeVisualShape(self.bot,45,rgbaColor=[0,1,0,1])
-		'''
-		
+		#changing the friction and restitution values of the fingers
 		fingers = [14,15]
-
 		for i in fingers:
 			p.changeDynamics(bodyUniqueId=self.bot,
 				             linkIndex=i,
 				             lateralFriction=2,
 				             restitution=0.5)
 		self.n = p.getNumJoints(self.bot)
-		
 		for _ in range(500):
 			p.stepSimulation()
-		
 		p.setPhysicsEngineParameter(numSolverIterations=150)
 
 		self.Area_Halfdim = 1
@@ -96,20 +79,19 @@ class robot:
 		self._urdfRoot = urdfRoot
 		self._width = 1024
 		self._height = 1024
-		
-		#MakeArena(x=0,y=0,z=0.05,
-	      #scale_x=self.Area_Halfdim,scale_y=self.Area_Halfdim,scale_z=0,
-	      #Inter_area_dist=0.5,pickAreaHeight=0.90)
+		#loading the arena
+		MakeArena(x=0,y=0,z=0.05,
+	      scale_x=self.Area_Halfdim,scale_y=self.Area_Halfdim,scale_z=0,
+	      Inter_area_dist=0.5,pickAreaHeight=0.90)
 		
 		self.overhead_camera(1)
-
-		#self._numObjects = num_Objects
-		#urdfList = self.get_objects()
-		#self._objectUids = self._place_objects(urdfList)
+		#loading various objects
+		self._numObjects = num_Objects
+		urdfList = self.get_objects()
+		self._objectUids = self._place_objects(urdfList)
 
 		for _ in range(500):
 			p.stepSimulation()
-		print("done")
 		img = self.overhead_camera(0)
 		img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
 		#p.configureDebugVisualizer(p.COV_ENABLE_SHADOWS, 0)
@@ -118,52 +100,97 @@ class robot:
 		#p.createMultiBody(baseVisualShapeIndex = highlight, basePosition = [0,0,0])
 		#p.createMultiBody(baseVisualShapeIndex = highlight, basePosition = [0,1.3,0])
 		#p.resetDebugVisualizerCamera(4, 90, -89.999,[0,0,1])
-		cv2.imwrite("C:/Users/yashs/OneDrive/Desktop/object detection images/image0.jpeg", img)
+		cv2.imwrite("./objdet_images/image.jpeg", img)
+		p.resetDebugVisualizerCamera(4, 0, -40, [0,0,0])
+		#time.sleep(1000)
 
-	def reset(self,a):
+	def reset(self,a):		#function to reset the environment if required
 		p.resetSimulation()
 		p.loadURDF(os.path.join(pybullet_data.getDataPath(), "plane.urdf"), 0, 0, 0)
-		self.bot = p.loadURDF('./rsc/bot.urdf',basePosition = [0,0,2])
-		self.rail1 = p.loadURDF('./rsc/rail1.urdf',basePosition = [-1.25,0,0.2],baseOrientation = p.getQuaternionFromEuler([0,0,np.pi/2]))
-		self.rail2 = p.loadURDF('./rsc/rail1.urdf',basePosition = [1.25,0,0.2],baseOrientation = p.getQuaternionFromEuler([0,0,np.pi/2]))
+		self.bot = p.loadURDF('./rsc/bot.urdf',basePosition = [0,0,1.7])
+		self.rail1 = p.loadURDF('./rsc/rail1.urdf',basePosition = [-1.25,0,0.01],baseOrientation = p.getQuaternionFromEuler([0,0,np.pi/2]), useFixedBase = True)
+		self.rail2 = p.loadURDF('./rsc/rail1.urdf',basePosition = [1.25,0,0.01],baseOrientation = p.getQuaternionFromEuler([0,0,np.pi/2]), useFixedBase = True)
 		self.cam1 = p.loadURDF('./rsc/cam1.urdf',basePosition = [1.5,-1,2],baseOrientation = p.getQuaternionFromEuler([0,0,np.pi/2]),useFixedBase = True)
 		self.cam2 = p.loadURDF('./rsc/cam1.urdf',basePosition = [1.5,1,2],baseOrientation = p.getQuaternionFromEuler([0,0,np.pi/2]),useFixedBase = True)
-		self.cart1_link=29
-		self.cart2_link=47
-		self.suction_cup=25
+		
 		p.setGravity(0,0,-10)
-		#cart1 pos (1.2432089007861375, -0.3714641732884502, 0.10364430206356245)
-        #cart2 pos (-1.251821904661355, -0.3712655324423194, 0.10362405301399435)
-
+		#defining the link numbers
+		self.n = p.getNumJoints(self.bot)
+		self.wrist = 11
+		self.mid_arm = 8
+		self.upper_arm = 5
+		self.head = 0
+		self.plate_left = 15
+		self.plate_right = 14
+		self.servo = 13
+		self.camera = 18
+		self.end_effect = 13
+		self.suction = 23
+		self.suction_cup = 23
+		self.cart2_link = 36
+		self.cart1_link = 62
+		i = 0
+		for i in range(self.n):
+			print(i)
+			print(p.getJointInfo(self.bot,i))
+		
+		#constraining the rails to increase the stability of the bot
 		p.createConstraint(self.rail1,-1,-1,-1,p.JOINT_FIXED,[1,0,0],[0,0,0],[-1.25,0,0.004989748675026239],childFrameOrientation=p.getQuaternionFromEuler([0,0,np.pi/2]))
 		p.createConstraint(self.rail2,-1,-1,-1,p.JOINT_FIXED,[1,0,0],[0,0,0],[ 1.25,0,0.004989748675026239],childFrameOrientation=p.getQuaternionFromEuler([0,0,np.pi/2]))
-
-		# p.createConstraint(self.bot,29,-1,-1,p.JOINT_PRISMATIC,[1,0,0],[0,0,0],[ 1.2432089007861375, -0.3714641732884502, 0.10364430206356245],childFrameOrientation=p.getQuaternionFromEuler([0,0,-np.pi/2]))
-		# p.createConstraint(self.bot,29,-1,-1,p.JOINT_PRISMATIC,[-1,0,0],[0,0,0],[ 1.2432089007861375, -0.3714641732884502, 0.10364430206356245],childFrameOrientation=p.getQuaternionFromEuler([0,0,-np.pi/2]))
-
-		# p.createConstraint(self.bot,47,-1,-1,p.JOINT_PRISMATIC,[1,0,0],[0,0,0],[ -1.251821904661355, -0.3714641732884502, 0.10364430206356245],childFrameOrientation=p.getQuaternionFromEuler([0,0,-np.pi/2]))
-		# p.createConstraint(self.bot,47,-1,-1,p.JOINT_PRISMATIC,[-1,0,0],[0,0,0],[ -1.251821904661355, -0.3714641732884502, 0.10364430206356245],childFrameOrientation=p.getQuaternionFromEuler([0,0,-np.pi/2]))
-		p.changeVisualShape(self.bot,29,rgbaColor=[0,1,0,1])
-		p.changeVisualShape(self.bot,47,rgbaColor=[0,1,0,1])
-		fingers = [14,15,17,16]
+		p.changeDynamics(bodyUniqueId=self.rail1,
+				             linkIndex=-1,
+				             lateralFriction=0.6)
+		p.changeDynamics(bodyUniqueId=self.rail2,
+				             linkIndex=-1,
+				             lateralFriction=0.6)
+		self.n = p.getNumJoints(self.bot)
+		#changing the friction values of the wheels of the carts
+		wheels = [38,41,44,47,73,76,79,82]
+		for i in wheels:
+			p.changeDynamics(bodyUniqueId=self.bot,
+				             linkIndex=i,
+				             lateralFriction=0.7,
+				             restitution=0.5)
+		#changing the friction and restitution values of the fingers
+		fingers = [14,15]
 		for i in fingers:
 			p.changeDynamics(bodyUniqueId=self.bot,
 				             linkIndex=i,
-				             lateralFriction=1,
+				             lateralFriction=2,
 				             restitution=0.5)
+		self.n = p.getNumJoints(self.bot)
+		for _ in range(500):
+			p.stepSimulation()
+		p.setPhysicsEngineParameter(numSolverIterations=150)
 
+		self.Area_Halfdim = 1
+		self._blockRandom = blockRandom
+		self._urdfRoot = urdfRoot
+		self._width = 1024
+		self._height = 1024
+		#loading the arena
 		MakeArena(x=0,y=0,z=0.05,
 	      scale_x=self.Area_Halfdim,scale_y=self.Area_Halfdim,scale_z=0,
 	      Inter_area_dist=0.5,pickAreaHeight=0.90)
 		
-		#self._numObjects = num_Objects
+		self.overhead_camera(1)
+		#loading various objects
+		self._numObjects = num_Objects
 		urdfList = self.get_objects()
 		self._objectUids = self._place_objects(urdfList)
+
 		for _ in range(500):
 			p.stepSimulation()
 		img = self.overhead_camera(0)
 		img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-		cv2.imwrite("C:/Users/yashs/OneDrive/Desktop/object detection images/image"+str(a)+".jpeg", img)
+		#p.configureDebugVisualizer(p.COV_ENABLE_SHADOWS, 0)
+		#highlight = p.createVisualShape(p.GEOM_BOX, halfExtents = [1, 2.25, 1.05], rgbaColor = [0, 1, 0, 0.3], visualFramePosition = [0,0,0])
+		#highlight2 = p.createVisualShape(p.GEOM_BOX, halfExtents = [1.6, 1.2, 1.1], rgbaColor = [0, 1, 0, 0.3], visualFramePosition = [0,0,0])
+		#p.createMultiBody(baseVisualShapeIndex = highlight, basePosition = [0,0,0])
+		#p.createMultiBody(baseVisualShapeIndex = highlight, basePosition = [0,1.3,0])
+		#p.resetDebugVisualizerCamera(4, 90, -89.999,[0,0,1])
+		cv2.imwrite("./objdet_images/image"+str(a)+".jpeg", img)
+		p.resetDebugVisualizerCamera(4, 0, -40, [0,0,0])
 	
 	def extend_arm(self):
 		# print('k')
@@ -199,12 +226,6 @@ class robot:
 				p.setJointMotorControl2(self.bot, self.wrist,p.VELOCITY_CONTROL, targetVelocity = 0)
 			if (i==0 and j==0 and k==0):
 				break
-		
-		
-		
-		
-
-			
 
 	def contract_arm(self):
 		i = 0
@@ -239,8 +260,7 @@ class robot:
 				p.setJointMotorControl2(self.bot, self.wrist,p.VELOCITY_CONTROL, targetVelocity = 0)
 			if (i==0 and j==0 and k==0):
 				break
-
-		
+	
 	def extend_wrist(self, size):
 		i = 0
 		currentPos_init = p.getJointState(self.bot, self.wrist)
@@ -253,7 +273,6 @@ class robot:
 			i = i+0.001
 		p.setJointMotorControl2(self.bot, self.wrist,p.VELOCITY_CONTROL, targetVelocity = 0)
 
-
 	def contract_wrist(self, size):
 		i = 0
 		currentPos_init = p.getJointState(self.bot, self.wrist)
@@ -265,7 +284,6 @@ class robot:
 			time.sleep(1./240.)
 			i = i+0.001
 		p.setJointMotorControl2(self.bot, self.wrist,p.VELOCITY_CONTROL, targetVelocity = 0)
-
 
 	def move_head(self, pos):
 		i = 0
@@ -287,8 +305,6 @@ class robot:
 				i = i+0.01
 		p.setJointMotorControl2(self.bot, self.head,p.VELOCITY_CONTROL, targetVelocity = 0)
 
-				
-
 	def close_gripper(self, size, count=0):
 		i = 0
 		currentPos_init = p.getJointState(self.bot, self.plate_left)
@@ -303,14 +319,12 @@ class robot:
 			time.sleep(1./240.)
 			i = i+0.001
 			if i>0.6:
-				print("not going further")
 				break
 		if count==0:
 			p.setJointMotorControl2(self.bot, self.plate_left,p.VELOCITY_CONTROL, targetVelocity = 0.2, force = 10)
 		else:
 			p.setJointMotorControl2(self.bot, self.plate_left,p.VELOCITY_CONTROL, targetVelocity = 0, force = 10)
 		#p.setJointMotorControl2(self.bot, self.plate_right,p.VELOCITY_CONTROL, targetVelocity = -0.09, force = 2)
-
 
 	def open_gripper(self):
 		i = 0
@@ -329,7 +343,6 @@ class robot:
 			i = i+0.001
 		p.setJointMotorControl2(self.bot, self.plate_left,p.VELOCITY_CONTROL, targetVelocity = 0)
 		#p.setJointMotorControl2(self.bot, self.plate_right,p.VELOCITY_CONTROL, targetVelocity = 0)
-
 
 	def move_frame(self, pos):
 		init, ori = p.getBasePositionAndOrientation(self.bot)
@@ -401,7 +414,6 @@ class robot:
 				k = k+1
 			return None
 
-
 	def move_frame_and_head(self, pos_frame ,pos_head):
 		# pos_frame = -1
 		kp=3
@@ -452,7 +464,6 @@ class robot:
 					increment=-0.01
 				if currentPos[0] < pos_head+0.01 and currentPos[0] > pos_head -0.01:
 					i=0
-					print("x mein ruk gaya")
 				p.setJointMotorControl2(self.bot, self.head,p.POSITION_CONTROL, targetPosition = currentPos[0]+(i/100))
 				i=i+increment
 				p.stepSimulation()
@@ -467,7 +478,6 @@ class robot:
 				print(t)
 				if counter > 5:
 					j=0
-					print("y mein ruk gaya")
 					print(p.getLinkState(self.bot,self.cart1_link)[0])
 					print(p.getLinkState(self.bot,self.cart2_link)[0])
 
@@ -490,7 +500,6 @@ class robot:
 				k = k+1
 			return None
 			
-
 	def rotate_gripper(self, angle):
 		info = p.getJointState(self.bot,self.servo)
 		if(angle>0):
@@ -551,7 +560,6 @@ class robot:
 	def end_effector(self):
 		return p.getLinkState(self.bot,self.end_effect)
 	
-
 	def suction_down(self):
 		i = 0.005
 		currentPos_init = p.getJointState(self.bot, self.suction)
@@ -562,8 +570,6 @@ class robot:
 			p.stepSimulation()
 			time.sleep(1./240.)
 		p.setJointMotorControl2(self.bot, self.suction,p.VELOCITY_CONTROL, targetVelocity = 0)
-
-		
 
 	def suction_up(self):
 		i = 0.005
@@ -588,18 +594,15 @@ class robot:
 		# print(pos_obj,'-------------------------------------------')
 		euler_orn=p.getEulerFromQuaternion(orn_cup)
 		for _ in range(500):
-			print("lag raha")
 			p.applyExternalForce(object,-1,[euler_orn[0],euler_orn[1],euler_orn[2]+2.5],[pos_cup[0],pos_cup[1],pos_cup[2]],p.WORLD_FRAME)
 			p.stepSimulation()
 			time.sleep(1.0/240.0)
 			pos_obj,orn_obj=p.getBasePositionAndOrientation(object)
 			if pos_obj[2]>pos_cup[2]-0.01:
-				print("hogaya")
 				break
 		#cons = p.createConstraint(self.bot,)
 		cons=p.createConstraint(object,-1,self.bot,self.suction_cup,p.JOINT_FIXED,[0,0,1],[0,0,0],[pos_obj[0]-pos_cup[0],pos_obj[1]-pos_cup[1],pos_obj[2]-pos_cup[2]])
 		for i in range(75):
-			print("horaha")
 			info = p.getJointState(self.bot,self.servo)
 			p.setJointMotorControl2(self.bot, self.servo, p.POSITION_CONTROL, targetPosition = 0)
 			p.stepSimulation()
@@ -615,13 +618,6 @@ class robot:
 		self.move_frame_and_head(pos_frame+0.06, pos_head-0.17)
 
 	def _get_random_object(self):
-		"""Randomly choose an object urdf from the random_urdfs directory.
-		Args:
-		num_objects:
-			Number of graspable objects.
-		Returns:
-		A list of urdf filenames.
-		"""
 		selected_objects_filenames = []
 		#503,507,510
 		numbers = [501, 502, 504, 505, 506, 507, 509, 510]

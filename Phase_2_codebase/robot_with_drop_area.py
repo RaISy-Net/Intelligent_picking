@@ -18,7 +18,6 @@ Area_Halfdim=1
 def get_grasp_prediction(x,y,z,a):
     Robot.rgbd_images(x,y,z)
     network = "./trained models/epoch_17_iou_0.96"
-    #network = "C:/Users/yashs/OneDrive/Documents/GitHub/Intelligent_picking/Phase_2_codebase/trained models/epoch_00_iou_0.93"
     rgb_path = "./CapturedImg/color"+".png"
     depth_path = "./CapturedImg/depth"+".png"
     gs = predict_grasp_angle(network, rgb_path, depth_path)
@@ -134,13 +133,13 @@ def grab_drop_suck(xpos, ypos, object):
 Robot = robot()
 p.resetDebugVisualizerCamera(2 , 0, -41, [0, -1.4, 1])
 Robot.suction_up()
-object_indices = [6, 24]   #to select which object to go to
+object_indices = [1, 7, 8, 6, 24]  
 count=0
 placing = [[0, 0.8], [0.8, 0.4], [0.8, 0.8]]
 suction = 0
 time.sleep(30)
 print(Robot.end_effector())
-for i in  object_indices: #can use object indices as well (to select particular object)
+for i in  object_indices: 
     object = Robot._objectUids[i]
     pos = p.getBasePositionAndOrientation(object)[0]  
     if i==6:
@@ -159,4 +158,3 @@ for i in  object_indices: #can use object indices as well (to select particular 
         time.sleep(0.01)
     
 time.sleep(10)
-
