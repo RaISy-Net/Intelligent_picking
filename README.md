@@ -1,9 +1,53 @@
-# Intelligent_picking
-- solution for flipkart robotics grid challenge
-- kuka_arm is main script for running the simulator
+# Intelligent Picking
+
+A Brief Overview of our approach could be found in this video - **[VIDEO SUBMISSION](https://www.youtube.com/watch?v=IlN6-pN3mRA&feature=youtu.be)**
+
+# Introduction 
+The problem of pick and place has been one of the actively studied area and a canonical problem in robotics. The Amazon Robotics Challenge (ARC) has a rich tradition for the fabrication of highly robust and competitive warehouse robots that do classify and segregate objects apart from just pick and place. The advent of Deep Reinforcement Learning as a reliable alternate for learning robot controllers has greatly increased the dexterity and robustness of these arms. The given problem statement of Flipkart Grid 2.0, is unique, unparalleled, challenging, and demands a great amount of customization and design improvements in terms of both hardware and software. The enormous dimension of the arena and the relatively heavier payload eliminates the possibility of using any pre-existing methodologies. Also fabricating a robot from scratch at the given price point makes the challenge even the more exciting. Thus, we are sharing a solution for the above task, with all our experiments and results which according to the best of our knowledge the most cost-efficient, simplistic yet robust approach
+
+# Hardware Design
+<p align="center">
+   <img width="300" height="300" src="https://github.com/RaISy-Net/Intelligent_picking/blob/master/ReadmeImages/ro.png">
+   <img width="300" height="300" src="https://github.com/RaISy-Net/Intelligent_picking/blob/master/ReadmeImages/ws.png">
+   <img width="400" height="300" src="https://github.com/RaISy-Net/Intelligent_picking/blob/master/ReadmeImages/ca.png">
+</p>
+
+* Our robot is greatly inspired by [cartman](https://arxiv.org/pdf/1709.06283.pdf), owing to its cost-efficient cartesian design which could cover the entire work area in a stable fashion.
+* The generic 6 DOF robot arm, requires high torque motors at every joint to support the
+payload at the end effector whose costs are around INR 10,000 per unit. However, the torque to be applied per joint is drastically decreased due to our design and thus we are unaffected by the above limitation.
+
+# Software Pipeline
+
+<p align="center">
+   <img width="1000" height="350" src="https://github.com/RaISy-Net/Intelligent_picking/blob/master/ReadmeImages/sp.png">
+</p>
+
+<br />
+
+<p align="center">
+   <img width="250" height="250" src="https://github.com/RaISy-Net/Intelligent_picking/blob/master/ReadmeImages/OD.jpeg.jpg">
+   <img width="500" height="250" src="https://github.com/RaISy-Net/Intelligent_picking/blob/master/ReadmeImages/Ge.png">
+   <img width="250" height="250" src="https://github.com/RaISy-Net/Intelligent_picking/blob/master/ReadmeImages/ge2.png">
+</p>
 
 
-# Papers & Blogs
+
+**For a more detailed explanation of our work, check out our Phase 2 Report submission - [Repot.pdf](https://github.com/RaISy-Net/Intelligent_picking/blob/master/Phase_2_submission/Docs/X%20Ash%20A%20-%2012_IIT%20(BHU)%20Varanasi_Intelligent_Picking_-_Round_3.pdf)**
+
+
+# Ongoing Work:
+
+* Having validated our solution in **Pybullet** Simulator, we are now moving on to build a real world prototype that closely resembles our idea within the given budget of **INR 50,000**
+
+* We are actively working in addressing the problems like **simulation to reality transfer** of our approach and customization of the pipeline for our pipeline for the fabricated hardware.
+
+
+**1. Any contributions/ suggestions are most welcome. Do contact the contributors with your valuable queries.** 
+
+**2. For clarifications about running our code, feel free to contact us.** 
+
+# References:
+## Papers & Blogs
 * [Robotic Pick-and-Place of Novel Objects
 in Clutter with Multi-Affordance Grasping
 and Cross-Domain Image Matching](https://arxiv.org/pdf/1710.01330.pdf)
@@ -28,7 +72,7 @@ MANIPULATOR](https://pdfs.semanticscholar.org/e5f8/d98ce96b1dfcce05966bed52a85a2
 * Grasp Prediction on RGB-D images [[Paper](https://arxiv.org/abs/1909.04810)] [[Code](https://github.com/skumra/robotic-grasping)]
 
 
-# Papers on Grasping and Pose estimation
+## Papers on Grasping and Pose estimation
 * [RefineNet for object segmentation](https://arxiv.org/pdf/1611.06612.pdf)
 * [Light weight RefineNet for object segmentation from RGB-D images](https://paperswithcode.com/paper/light-weight-refinenet-for-real-time-semantic)
 * [Training COCO dataset to master object segmentation - MEDIUM](https://towardsdatascience.com/master-the-coco-dataset-for-semantic-image-segmentation-part-1-of-2-732712631047)
@@ -40,7 +84,7 @@ MANIPULATOR](https://pdfs.semanticscholar.org/e5f8/d98ce96b1dfcce05966bed52a85a2
 
 
 
-# Other GitHub links
+## Other GitHub links
 * [MIT-Princeton Vision Toolbox for the APC 2016](https://github.com/andyzeng/apc-vision-toolbox)
 * [Motoman robots files](https://github.com/ros-industrial/motoman)
 * [Kawasaki Robotics files](https://github.com/Kawasaki-Robotics/khi_robot)

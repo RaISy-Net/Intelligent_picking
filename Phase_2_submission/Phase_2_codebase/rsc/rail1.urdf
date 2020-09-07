@@ -1,0 +1,88 @@
+<?xml version="1.0"?>
+<!-- created with Phobos 1.0.1 "Capricious Choutengan" -->
+  <robot name="rail1">
+
+    <link name="Untitled.066">
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="10.0"/>
+        <inertia ixx="3.97402" ixy="0" ixz="0" iyy="0.02757" iyz="0" izz="2e-05"/>
+      </inertial>
+      <visual name="Cube.016">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <box size="5.0 0.35 0.01"/>
+        </geometry>
+        <material name="Material.046"/>
+      </visual>
+      <collision name="Cube.016">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <box size="5.0 0.35 0.01"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="Untitled.067">
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="1.0"/>
+        <inertia ixx="0.00856" ixy="0" ixz="0" iyy="2e-05" iyz="0" izz="2e-05"/>
+      </inertial>
+      <visual name="Cube.018">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <box size="5.0 0.01 0.05"/>
+        </geometry>
+        <material name="Material.047"/>
+      </visual>
+      <collision name="Cube.018">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <box size="5.0 0.01 0.05"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="Untitled.068">
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="1.0"/>
+        <inertia ixx="0.00856" ixy="0" ixz="0" iyy="2e-05" iyz="0" izz="2e-05"/>
+      </inertial>
+      <visual name="Cube.018">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <box size="5.0 0.01 0.05"/>
+        </geometry>
+        <material name="Material.047"/>
+      </visual>
+      <collision name="Cube.018">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <box size="5.0 0.01 0.05"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="Untitled.067" type="fixed">
+      <origin xyz="0 0.175 0.03" rpy="0 0 0"/>
+      <parent link="Untitled.066"/>
+      <child link="Untitled.067"/>
+    </joint>
+
+    <joint name="Untitled.068" type="fixed">
+      <origin xyz="0 -0.175 0.03" rpy="0 0 0"/>
+      <parent link="Untitled.066"/>
+      <child link="Untitled.068"/>
+    </joint>
+
+    <material name="Material.046">
+      <color rgba="0.08 0.08 0.08 1.0"/>
+    </material>
+
+    <material name="Material.047">
+      <color rgba="0.56 0.56 0.56 1.0"/>
+    </material>
+
+  </robot>
