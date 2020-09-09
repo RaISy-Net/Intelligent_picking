@@ -65,7 +65,7 @@ class GraspEstimation:
                 )
             else:
                 fig = plt.figure(figsize=(7, 2))
-                fig.canvas.manager.window.wm_geometry("+330+440")
+                #fig.canvas.manager.window.wm_geometry("+330+440")
                 gs=plot_results(fig=fig,
                             rgb_img=self.img_data.get_rgb(self.rgb, False),
                             grasp_q_img=q_img,
