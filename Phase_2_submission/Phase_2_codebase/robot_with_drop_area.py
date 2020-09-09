@@ -33,6 +33,7 @@ class GridEnvironment():
         #initializing the grasp model
         self.GraspModel = GraspEstimation()
 
+    #function to get RGB-D image and predict the grasping points info
     def get_grasp_prediction(self,x,y,z,a):
         self.Robot.rgbd_images(x,y,z)
         self.network = "./trained models/epoch_17_iou_0.96"
@@ -42,6 +43,7 @@ class GridEnvironment():
         gs = self.GraspModel.predict_grasp()
         return gs
 
+    #function to extract points from the info received from the function above
     def get_real_world_coord(self):
         end_effector_initpos = self.Robot.end_effector()[0]
         a=0
@@ -56,6 +58,7 @@ class GridEnvironment():
         angle = gs[0].angle
         return x,y,angle,score
 
+    #function to pick an object autonomously
     def pick(self, xpos, ypos, object, threshold=0.9):
         self.Robot.overhead_camera(0)
         self.Robot.move_frame_and_head(ypos+0.06, xpos-0.03)
@@ -90,29 +93,23 @@ class GridEnvironment():
             self.Robot.reset_gripper()
             return 0, None
 
+    #function to place objects
     def place(self, xpos, ypos, suction, cons):
         self.Robot.overhead_camera(1)
         if suction:
             self.Robot.move_suction_cup(ypos, xpos)
-            self.Robot.extend_arm()
-            z = self.Robot.end_effector()[0][2]
-            p.resetDebugVisualizerCamera(0.4, 180, -20, [xpos, ypos, z-0.05])
-            time.sleep(3)
+            self.Robot.extend_arm(xpos, ypos)
             self.Robot.remove_suction_force(cons)
-            p.resetDebugVisualizerCamera(2, 180, -41, [0, 1.4, 0.2])
             self.Robot.contract_arm()
             self.Robot.open_gripper()
         else:
             self.Robot.move_frame_and_head(ypos+0.06, xpos-0.03)
-            self.Robot.extend_arm()
-            z = self.Robot.end_effector()[0][2]
-            p.resetDebugVisualizerCamera(0.4, 180, -20, [xpos, ypos, z-0.05])
-            time.sleep(3)
+            self.Robot.extend_arm(xpos, ypos)
             self.Robot.open_gripper()
-            p.resetDebugVisualizerCamera(2, 180, -41, [0, 1.4, 0.2])
             self.Robot.contract_arm()
         self.Robot.reset_gripper()
 
+    #function to grab drop and suck
     def grab_drop_suck(self, xpos, ypos, object):
         self.Robot.move_frame_and_head(ypos+0.06, xpos-0.03)
         z_init = self.Robot.end_effector()[0][2]
@@ -147,6 +144,7 @@ class GridEnvironment():
         self.Robot.reset_gripper()
         return 1, cons
 
+    #single function to run tnhe entire simulation
     def do_simulation(self):
         for i in  self.object_indices: 
             object = self.Robot._objectUids[i]
