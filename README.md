@@ -32,7 +32,7 @@ payload at the end effector whose costs are around INR 10,000 per unit. However,
 
 
 
-**For a more detailed explanation of our work, check out our Phase 2 Report submission - [Repot.pdf](https://github.com/RaISy-Net/Intelligent_picking/blob/master/Phase_2_submission/Docs/X%20Ash%20A%20-%2012_IIT%20(BHU)%20Varanasi_Intelligent_Picking_-_Round_3.pdf)**
+**For a more detailed explanation of our work, check out our Phase 2 Report submission - [Report.pdf](https://github.com/RaISy-Net/Intelligent_picking/blob/master/Phase_2_submission/Docs/X%20Ash%20A%20-%2012_IIT%20(BHU)%20Varanasi_Intelligent_Picking_-_Round_3.pdf)**
 
 
 # Ongoing Work:
