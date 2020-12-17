@@ -19,7 +19,7 @@ Area_Halfdim=1
 class GridEnvironment():
     def __init__(self):
         #initializing the grasp model
-        self.GraspModel = GraspEstimation(model = "./src/trained models/epoch_00_iou_0.93")
+        self.GraspModel = GraspEstimation(model = "./src/trained models/epoch_17_iou_0.96")
 
         #loading the robot class
         self.Robot = robot()

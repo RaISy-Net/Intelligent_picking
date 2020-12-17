@@ -6,6 +6,7 @@ import numpy as np
 import torch.utils.data
 from PIL import Image
 import cv2
+import os
 
 from src.inference import *
 
@@ -14,6 +15,7 @@ from src.inference.post_process import post_process_output
 from src.utils.data.camera_data import CameraData
 from src.utils.visualisation.plot import plot_results, save_results
 
+import sys
 logging.basicConfig(level=logging.INFO)
 
 class GraspEstimation:
@@ -27,10 +29,15 @@ class GraspEstimation:
 
         # Load Network
         logging.info('Loading model...')
+        # temp = os.getcwd()
+        dir_path = os.path.dirname(os.path.realpath(__file__))
+        sys.path.append(dir_path)
+        # os.chdir(dir_path)
         self.net = torch.load(model,map_location=torch.device('cpu'))
+        # os.chdir(temp)
         logging.info('Done')
 
-    def load_images(self, network, rgb_path, depth_path):
+    def load_images(self, rgb_path, depth_path):
         # Load image
         logging.info('Loading image...')
         self.pic = Image.open(rgb_path, 'r')
