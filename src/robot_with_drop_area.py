@@ -18,6 +18,9 @@ Area_Halfdim=1
 
 class GridEnvironment():
     def __init__(self):
+        #initializing the grasp model
+        self.GraspModel = GraspEstimation(model = "./src/trained models/epoch_00_iou_0.93")
+
         #loading the robot class
         self.Robot = robot()
         self.Robot.suction_up()
@@ -30,9 +33,6 @@ class GridEnvironment():
         self.object_indices = [2, 7, 8, 6, 24]  
         self.count=0
         self.placing = [[0, 0.8], [0.8, 0.4], [0.8, 0.8]]
-
-        #initializing the grasp model
-        self.GraspModel = GraspEstimation(model = "./src/trained models/epoch_17_iou_0.96")
 
     #function to get RGB-D image and predict the grasping points info
     def get_grasp_prediction(self,x,y,z,a):
