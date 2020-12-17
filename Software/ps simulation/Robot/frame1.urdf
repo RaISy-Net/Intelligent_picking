@@ -1,0 +1,911 @@
+<?xml version="1.0"?>
+<!-- created with Phobos 1.0.1 "Capricious Choutengan" -->
+  <robot name="frame">
+
+    <link name="Untitled">
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="0.001"/>
+        <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+      </inertial>
+    </link>
+
+    <link name="Untitled.001">
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="0.001"/>
+        <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+      </inertial>
+    </link>
+
+    <link name="Untitled.002">
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="0.001"/>
+        <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+      </inertial>
+    </link>
+
+    <link name="Untitled.003">
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="0.001"/>
+        <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+      </inertial>
+    </link>
+
+    <link name="Untitled.004">
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="4.0"/>
+        <inertia ixx="0.00043" ixy="0" ixz="0" iyy="0.00145" iyz="0" izz="0.06667"/>
+      </inertial>
+      <visual name="base link.000">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <box size="0.4 0.2 0.1"/>
+        </geometry>
+        <material name="Material.005"/>
+      </visual>
+      <collision name="base link.000">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <box size="0.4 0.2 0.1"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="Untitled.005">
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="0.25"/>
+        <inertia ixx="7e-05" ixy="0" ixz="0" iyy="0.00013" iyz="0" izz="0.00056"/>
+      </inertial>
+      <visual name="bl Link.000">
+        <origin xyz="-0.0022 0 0" rpy="-3.14159 0 0"/>
+        <geometry>
+          <cylinder radius="0.09" length="0.05"/>
+        </geometry>
+        <material name="Material.004"/>
+      </visual>
+      <collision name="bl Link.000">
+        <origin xyz="-0.0022 0 0" rpy="-3.14159 0 0"/>
+        <geometry>
+          <cylinder radius="0.09" length="0.05"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="Untitled.006">
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="0.25"/>
+        <inertia ixx="7e-05" ixy="0" ixz="0" iyy="0.00013" iyz="0" izz="0.00056"/>
+      </inertial>
+      <visual name="bl Link.002.000">
+        <origin xyz="-0.0022 0 0" rpy="-3.14159 0 0"/>
+        <geometry>
+          <cylinder radius="0.09" length="0.05"/>
+        </geometry>
+        <material name="Material.001"/>
+      </visual>
+      <collision name="bl Link.002.000">
+        <origin xyz="-0.0022 0 0" rpy="-3.14159 0 0"/>
+        <geometry>
+          <cylinder radius="0.09" length="0.05"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="Untitled.007">
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="0.25"/>
+        <inertia ixx="7e-05" ixy="0" ixz="0" iyy="0.00013" iyz="0" izz="0.00056"/>
+      </inertial>
+      <visual name="bl Link.003.000">
+        <origin xyz="-0.0022 0 0" rpy="0 0 0"/>
+        <geometry>
+          <cylinder radius="0.09" length="0.05"/>
+        </geometry>
+        <material name="Material.002"/>
+      </visual>
+      <collision name="bl Link.003.000">
+        <origin xyz="-0.0022 0 0" rpy="0 0 0"/>
+        <geometry>
+          <cylinder radius="0.09" length="0.05"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="Untitled.008">
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="0.25"/>
+        <inertia ixx="7e-05" ixy="0" ixz="0" iyy="0.00013" iyz="0" izz="0.00056"/>
+      </inertial>
+      <visual name="bl Link.001.000">
+        <origin xyz="-0.0022 0 0" rpy="0 0 0"/>
+        <geometry>
+          <cylinder radius="0.09" length="0.05"/>
+        </geometry>
+        <material name="Material.003"/>
+      </visual>
+      <collision name="bl Link.001.000">
+        <origin xyz="-0.0022 0 0" rpy="0 0 0"/>
+        <geometry>
+          <cylinder radius="0.09" length="0.05"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="Untitled.009">
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="4.0"/>
+        <inertia ixx="0.00043" ixy="0" ixz="0" iyy="0.00145" iyz="0" izz="0.06667"/>
+      </inertial>
+      <visual name="base link.001">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <box size="0.4 0.2 0.1"/>
+        </geometry>
+        <material name="Material.005"/>
+      </visual>
+      <collision name="base link.000">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <box size="0.4 0.2 0.1"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="Untitled.010">
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="0.001"/>
+        <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+      </inertial>
+    </link>
+
+    <link name="Untitled.011">
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="0.25"/>
+        <inertia ixx="7e-05" ixy="0" ixz="0" iyy="0.00013" iyz="0" izz="0.00056"/>
+      </inertial>
+      <visual name="bl Link.003.001">
+        <origin xyz="-0.0022 0 0" rpy="0 0 0"/>
+        <geometry>
+          <cylinder radius="0.09" length="0.05"/>
+        </geometry>
+        <material name="Material.002"/>
+      </visual>
+      <collision name="bl Link.003.000">
+        <origin xyz="-0.0022 0 0" rpy="0 0 0"/>
+        <geometry>
+          <cylinder radius="0.09" length="0.05"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="Untitled.012">
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="0.001"/>
+        <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+      </inertial>
+    </link>
+
+    <link name="Untitled.013">
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="0.25"/>
+        <inertia ixx="7e-05" ixy="0" ixz="0" iyy="0.00013" iyz="0" izz="0.00056"/>
+      </inertial>
+      <visual name="bl Link.002.001">
+        <origin xyz="-0.0022 0 0" rpy="-3.14159 0 0"/>
+        <geometry>
+          <cylinder radius="0.09" length="0.05"/>
+        </geometry>
+        <material name="Material.001"/>
+      </visual>
+      <collision name="bl Link.002.000">
+        <origin xyz="-0.0022 0 0" rpy="-3.14159 0 0"/>
+        <geometry>
+          <cylinder radius="0.09" length="0.05"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="Untitled.014">
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="0.001"/>
+        <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+      </inertial>
+    </link>
+
+    <link name="Untitled.015">
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="0.25"/>
+        <inertia ixx="7e-05" ixy="0" ixz="0" iyy="0.00013" iyz="0" izz="0.00056"/>
+      </inertial>
+      <visual name="bl Link.001">
+        <origin xyz="-0.0022 0 0" rpy="-3.14159 0 0"/>
+        <geometry>
+          <cylinder radius="0.09" length="0.05"/>
+        </geometry>
+        <material name="Material.004"/>
+      </visual>
+      <collision name="bl Link.000">
+        <origin xyz="-0.0022 0 0" rpy="-3.14159 0 0"/>
+        <geometry>
+          <cylinder radius="0.09" length="0.05"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="Untitled.016">
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="0.001"/>
+        <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+      </inertial>
+    </link>
+
+    <link name="Untitled.017">
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="0.25"/>
+        <inertia ixx="7e-05" ixy="0" ixz="0" iyy="0.00013" iyz="0" izz="0.00056"/>
+      </inertial>
+      <visual name="bl Link.001.001">
+        <origin xyz="-0.0022 0 0" rpy="0 0 0"/>
+        <geometry>
+          <cylinder radius="0.09" length="0.05"/>
+        </geometry>
+        <material name="Material.003"/>
+      </visual>
+      <collision name="bl Link.001.000">
+        <origin xyz="-0.0022 0 0" rpy="0 0 0"/>
+        <geometry>
+          <cylinder radius="0.09" length="0.05"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="Untitled.018">
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="0.001"/>
+        <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+      </inertial>
+    </link>
+
+    <link name="Untitled.019">
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="0.001"/>
+        <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+      </inertial>
+    </link>
+
+    <link name="Untitled.020">
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="6.0"/>
+        <inertia ixx="5.68584" ixy="0" ixz="0" iyy="1.05355" iyz="0" izz="4.63377"/>
+      </inertial>
+      <visual name="base link.002">
+        <origin xyz="0 0 -0.06" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="base link.004.stl" scale="1.0 1.0 1.0"/>
+        </geometry>
+        <material name="Material.007"/>
+      </visual>
+      <collision name="base link.002.000">
+        <origin xyz="0 0 -0.06" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="base link.005.stl" scale="1.0 1.0 1.0"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="Untitled.021">
+      <inertial>
+        <origin xyz="0 0 0.01" rpy="0 0 0"/>
+        <mass value="0.01"/>
+        <inertia ixx="2e-05" ixy="0" ixz="0" iyy="2e-05" iyz="0" izz="2e-05"/>
+      </inertial>
+      <visual name="Cube.003">
+        <origin xyz="0 0 0.01" rpy="0 0 0"/>
+        <geometry>
+          <box size="0.15 0.03 0.01"/>
+        </geometry>
+        <material name="Material.009"/>
+      </visual>
+      <collision name="Cube.003">
+        <origin xyz="0 0 0.01" rpy="0 0 0"/>
+        <geometry>
+          <box size="0.15 0.03 0.01"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="Untitled.022">
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="0.05"/>
+        <inertia ixx="2e-05" ixy="0" ixz="0" iyy="2e-05" iyz="0" izz="2e-05"/>
+      </inertial>
+      <visual name="Cube.002">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <box size="0.03 0.03 0.06"/>
+        </geometry>
+        <material name="Material.010"/>
+      </visual>
+      <collision name="Cube.002">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <box size="0.03 0.03 0.06"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="Untitled.023">
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="0.05"/>
+        <inertia ixx="2e-05" ixy="0" ixz="0" iyy="2e-05" iyz="0" izz="2e-05"/>
+      </inertial>
+      <visual name="Cube.001">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <box size="0.03 0.03 0.06"/>
+        </geometry>
+        <material name="Material.010"/>
+      </visual>
+      <collision name="Cube.001">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <box size="0.03 0.03 0.06"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="Untitled.024">
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="0.001"/>
+        <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+      </inertial>
+    </link>
+
+    <link name="Untitled.025">
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="0.001"/>
+        <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+      </inertial>
+    </link>
+
+    <link name="Untitled.026">
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="0.5"/>
+        <inertia ixx="2e-05" ixy="0" ixz="0" iyy="2e-05" iyz="0" izz="2e-05"/>
+      </inertial>
+      <visual name="Cube">
+        <origin xyz="0 0 0" rpy="-1.5708 0 0"/>
+        <geometry>
+          <box size="0.2 0.2 0.04"/>
+        </geometry>
+        <material name="Material.008"/>
+      </visual>
+      <collision name="Cube">
+        <origin xyz="0 0 0" rpy="-1.5708 0 0"/>
+        <geometry>
+          <box size="0.2 0.2 0.04"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="Untitled.027">
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="0.5"/>
+        <inertia ixx="0.00286" ixy="0" ixz="0" iyy="0.00286" iyz="0" izz="0.0001"/>
+      </inertial>
+      <visual name="base link">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="base link.006.stl" scale="1.0 1.0 1.0"/>
+        </geometry>
+        <material name="Material.011"/>
+      </visual>
+      <collision name="base link.000.001.002">
+        <origin xyz="0 0.00061 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="base link.009.stl" scale="1.0 1.0 1.0"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="Untitled.028">
+      <inertial>
+        <origin xyz="0 0 0.02952" rpy="0 0 0"/>
+        <mass value="0.5"/>
+        <inertia ixx="0.00377" ixy="0" ixz="0" iyy="0.00377" iyz="0" izz="4e-05"/>
+      </inertial>
+      <visual name="inner Link">
+        <origin xyz="0 0 0.02952" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="inner Link.stl" scale="1.0 1.0 1.0"/>
+        </geometry>
+        <material name="Material.012"/>
+      </visual>
+      <collision name="inner Link.000">
+        <origin xyz="0 0 0.02952" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="inner Link.003.stl" scale="1.0 1.0 1.0"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="Untitled.029">
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="0.1"/>
+        <inertia ixx="2e-05" ixy="0" ixz="0" iyy="2e-05" iyz="0" izz="2e-05"/>
+      </inertial>
+      <visual name="Cube.004">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <box size="0.06 0.026 0.01"/>
+        </geometry>
+        <material name="Material.013"/>
+      </visual>
+      <collision name="Cube.004">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <box size="0.06 0.026 0.01"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="Untitled.030">
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="0.5"/>
+        <inertia ixx="0.00286" ixy="0" ixz="0" iyy="0.00286" iyz="0" izz="0.0001"/>
+      </inertial>
+      <visual name="base link.003">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="base link.007.stl" scale="1.0 1.0 1.0"/>
+        </geometry>
+        <material name="Material.014"/>
+      </visual>
+      <collision name="base link.003.000">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="base link.010.stl" scale="1.0 1.0 1.0"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="Untitled.031">
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="0.5"/>
+        <inertia ixx="0.00377" ixy="0" ixz="0" iyy="0.00377" iyz="0" izz="4e-05"/>
+      </inertial>
+      <visual name="inner Link.001">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="inner Link.001.stl" scale="1.0 1.0 1.0"/>
+        </geometry>
+        <material name="Material.015"/>
+      </visual>
+      <collision name="inner Link.001.000">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="inner Link.004.stl" scale="1.0 1.0 1.0"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="Untitled.032">
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="0.1"/>
+        <inertia ixx="2e-05" ixy="0" ixz="0" iyy="2e-05" iyz="0" izz="2e-05"/>
+      </inertial>
+      <visual name="Cube.005">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <box size="0.06 0.026 0.01"/>
+        </geometry>
+        <material name="Material.016"/>
+      </visual>
+      <collision name="Cube.005">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <box size="0.06 0.026 0.01"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="Untitled.033">
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="0.5"/>
+        <inertia ixx="0.00286" ixy="0" ixz="0" iyy="0.00286" iyz="0" izz="0.0001"/>
+      </inertial>
+      <visual name="base link.004">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="base link.008.stl" scale="1.0 1.0 1.0"/>
+        </geometry>
+        <material name="Material.017"/>
+      </visual>
+      <collision name="base link.004.000">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="base link.011.stl" scale="1.0 1.0 1.0"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="Untitled.034">
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="0.5"/>
+        <inertia ixx="0.00377" ixy="0" ixz="0" iyy="0.00377" iyz="0" izz="4e-05"/>
+      </inertial>
+      <visual name="inner Link.002">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="inner Link.002.stl" scale="1.0 1.0 1.0"/>
+        </geometry>
+        <material name="Material.018"/>
+      </visual>
+      <collision name="inner Link.002.000">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="inner Link.005.stl" scale="1.0 1.0 1.0"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="Untitled.035">
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="0.1"/>
+        <inertia ixx="2e-05" ixy="0" ixz="0" iyy="2e-05" iyz="0" izz="2e-05"/>
+      </inertial>
+      <visual name="Cube.006">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <box size="0.06 0.026 0.01"/>
+        </geometry>
+        <material name="Material.019"/>
+      </visual>
+      <collision name="Cube.006">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <box size="0.06 0.026 0.01"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="Untitled" type="fixed">
+      <origin xyz="-0.11 0.06 0" rpy="1.5708 0 0"/>
+      <parent link="Untitled.004"/>
+      <child link="Untitled"/>
+    </joint>
+
+    <joint name="Untitled.001" type="fixed">
+      <origin xyz="-0.11 -0.06 0" rpy="-1.5708 0 0"/>
+      <parent link="Untitled.004"/>
+      <child link="Untitled.001"/>
+    </joint>
+
+    <joint name="Untitled.002" type="fixed">
+      <origin xyz="0.11 0.06 0" rpy="1.5708 0 0"/>
+      <parent link="Untitled.004"/>
+      <child link="Untitled.002"/>
+    </joint>
+
+    <joint name="Untitled.003" type="fixed">
+      <origin xyz="0.11 -0.06 0" rpy="-1.5708 0 0"/>
+      <parent link="Untitled.004"/>
+      <child link="Untitled.003"/>
+    </joint>
+
+    <joint name="Untitled.004" type="fixed">
+      <origin xyz="0 0 -0.07" rpy="0 0 -1.5708"/>
+      <parent link="Untitled.018"/>
+      <child link="Untitled.004"/>
+    </joint>
+
+    <joint name="Untitled.005" type="continuous">
+      <origin xyz="0 0 -0.07" rpy="3.14159 0 0"/>
+      <parent link="Untitled.002"/>
+      <child link="Untitled.005"/>
+      <axis xyz="0 0 1.0"/>
+      <limit effort="0.1" velocity="1.5"/>
+    </joint>
+
+    <joint name="Untitled.006" type="continuous">
+      <origin xyz="0 0 -0.07" rpy="3.14159 0 0"/>
+      <parent link="Untitled"/>
+      <child link="Untitled.006"/>
+      <axis xyz="0 0 1.0"/>
+      <limit effort="0.1" velocity="1.5"/>
+    </joint>
+
+    <joint name="Untitled.007" type="continuous">
+      <origin xyz="0 0 -0.07" rpy="-3.14159 0 0"/>
+      <parent link="Untitled.001"/>
+      <child link="Untitled.007"/>
+      <axis xyz="0 0 1.0"/>
+      <limit effort="0.1" velocity="1.5"/>
+    </joint>
+
+    <joint name="Untitled.008" type="continuous">
+      <origin xyz="0 0 -0.07" rpy="-3.14159 0 0"/>
+      <parent link="Untitled.003"/>
+      <child link="Untitled.008"/>
+      <axis xyz="0 0 1.0"/>
+      <limit effort="0.1" velocity="1.5"/>
+    </joint>
+
+    <joint name="Untitled.009" type="fixed">
+      <origin xyz="0 0 -0.0576" rpy="0 0 -1.5708"/>
+      <parent link="Untitled.019"/>
+      <child link="Untitled.009"/>
+    </joint>
+
+    <joint name="Untitled.010" type="fixed">
+      <origin xyz="-0.11 -0.06 0" rpy="-1.5708 0 0"/>
+      <parent link="Untitled.009"/>
+      <child link="Untitled.010"/>
+    </joint>
+
+    <joint name="Untitled.011" type="continuous">
+      <origin xyz="0 0 -0.07" rpy="-3.14159 0 0"/>
+      <parent link="Untitled.010"/>
+      <child link="Untitled.011"/>
+      <axis xyz="0 0 1.0"/>
+      <limit effort="0.1" velocity="1.5"/>
+    </joint>
+
+    <joint name="Untitled.012" type="fixed">
+      <origin xyz="-0.11 0.06 0" rpy="1.5708 0 0"/>
+      <parent link="Untitled.009"/>
+      <child link="Untitled.012"/>
+    </joint>
+
+    <joint name="Untitled.013" type="continuous">
+      <origin xyz="0 0 -0.07" rpy="3.14159 0 0"/>
+      <parent link="Untitled.012"/>
+      <child link="Untitled.013"/>
+      <axis xyz="0 0 1.0"/>
+      <limit effort="0.1" velocity="1.5"/>
+    </joint>
+
+    <joint name="Untitled.014" type="fixed">
+      <origin xyz="0.11 0.06 0" rpy="1.5708 0 0"/>
+      <parent link="Untitled.009"/>
+      <child link="Untitled.014"/>
+    </joint>
+
+    <joint name="Untitled.015" type="continuous">
+      <origin xyz="0 0 -0.07" rpy="3.14159 0 0"/>
+      <parent link="Untitled.014"/>
+      <child link="Untitled.015"/>
+      <axis xyz="0 0 1.0"/>
+      <limit effort="0.1" velocity="1.5"/>
+    </joint>
+
+    <joint name="Untitled.016" type="fixed">
+      <origin xyz="0.11 -0.06 0" rpy="-1.5708 0 0"/>
+      <parent link="Untitled.009"/>
+      <child link="Untitled.016"/>
+    </joint>
+
+    <joint name="Untitled.017" type="continuous">
+      <origin xyz="0 0 -0.07" rpy="-3.14159 0 0"/>
+      <parent link="Untitled.016"/>
+      <child link="Untitled.017"/>
+      <axis xyz="0 0 1.0"/>
+      <limit effort="0.1" velocity="1.5"/>
+    </joint>
+
+    <joint name="Untitled.018" type="fixed">
+      <origin xyz="-1.225 0 -1.18292" rpy="0 0 0"/>
+      <parent link="Untitled.020"/>
+      <child link="Untitled.018"/>
+    </joint>
+
+    <joint name="Untitled.019" type="fixed">
+      <origin xyz="1.22 0 -1.18292" rpy="0 0 0"/>
+      <parent link="Untitled.020"/>
+      <child link="Untitled.019"/>
+    </joint>
+
+    <joint name="Untitled.021" type="fixed">
+      <origin xyz="0.06656 -0.00819 -0.00718" rpy="0 0 0"/>
+      <parent link="Untitled.024"/>
+      <child link="Untitled.021"/>
+    </joint>
+
+    <joint name="Untitled.022" type="fixed">
+      <origin xyz="-0.06 -0.05371 0" rpy="-1.5708 0 0"/>
+      <parent link="Untitled.026"/>
+      <child link="Untitled.022"/>
+    </joint>
+
+    <joint name="Untitled.023" type="fixed">
+      <origin xyz="0.06 -0.05371 0" rpy="-1.5708 0 0"/>
+      <parent link="Untitled.026"/>
+      <child link="Untitled.023"/>
+    </joint>
+
+    <joint name="Untitled.024" type="fixed">
+      <origin xyz="-0.00656 0.00819 -0.03142" rpy="0 0 0"/>
+      <parent link="Untitled.022"/>
+      <child link="Untitled.024"/>
+    </joint>
+
+    <joint name="Untitled.025" type="fixed">
+      <origin xyz="0.00237 -0.00899 -0.03609" rpy="0 0 0"/>
+      <parent link="Untitled.023"/>
+      <child link="Untitled.025"/>
+    </joint>
+
+    <joint name="Untitled.026" type="prismatic">
+      <origin xyz="0 0 0.36263" rpy="1.5708 0 -1.5708"/>
+      <parent link="Untitled.020"/>
+      <child link="Untitled.026"/>
+      <axis xyz="0 0 1.0"/>
+      <limit lower="-1.2931" upper="1.29" effort="0.1" velocity="1.0"/>
+    </joint>
+
+    <joint name="Untitled.027" type="fixed">
+      <origin xyz="0.00656 -0.00819 -0.15126" rpy="0 0 0"/>
+      <parent link="Untitled.024"/>
+      <child link="Untitled.027"/>
+    </joint>
+
+    <joint name="Untitled.028" type="prismatic">
+      <origin xyz="0 0 -0.02468" rpy="0 0 0"/>
+      <parent link="Untitled.027"/>
+      <child link="Untitled.028"/>
+      <axis xyz="0 0 1.0"/>
+      <limit lower="-1.2931" upper="1.29" effort="0.1" velocity="1.0"/>
+    </joint>
+
+    <joint name="Untitled.029" type="fixed">
+      <origin xyz="0.01 0 -0.12848" rpy="0 0 0"/>
+      <parent link="Untitled.028"/>
+      <child link="Untitled.029"/>
+    </joint>
+
+    <joint name="Untitled.030" type="fixed">
+      <origin xyz="0.05 0 0.14075" rpy="0 0 0"/>
+      <parent link="Untitled.029"/>
+      <child link="Untitled.030"/>
+    </joint>
+
+    <joint name="Untitled.031" type="prismatic">
+      <origin xyz="0 0 -0.02247" rpy="0 0 0"/>
+      <parent link="Untitled.030"/>
+      <child link="Untitled.031"/>
+      <axis xyz="0 0 1.0"/>
+      <limit lower="-1.2931" upper="1.29" effort="0.1" velocity="1.0"/>
+    </joint>
+
+    <joint name="Untitled.032" type="fixed">
+      <origin xyz="0.00738 0.0014 -0.1528" rpy="0 0 0"/>
+      <parent link="Untitled.031"/>
+      <child link="Untitled.032"/>
+    </joint>
+
+    <joint name="Untitled.033" type="fixed">
+      <origin xyz="0.05262 -0.0014 0.13993" rpy="0 0 0"/>
+      <parent link="Untitled.032"/>
+      <child link="Untitled.033"/>
+    </joint>
+
+    <joint name="Untitled.034" type="prismatic">
+      <origin xyz="0 0 -0.01" rpy="0 0 0"/>
+      <parent link="Untitled.033"/>
+      <child link="Untitled.034"/>
+      <axis xyz="0 0 1.0"/>
+      <limit lower="-1.2931" upper="1.29" effort="0.1" velocity="1.0"/>
+    </joint>
+
+    <joint name="Untitled.035" type="fixed">
+      <origin xyz="0.00989 -0.00047 -0.15397" rpy="0 0 0"/>
+      <parent link="Untitled.034"/>
+      <child link="Untitled.035"/>
+    </joint>
+
+    <material name="Material.001">
+      <color rgba="0 0 0 1.0"/>
+    </material>
+
+    <material name="Material.002">
+      <color rgba="0 0 0 1.0"/>
+    </material>
+
+    <material name="Material.003">
+      <color rgba="0 0 0 1.0"/>
+    </material>
+
+    <material name="Material.004">
+      <color rgba="0 0 0 1.0"/>
+    </material>
+
+    <material name="Material.005">
+      <color rgba="0.64 0.64 0.64 1.0"/>
+    </material>
+
+    <material name="Material.007">
+      <color rgba="0.4 0.4 0.4 1.0"/>
+    </material>
+
+    <material name="Material.008">
+      <color rgba="0 0 0 1.0"/>
+    </material>
+
+    <material name="Material.009">
+      <color rgba="0 0 0 1.0"/>
+    </material>
+
+    <material name="Material.010">
+      <color rgba="0 0 0 1.0"/>
+    </material>
+
+    <material name="Material.011">
+      <color rgba="0.64 0.64 0.64 1.0"/>
+    </material>
+
+    <material name="Material.012">
+      <color rgba="0.16 0.16 0.16 1.0"/>
+    </material>
+
+    <material name="Material.013">
+      <color rgba="0.16 0.16 0.16 1.0"/>
+    </material>
+
+    <material name="Material.014">
+      <color rgba="0.64 0.64 0.64 1.0"/>
+    </material>
+
+    <material name="Material.015">
+      <color rgba="0.16 0.16 0.16 1.0"/>
+    </material>
+
+    <material name="Material.016">
+      <color rgba="0.16 0.16 0.16 1.0"/>
+    </material>
+
+    <material name="Material.017">
+      <color rgba="0.64 0.64 0.64 1.0"/>
+    </material>
+
+    <material name="Material.018">
+      <color rgba="0.16 0.16 0.16 1.0"/>
+    </material>
+
+    <material name="Material.019">
+      <color rgba="0.16 0.16 0.16 1.0"/>
+    </material>
+
+  </robot>
