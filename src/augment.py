@@ -47,24 +47,19 @@ def rotate(rgb_file,depth_file,grasp_file,rot,final_rgb,final_depth,final_grasp,
 		file.write(str(arr[i][1])+" "+str(arr[i][0])+"\n")
 	file.close()
 	
-	
-dir='/home/ayush/Desktop/dataset_new/'
-x=800
-for i in range(800):	
-	grasp_file=dir+'color'+str(i)+'cpos.txt'
-	rgb_file=dir+'color'+str(i)+'.png'
-	depth_file=dir+'depth'+str(i)+'.png'
-	for j in range(4):
-		rot=random.uniform(-1.5,1.5)
-		#rot=0.8
-		print(rot)
-		final_rgb=dir+'color'+str(x)+'.png'
-		final_depth=dir+'depth'+str(x)+'.png'
-		final_grasp=dir+'color'+str(x)+'cpos.txt'
-		rotate(rgb_file,depth_file,grasp_file,rot,final_rgb,final_depth,final_grasp)
-		x=x+1
-		
-		
-	
-
-
+if __name__=='__main__':	
+	dir='/home/ayush/Desktop/dataset_new/'
+	x=800
+	for i in range(800):	
+		grasp_file=dir+'color'+str(i)+'cpos.txt'
+		rgb_file=dir+'color'+str(i)+'.png'
+		depth_file=dir+'depth'+str(i)+'.png'
+		for j in range(4):
+			rot=random.uniform(-1.5,1.5)
+			#rot=0.8
+			print(rot)
+			final_rgb=dir+'color'+str(x)+'.png'
+			final_depth=dir+'depth'+str(x)+'.png'
+			final_grasp=dir+'color'+str(x)+'cpos.txt'
+			rotate(rgb_file,depth_file,grasp_file,rot,final_rgb,final_depth,final_grasp)
+			x=x+1

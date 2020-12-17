@@ -18,10 +18,11 @@ def save_img(rgb_img,gtbbs,name):
 	ax.set_title('Grasp')
 	ax.axis('off')
 	fig.savefig(name)
-	
-dir='/home/ayush/Desktop/dataset/'
-x=125
-depth_img = image.DepthImage.from_tiff(dir+'depth'+str(x)+'.png')
-gtbbs = grasp.GraspRectangles.load_from_cornell_file(dir+'color'+str(x)+'cpos.txt')
-rgb_img = image.Image.from_file(dir+'color'+str(x)+'.png')
-save_img(rgb_img,gtbbs,'grasp1.png')
+
+if __name__=='__main__':	
+	dir='/home/ayush/Desktop/dataset/'
+	x=125
+	depth_img = image.DepthImage.from_tiff(dir+'depth'+str(x)+'.png')
+	gtbbs = grasp.GraspRectangles.load_from_cornell_file(dir+'color'+str(x)+'cpos.txt')
+	rgb_img = image.Image.from_file(dir+'color'+str(x)+'.png')
+	save_img(rgb_img,gtbbs,'grasp1.png')

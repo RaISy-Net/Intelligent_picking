@@ -9,9 +9,6 @@ import pybullet_data
 def MakeArena(x,y,z=0.5,scale_x=0.5,scale_y=1,scale_z=0.5,Inter_area_dist=1,pickAreaHeight=0.9):
 	p.setAdditionalSearchPath(pybullet_data.getDataPath())
 
-	#boundary_c=p.createCollisionShape(p.GEOM_BOX,halfExtents=[scale_x/50,scale_y,0.02])
-	#boundary_v=p.createVisualShape(p.GEOM_BOX,halfExtents=[scale_x/50,scale_y,0.02],rgbaColor=[0,0,1,1])
-
 	pick_c=p.createCollisionShape(p.GEOM_BOX,halfExtents=[scale_x,scale_y,pickAreaHeight/2.0])
 	pick_v=p.createVisualShape(p.GEOM_BOX,halfExtents=[scale_x,scale_y,pickAreaHeight/2.0],rgbaColor=[1,0,0,1])
 	y_pick = y - scale_y - Inter_area_dist/2.0
@@ -45,14 +42,8 @@ def MakeArena(x,y,z=0.5,scale_x=0.5,scale_y=1,scale_z=0.5,Inter_area_dist=1,pick
 
 	multi=p.createMultiBody(baseCollisionShapeIndex=drop_c,baseVisualShapeIndex=drop_v,basePosition=[x,y_drop,z])
 
-	#bound=p.createMultiBody(baseCollisionShapeIndex=boundary_c,baseVisualShapeIndex=boundary_v,basePosition=[x+scale_x,y_pick,0.37])
-	#bound=p.createMultiBody(baseCollisionShapeIndex=boundary_c,baseVisualShapeIndex=boundary_v,basePosition=[x-scale_x,y_pick,0.37])
-	#bound=p.createMultiBody(baseCollisionShapeIndex=boundary_c,baseVisualShapeIndex=boundary_v,basePosition=[x,y_pick+scale_y,0.37],baseOrientation=p.getQuaternionFromEuler([0,0,np.pi/2]))
-	#bound=p.createMultiBody(baseCollisionShapeIndex=boundary_c,baseVisualShapeIndex=boundary_v,basePosition=[x,y_pick-scale_y,0.37],baseOrientation=p.getQuaternionFromEuler([0,0,np.pi/2]))
-
-#MakeArena(x=0,y=0,z=-0.15,
-	      #scale_x=0.3,scale_y=0.3,scale_z=0,
-	      #Inter_area_dist=0.5,pickAreaHeight=0.5)
-
-#p.resetDebugVisualizerCamera(1.3 , 0, -41, [0, 0, 0.5])
-#time.sleep(100)
+if __name__=='__main__':
+	p.connect(p.GUI)
+	MakeArena(x=0,y=0,z=-0.15,scale_x=0.3,scale_y=0.3,scale_z=0,Inter_area_dist=0.5,pickAreaHeight=0.5)
+	p.resetDebugVisualizerCamera(1.3 , 0, -41, [0, 0, 0.5])
+	time.sleep(10)
