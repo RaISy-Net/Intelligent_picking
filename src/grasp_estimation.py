@@ -7,6 +7,8 @@ import torch.utils.data
 from PIL import Image
 import cv2
 
+from src.inference import *
+
 from src.hardware.device import get_device
 from src.inference.post_process import post_process_output
 from src.utils.data.camera_data import CameraData
@@ -16,25 +18,25 @@ logging.basicConfig(level=logging.INFO)
 
 class GraspEstimation:
 
-    def __init__(self):
+    def __init__(self, model):
         self.use_depth = 1
         self.use_rgb = 1 
         self.n_grasps = 1
         self.save = 0
         self.force_cpu = False
 
-    def load_network_image(self, network, rgb_path, depth_path):
+        # Load Network
+        logging.info('Loading model...')
+        self.net = torch.load(model,map_location=torch.device('cpu'))
+        logging.info('Done')
+
+    def load_images(self, network, rgb_path, depth_path):
         # Load image
         logging.info('Loading image...')
         self.pic = Image.open(rgb_path, 'r')
         self.rgb = np.array(self.pic)
         self.pic = Image.open(depth_path, 'r')
         self.depth = np.expand_dims(np.array(self.pic), axis=2)
-
-        # Load Network
-        logging.info('Loading model...')
-        self.net = torch.load(network,map_location=torch.device('cpu'))
-        logging.info('Done')
 
     def predict_grasp(self):
         # Get the compute device
