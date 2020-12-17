@@ -7,9 +7,9 @@ The problem of pick and place has been one of the actively studied area and a ca
 
 # Hardware Design
 <p align="center">
-   <img width="300" height="300" src="assets/ro.png">
-   <img width="300" height="300" src="assets/ws.png">
-   <img width="400" height="300" src="assets/ca.png">
+   <img width="300" height="300" src="assets/Readme Images/ro.png">
+   <img width="300" height="300" src="assets/Readme Images/ws.png">
+   <img width="400" height="300" src="assets/Readme Images/ca.png">
 </p>
 
 * Our robot is greatly inspired by [cartman](https://arxiv.org/pdf/1709.06283.pdf), owing to its cost-efficient cartesian design which could cover the entire work area in a stable fashion.
@@ -19,15 +19,15 @@ payload at the end effector whose costs are around INR 10,000 per unit. However,
 # Software Pipeline
 
 <p align="center">
-   <img width="1000" height="350" src="assets/sp.png">
+   <img width="1000" height="350" src="assets/Readme Images/sp.png">
 </p>
 
 <br />
 
 <p align="center">
-   <img width="250" height="250" src="assets/OD.jpeg.jpg">
-   <img width="500" height="250" src="assets/Ge.png">
-   <img width="250" height="250" src="assets/ge2.png">
+   <img width="250" height="250" src="assets/Readme Images/OD.jpeg.jpg">
+   <img width="500" height="250" src="assets/Readme Images/Ge.png">
+   <img width="250" height="250" src="assets/Readme Images/ge2.png">
 </p>
 
 
@@ -76,7 +76,7 @@ MANIPULATOR](https://pdfs.semanticscholar.org/e5f8/d98ce96b1dfcce05966bed52a85a2
 * [RefineNet for object segmentation](https://arxiv.org/pdf/1611.06612.pdf)
 * [Light weight RefineNet for object segmentation from RGB-D images](https://paperswithcode.com/paper/light-weight-refinenet-for-real-time-semantic)
 * [Training COCO dataset to master object segmentation - MEDIUM](https://towardsdatascience.com/master-the-coco-dataset-for-semantic-image-segmentation-part-1-of-2-732712631047)
-* [DenseFusion: 6D Object Pose Estimation by Iterative Dense Fusion](https://arxiv.org/pdf/1901.04780v1.pdf) - Implimentation [GitHub](https://github.com/j96w/DenseFusion)
+* [DenseFusion: 6D Object Pose Estimation by Iterative Dense Fusion](https://arxiv.org/pdf/1901.04780v1.pdf) - Implementation [GitHub](https://github.com/j96w/DenseFusion)
 * [Using Geometry to Detect Grasp Poses in 3D Point Clouds](http://www.ccs.neu.edu/home/atp/publications/grasp_poses_isrr2015.pdf)
 * [Using Geometry to Detect Grasping Points on 3D Unknown Point Cloud](https://rua.ua.es/dspace/bitstream/10045/75568/1/ICINCO_2017_182_CR.pdf)
 * [Vision-based Robotic Grasp Detection From Object Localization, Object Pose Estimation To Grasp Estimation: A Review](https://arxiv.org/pdf/1905.06658.pdf) - Survey Paper
