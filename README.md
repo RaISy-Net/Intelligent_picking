@@ -7,9 +7,9 @@ The problem of pick and place has been one of the actively studied area and a ca
 
 # Hardware Design
 <p align="center">
-   <img width="300" height="300" src="https://github.com/RaISy-Net/Intelligent_picking/blob/master/ReadmeImages/ro.png">
-   <img width="300" height="300" src="https://github.com/RaISy-Net/Intelligent_picking/blob/master/ReadmeImages/ws.png">
-   <img width="400" height="300" src="https://github.com/RaISy-Net/Intelligent_picking/blob/master/ReadmeImages/ca.png">
+   <img width="300" height="300" src="assets/ro.png">
+   <img width="300" height="300" src="assets/ws.png">
+   <img width="400" height="300" src="assets/ca.png">
 </p>
 
 * Our robot is greatly inspired by [cartman](https://arxiv.org/pdf/1709.06283.pdf), owing to its cost-efficient cartesian design which could cover the entire work area in a stable fashion.
@@ -19,20 +19,20 @@ payload at the end effector whose costs are around INR 10,000 per unit. However,
 # Software Pipeline
 
 <p align="center">
-   <img width="1000" height="350" src="https://github.com/RaISy-Net/Intelligent_picking/blob/master/ReadmeImages/sp.png">
+   <img width="1000" height="350" src="assets/sp.png">
 </p>
 
 <br />
 
 <p align="center">
-   <img width="250" height="250" src="https://github.com/RaISy-Net/Intelligent_picking/blob/master/ReadmeImages/OD.jpeg.jpg">
-   <img width="500" height="250" src="https://github.com/RaISy-Net/Intelligent_picking/blob/master/ReadmeImages/Ge.png">
-   <img width="250" height="250" src="https://github.com/RaISy-Net/Intelligent_picking/blob/master/ReadmeImages/ge2.png">
+   <img width="250" height="250" src="assets/OD.jpeg.jpg">
+   <img width="500" height="250" src="assets/Ge.png">
+   <img width="250" height="250" src="assets/ge2.png">
 </p>
 
 
 
-**For a more detailed explanation of our work, check out our Phase 2 Report submission - [Report.pdf](https://github.com/RaISy-Net/Intelligent_picking/blob/master/Phase_2_submission/Docs/X%20Ash%20A%20-%2012_IIT%20(BHU)%20Varanasi_Intelligent_Picking_-_Round_3.pdf)**
+**For a more detailed explanation of our work, check out our Phase 2 Report submission - [Report.pdf](assetsission/Docs/X%20Ash%20A%20-%2012_IIT%20(BHU)%20Varanasi_Intelligent_Picking_-_Round_3.pdf)**
 
 
 # Ongoing Work:
