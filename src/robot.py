@@ -9,7 +9,7 @@ import pybullet as p
 import pybullet_data
 import distutils.dir_util
 from pkg_resources import parse_version
-from drop_area import *
+from src.drop_area import *
 
 
 class robot:
@@ -19,11 +19,11 @@ class robot:
 		p.loadURDF(os.path.join(pybullet_data.getDataPath(), "plane.urdf"), 0, 0, 0)
 		
 		#loading the robot parts
-		self.bot = p.loadURDF('./rsc/bot.urdf',basePosition = [0,0,1.7])
-		self.rail1 = p.loadURDF('./rsc/rail1.urdf',basePosition = [-1.25,0,0.01],baseOrientation = p.getQuaternionFromEuler([0,0,np.pi/2]), useFixedBase = True)
-		self.rail2 = p.loadURDF('./rsc/rail1.urdf',basePosition = [1.25,0,0.01],baseOrientation = p.getQuaternionFromEuler([0,0,np.pi/2]), useFixedBase = True)
-		self.cam1 = p.loadURDF('./rsc/cam1.urdf',basePosition = [1.5,-1,2],baseOrientation = p.getQuaternionFromEuler([0,0,np.pi/2]),useFixedBase = True)
-		self.cam2 = p.loadURDF('./rsc/cam1.urdf',basePosition = [1.5,1,2],baseOrientation = p.getQuaternionFromEuler([0,0,np.pi/2]),useFixedBase = True)
+		self.bot = p.loadURDF('./src/rsc/bot.urdf',basePosition = [0,0,1.7])
+		self.rail1 = p.loadURDF('./src/rsc/rail1.urdf',basePosition = [-1.25,0,0.01],baseOrientation = p.getQuaternionFromEuler([0,0,np.pi/2]), useFixedBase = True)
+		self.rail2 = p.loadURDF('./src/rsc/rail1.urdf',basePosition = [1.25,0,0.01],baseOrientation = p.getQuaternionFromEuler([0,0,np.pi/2]), useFixedBase = True)
+		self.cam1 = p.loadURDF('./src/rsc/cam1.urdf',basePosition = [1.5,-1,2],baseOrientation = p.getQuaternionFromEuler([0,0,np.pi/2]),useFixedBase = True)
+		self.cam2 = p.loadURDF('./src/rsc/cam1.urdf',basePosition = [1.5,1,2],baseOrientation = p.getQuaternionFromEuler([0,0,np.pi/2]),useFixedBase = True)
 		
 		p.setGravity(0,0,-10)
 		#defining the link numbers
@@ -99,7 +99,7 @@ class robot:
 		#taking overhead camera image
 		img = self.overhead_camera(0)
 		img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-		cv2.imwrite("./objdet_images/image.jpeg", img)
+		cv2.imwrite("./src/objdet_images/image.jpeg", img)
 		p.resetDebugVisualizerCamera(4, 0, -40, [0,0,0])
 
 	#function to reset the environment if required
@@ -108,11 +108,11 @@ class robot:
 		p.loadURDF(os.path.join(pybullet_data.getDataPath(), "plane.urdf"), 0, 0, 0)
 		
 		#loading the robot parts
-		self.bot = p.loadURDF('./rsc/bot.urdf',basePosition = [0,0,1.7])
-		self.rail1 = p.loadURDF('./rsc/rail1.urdf',basePosition = [-1.25,0,0.01],baseOrientation = p.getQuaternionFromEuler([0,0,np.pi/2]), useFixedBase = True)
-		self.rail2 = p.loadURDF('./rsc/rail1.urdf',basePosition = [1.25,0,0.01],baseOrientation = p.getQuaternionFromEuler([0,0,np.pi/2]), useFixedBase = True)
-		self.cam1 = p.loadURDF('./rsc/cam1.urdf',basePosition = [1.5,-1,2],baseOrientation = p.getQuaternionFromEuler([0,0,np.pi/2]),useFixedBase = True)
-		self.cam2 = p.loadURDF('./rsc/cam1.urdf',basePosition = [1.5,1,2],baseOrientation = p.getQuaternionFromEuler([0,0,np.pi/2]),useFixedBase = True)
+		self.bot = p.loadURDF('./src/rsc/bot.urdf',basePosition = [0,0,1.7])
+		self.rail1 = p.loadURDF('./src/rsc/rail1.urdf',basePosition = [-1.25,0,0.01],baseOrientation = p.getQuaternionFromEuler([0,0,np.pi/2]), useFixedBase = True)
+		self.rail2 = p.loadURDF('./src/rsc/rail1.urdf',basePosition = [1.25,0,0.01],baseOrientation = p.getQuaternionFromEuler([0,0,np.pi/2]), useFixedBase = True)
+		self.cam1 = p.loadURDF('./src/rsc/cam1.urdf',basePosition = [1.5,-1,2],baseOrientation = p.getQuaternionFromEuler([0,0,np.pi/2]),useFixedBase = True)
+		self.cam2 = p.loadURDF('./src/rsc/cam1.urdf',basePosition = [1.5,1,2],baseOrientation = p.getQuaternionFromEuler([0,0,np.pi/2]),useFixedBase = True)
 		
 		p.setGravity(0,0,-10)
 		#defining the link numbers
@@ -188,7 +188,7 @@ class robot:
 		#taking overhead camera image
 		img = self.overhead_camera(0)
 		img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-		cv2.imwrite("./objdet_images/image"+str(a)+".jpeg", img)
+		cv2.imwrite("./src/objdet_images/image"+str(a)+".jpeg", img)
 		p.resetDebugVisualizerCamera(4, 0, -40, [0,0,0])
 	
 	#function to extend arm fully
@@ -762,5 +762,5 @@ class robot:
 			depth_image_new=np.zeros(np_img_arr.shape[:2], dtype=np.float64)
 			depth_image_new[:,:] = depth
 			depth_image_new[:,:] = depth_image_new[:,:]*(255/(upper_bound-lower_bound))-((255*lower_bound)/(upper_bound-lower_bound))
-			cv2.imwrite(r"./CapturedImg/depth"+".png",depth_image_new)
-			cv2.imwrite(r"./CapturedImg/color"+".png",np_img_arr)
+			cv2.imwrite(r"./src/CapturedImg/depth"+".png",depth_image_new)
+			cv2.imwrite(r"./src/CapturedImg/color"+".png",np_img_arr)

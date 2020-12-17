@@ -9,14 +9,18 @@ import pybullet as p
 import pybullet_data
 import distutils.dir_util
 from pkg_resources import parse_version
-from robot import robot
-from drop_area import *
-from grasp_estimation import GraspEstimation
+from src.inference import *
+from src.robot import robot
+from src.drop_area import *
+from src.grasp_estimation import GraspEstimation
 
 Area_Halfdim=1
 
 class GridEnvironment():
     def __init__(self):
+        #initializing the grasp model
+        self.GraspModel = GraspEstimation(model = "./src/trained models/epoch_17_iou_0.96")
+
         #loading the robot class
         self.Robot = robot()
         self.Robot.suction_up()
@@ -30,16 +34,12 @@ class GridEnvironment():
         self.count=0
         self.placing = [[0, 0.8], [0.8, 0.4], [0.8, 0.8]]
 
-        #initializing the grasp model
-        self.GraspModel = GraspEstimation()
-
     #function to get RGB-D image and predict the grasping points info
     def get_grasp_prediction(self,x,y,z,a):
         self.Robot.rgbd_images(x,y,z)
-        self.network = "./trained models/epoch_17_iou_0.96"
-        self.rgb_path = "./CapturedImg/color"+".png"
-        self.depth_path = "./CapturedImg/depth"+".png"
-        self.GraspModel.load_network_image(self.network, self.rgb_path, self.depth_path)
+        self.rgb_path = "./src/CapturedImg/color"+".png"
+        self.depth_path = "./src/CapturedImg/depth"+".png"
+        self.GraspModel.load_images(self.rgb_path, self.depth_path)
         gs = self.GraspModel.predict_grasp()
         return gs
 

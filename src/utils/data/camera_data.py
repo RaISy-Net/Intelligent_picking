@@ -1,7 +1,7 @@
 import numpy as np
 import torch
 
-from utils.dataset_processing import image
+from src.utils.dataset_processing import image
 
 
 class CameraData:

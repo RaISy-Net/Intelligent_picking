@@ -5,12 +5,12 @@ import matplotlib.pyplot as plt
 import numpy as np
 import torch
 
-from hardware.camera import RealSenseCamera
-from hardware.device import get_device
-from inference.post_process import post_process_output
-from utils.data.camera_data import CameraData
-from utils.dataset_processing.grasp import detect_grasps
-from utils.visualisation.plot import plot_grasp
+from src.hardware.camera import RealSenseCamera
+from src.hardware.device import get_device
+from src.inference.post_process import post_process_output
+from src.utils.data.camera_data import CameraData
+from src.utils.dataset_processing.grasp import detect_grasps
+from src.utils.visualisation.plot import plot_grasp
 
 
 class GraspGenerator:
