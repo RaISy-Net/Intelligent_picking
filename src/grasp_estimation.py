@@ -81,7 +81,7 @@ class GraspEstimation:
                             grasp_angle_img=ang_img,
                             no_grasps=self.n_grasps,
                             grasp_width_img=width_img)
-                fig.savefig('img_result.pdf')
+                fig.savefig('./src/prediction results/img_result.pdf')
                 plt.close()
                 for g in gs:
                     print(g.center)
