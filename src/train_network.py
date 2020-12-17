@@ -13,12 +13,12 @@ import torch.optim as optim
 import torch.utils.data
 from torchsummary import summary
 
-from hardware.device import get_device
-from inference.models import get_network
-from inference.post_process import post_process_output
-from utils.data import get_dataset
-from utils.dataset_processing import evaluation
-from utils.visualisation.gridshow import gridshow
+from src.hardware.device import get_device
+from src.inference.models import get_network
+from src.inference.post_process import post_process_output
+from src.utils.data import get_dataset
+from src.utils.dataset_processing import evaluation
+from src.utils.visualisation.gridshow import gridshow
 
 
 def parse_args():

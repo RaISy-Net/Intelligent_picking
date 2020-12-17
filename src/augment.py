@@ -3,8 +3,8 @@ import random
 import os
 from imageio import imwrite
 import matplotlib.pyplot as plt
-from utils.dataset_processing import grasp, image
-from utils.data.grasp_data import GraspDatasetBase
+from src.utils.dataset_processing import grasp, image
+from src.utils.data.grasp_data import GraspDatasetBase
 
 
 def save_img(rgb_img,gtbbs,name):

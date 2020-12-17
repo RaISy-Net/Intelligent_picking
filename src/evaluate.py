@@ -5,11 +5,11 @@ import time
 import numpy as np
 import torch.utils.data
 
-from hardware.device import get_device
-from inference.post_process import post_process_output
-from utils.data import get_dataset
-from utils.dataset_processing import evaluation, grasp
-from utils.visualisation.plot import save_results
+from src.hardware.device import get_device
+from src.inference.post_process import post_process_output
+from src.utils.data import get_dataset
+from src.utils.dataset_processing import evaluation, grasp
+from src.utils.visualisation.plot import save_results
 
 logging.basicConfig(level=logging.INFO)
 

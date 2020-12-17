@@ -7,10 +7,10 @@ import torch.utils.data
 from PIL import Image
 import cv2
 
-from hardware.device import get_device
-from inference.post_process import post_process_output
-from utils.data.camera_data import CameraData
-from utils.visualisation.plot import plot_results, save_results
+from src.hardware.device import get_device
+from src.inference.post_process import post_process_output
+from src.utils.data.camera_data import CameraData
+from src.utils.visualisation.plot import plot_results, save_results
 
 logging.basicConfig(level=logging.INFO)
 
