@@ -122,7 +122,7 @@ class GridEnvironment():
         self.Robot.extend_wrist(zpos)
         self.Robot.close_gripper(0.10)
         self.Robot.contract_wrist(zpos)
-        p.setJointMotorControl2(Robot.bot, Robot.plate_left, p.VELOCITY_CONTROL, targetVelocity = 0)
+        p.setJointMotorControl2(self.Robot.bot, self.Robot.plate_left, p.VELOCITY_CONTROL, targetVelocity = 0)
         self.Robot.open_gripper()
         self.Robot.reset_gripper()
         pos = p.getBasePositionAndOrientation(object)[0]  
