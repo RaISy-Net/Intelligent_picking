@@ -30,24 +30,27 @@ class GridEnvironment():
         p.resetDebugVisualizerCamera(2 , 0, -41, [0, -1.4, 1])
         
         #setting objects to be picked and where to be dropped
-        self.object_indices = [2, 7, 8, 6, 24]  
+        self.object_indices = [7, 2, 8, 6, 24]  
         self.count=0
         self.placing = [[0, 0.8], [0.8, 0.4], [0.8, 0.8]]
 
+        #calibration metric from depth estimation while grasp planning
+        self.calib = 3.7 
+
     #function to get RGB-D image and predict the grasping points info
     def get_grasp_prediction(self,x,y,z,a):
-        self.Robot.rgbd_images(x,y,z)
+        top_pos = self.Robot.rgbd_images(x,y,z)
         self.rgb_path = "./src/CapturedImg/color"+".png"
         self.depth_path = "./src/CapturedImg/depth"+".png"
         self.GraspModel.load_images(self.rgb_path, self.depth_path)
         gs = self.GraspModel.predict_grasp()
-        return gs
+        return gs, top_pos
 
     #function to extract points from the info received from the function above
     def get_real_world_coord(self):
         end_effector_initpos = self.Robot.end_effector()[0]
         a=0
-        gs = self.get_grasp_prediction(end_effector_initpos[0],end_effector_initpos[1],end_effector_initpos[2],a)
+        gs, top_pos = self.get_grasp_prediction(end_effector_initpos[0],end_effector_initpos[1],end_effector_initpos[2],a)
         x = end_effector_initpos[0]
         y = end_effector_initpos[1]
         z = end_effector_initpos[2]
@@ -56,20 +59,23 @@ class GridEnvironment():
         x = x + a*(1-gs[0].center[1]/112)
         score = gs[0].quality
         angle = gs[0].angle
-        return x,y,angle,score
+        return x,y,angle,score,top_pos
 
     #function to pick an object autonomously
-    def pick(self, xpos, ypos, object, threshold=10):# change threshold later to 0.9
+    def pick(self, xpos, ypos, object, threshold=0.1):# change threshold later to 0.9
         self.Robot.overhead_camera(0)
         self.Robot.move_frame_and_head(ypos+0.06, xpos-0.03)
         z_init = self.Robot.end_effector()[0][2]
-        x,y,angle,score = self.get_real_world_coord()
+        x,y,angle,score,top_pos = self.get_real_world_coord()
         if score<threshold:
-            if z_init>1.185:
-                zpos = z_init - 1.181
-                self.Robot.extend_wrist(zpos)
             self.Robot.move_suction_cup(ypos, xpos)
             self.Robot.close_gripper(0.09, 1)
+            if z_init>1.185:
+                zpos = z_init - 1.181
+                z_error = max(top_pos - 0.9534781, 0)
+                print("error")
+                print(z_error)
+                self.Robot.extend_wrist(zpos+self.calib*z_error)
             p.resetDebugVisualizerCamera(0.4, angle, -20, [xpos, ypos, p.getBasePositionAndOrientation(object)[0][2]])
             self.Robot.suction_down()
             cons = self.Robot.suction_force(object)
@@ -86,7 +92,8 @@ class GridEnvironment():
             z_init = self.Robot.end_effector()[0][2]
             zpos = z_init - 1.052
             p.resetDebugVisualizerCamera(0.4, angle, -20, [xpos, ypos, p.getBasePositionAndOrientation(object)[0][2]])
-            self.Robot.extend_wrist(zpos)
+            z_error = max(0.9534812 - top_pos, 0)
+            self.Robot.extend_wrist(zpos - z_error)
             self.Robot.close_gripper(0.10)
             self.Robot.contract_wrist(0.13)
             p.resetDebugVisualizerCamera(2 , 0, -41, [0, -1.4, 1])

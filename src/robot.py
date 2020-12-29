@@ -568,11 +568,11 @@ class robot:
 		return p.getLinkState(self.bot,self.end_effect)
 	
 	#function to extend the suction cup
-	def suction_down(self):
+	def suction_down(self, down=0.09):
 		i = 0.005
 		currentPos_init = p.getJointState(self.bot, self.suction)
 		currentPos = p.getJointState(self.bot, self.suction)
-		while(currentPos[0]>-0.09):
+		while(currentPos[0]>-down):
 			currentPos = p.getJointState(self.bot, self.suction)
 			p.setJointMotorControl2(self.bot, self.suction,p.POSITION_CONTROL, targetPosition = currentPos[0]-i)
 			p.stepSimulation()
@@ -768,6 +768,7 @@ class robot:
 			np_img_arr = cv2.cvtColor(np_img_arr,cv2.COLOR_BGR2RGB)
 			depth = img_arr[3]
 			depth = np.reshape(depth, (height, width))
+			top_surf = np.amin(depth)
 			depth_image = np.zeros(np_img_arr.shape, dtype=np.float64)
 			depth_image[:,:,0] = depth
 			lower_bound=np.amin(depth_image[:,:,0])
@@ -777,3 +778,4 @@ class robot:
 			depth_image_new[:,:] = depth_image_new[:,:]*(255/(upper_bound-lower_bound))-((255*lower_bound)/(upper_bound-lower_bound))
 			cv2.imwrite(r"./src/CapturedImg/depth"+".png",depth_image_new)
 			cv2.imwrite(r"./src/CapturedImg/color"+".png",np_img_arr)
+			return top_surf
