@@ -59,7 +59,7 @@ class GridEnvironment():
         return x,y,angle,score
 
     #function to pick an object autonomously
-    def pick(self, xpos, ypos, object, threshold=0.9):
+    def pick(self, xpos, ypos, object, threshold=10):# change threshold later to 0.9
         self.Robot.overhead_camera(0)
         self.Robot.move_frame_and_head(ypos+0.06, xpos-0.03)
         z_init = self.Robot.end_effector()[0][2]

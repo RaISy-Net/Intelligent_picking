@@ -601,10 +601,22 @@ class robot:
 		pos_cup=p.getLinkState(self.bot,self.suction_cup)[0]
 		orn_cup=p.getLinkState(self.bot,self.suction_cup)[1]
 		pos_obj,orn_obj=p.getBasePositionAndOrientation(object)
+		import pdb
+		
 		euler_orn=p.getEulerFromQuaternion(orn_cup)
-		for _ in range(500):
-			p.applyExternalForce(object,-1,[euler_orn[0],euler_orn[1],euler_orn[2]+2.5],[pos_cup[0],pos_cup[1],pos_cup[2]],p.WORLD_FRAME)
+		force_constant=20
+
+		p.addUserDebugLine([pos_cup[0],pos_cup[1],pos_cup[2]],[pos_obj[0],pos_obj[1],pos_obj[2]],[0.0,1.0,0.])
+		vector_cup2obj=[force_constant*(pos_cup[0]-pos_obj[0]),force_constant*(pos_cup[1]-pos_obj[1]),force_constant*(pos_cup[2]-pos_obj[2])]
+		
+		for _ in range(250):
+			# p.applyExternalForce(object,-1,[euler_orn[0],euler_orn[1],euler_orn[2]+2.5],[pos_cup[0],pos_cup[1],pos_cup[2]],p.WORLD_FRAME)
+			p.applyExternalForce(object,-1,vector_cup2obj,[pos_cup[0],pos_cup[1],pos_cup[2]],p.WORLD_FRAME)
 			p.stepSimulation()
+			print(vector_cup2obj,'vector_cup2obj')
+			pos_obj,orn_obj=p.getBasePositionAndOrientation(object)
+			pos_cup=p.getLinkState(self.bot,self.suction_cup)[0]
+			vector_cup2obj=[force_constant*(pos_cup[0]-pos_obj[0]),force_constant*(pos_cup[1]-pos_obj[1]),force_constant*(pos_cup[2]-pos_obj[2])]
 			time.sleep(1.0/240.0)
 			pos_obj,orn_obj=p.getBasePositionAndOrientation(object)
 			if pos_obj[2]>pos_cup[2]-0.01:
@@ -617,6 +629,7 @@ class robot:
 		self.reset_gripper()
 		return cons
 
+		
 	#function to remove suction force
 	def remove_suction_force(self, cons):
 		p.removeConstraint(cons)
