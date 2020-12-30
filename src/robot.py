@@ -618,10 +618,9 @@ class robot:
 			pos_cup=p.getLinkState(self.bot,self.suction_cup)[0]
 			vector_cup2obj=[force_constant*(pos_cup[0]-pos_obj[0]),force_constant*(pos_cup[1]-pos_obj[1]),force_constant*(pos_cup[2]-pos_obj[2])]
 			time.sleep(1.0/240.0)
-			pos_obj,orn_obj=p.getBasePositionAndOrientation(object)
 			if pos_obj[2]>pos_cup[2]-0.01:
 				break
-		cons=p.createConstraint(object,-1,self.bot,self.suction_cup,p.JOINT_FIXED,[0,0,1],[0,0,0],[pos_obj[0]-pos_cup[0],pos_obj[1]-pos_cup[1],pos_obj[2]-pos_cup[2]])
+		cons=p.createConstraint(object,-1,self.bot,self.suction_cup,p.JOINT_FIXED,[0,0,1],[0,0,0],[pos_obj[0]-pos_cup[0],pos_obj[1]-pos_cup[1],pos_obj[2]-pos_cup[2]],orn_obj)
 		for i in range(75):
 			info = p.getJointState(self.bot,self.servo)
 			p.setJointMotorControl2(self.bot, self.servo, p.POSITION_CONTROL, targetPosition = 0)

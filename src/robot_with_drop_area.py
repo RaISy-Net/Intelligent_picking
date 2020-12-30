@@ -30,7 +30,7 @@ class GridEnvironment():
         p.resetDebugVisualizerCamera(2 , 0, -41, [0, -1.4, 1])
         
         #setting objects to be picked and where to be dropped
-        self.object_indices = [7, 2, 8, 6, 24]  
+        self.object_indices = [2, 7, 8, 6, 24]  
         self.count=0
         self.placing = [[0, 0.8], [0.8, 0.4], [0.8, 0.8]]
 
@@ -62,7 +62,7 @@ class GridEnvironment():
         return x,y,angle,score,top_pos
 
     #function to pick an object autonomously
-    def pick(self, xpos, ypos, object, threshold=0.1):# change threshold later to 0.9
+    def pick(self, xpos, ypos, object, threshold=10):# change threshold later to 0.9
         self.Robot.overhead_camera(0)
         self.Robot.move_frame_and_head(ypos+0.06, xpos-0.03)
         z_init = self.Robot.end_effector()[0][2]
