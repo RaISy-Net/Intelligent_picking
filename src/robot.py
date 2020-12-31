@@ -10,6 +10,7 @@ import pybullet_data
 import distutils.dir_util
 from pkg_resources import parse_version
 from src.drop_area import *
+import matplotlib.pyplot as plt
 
 
 class robot:
@@ -356,7 +357,7 @@ class robot:
 
 	#function to move the frame -- not used in sim
 	def move_frame(self, pos):
-		init, ori = p.getBasePositionAndOrientation(self.bot)
+		init, _ = p.getBasePositionAndOrientation(self.bot)
 		j = 0.15
 		j3 = p.getJointState(self.bot,31)
 		j5 = p.getJointState(self.bot,33)
@@ -376,7 +377,7 @@ class robot:
 				p.setJointMotorControl2(self.bot, 51,p.POSITION_CONTROL, targetPosition = j16[0]-j)
 				p.setJointMotorControl2(self.bot, 53,p.POSITION_CONTROL, targetPosition = j18[0]+j)
 				p.setJointMotorControl2(self.bot, 55,p.POSITION_CONTROL, targetPosition = j20[0]-j)
-				init, ori = p.getBasePositionAndOrientation(self.bot)
+				init, _ = p.getBasePositionAndOrientation(self.bot)
 				j3 = p.getJointState(self.bot,31)
 				j5 = p.getJointState(self.bot,33)
 				j7 = p.getJointState(self.bot,35)
@@ -404,7 +405,7 @@ class robot:
 				p.setJointMotorControl2(self.bot, 51,p.POSITION_CONTROL, targetPosition = j16[0]+j)
 				p.setJointMotorControl2(self.bot, 53,p.POSITION_CONTROL, targetPosition = j18[0]-j)
 				p.setJointMotorControl2(self.bot, 55,p.POSITION_CONTROL, targetPosition = j20[0]+j)
-				init, ori = p.getBasePositionAndOrientation(self.bot)
+				init, _ = p.getBasePositionAndOrientation(self.bot)
 				j3 = p.getJointState(self.bot,31)
 				j5 = p.getJointState(self.bot,33)
 				j7 = p.getJointState(self.bot,35)
@@ -424,75 +425,85 @@ class robot:
 			return None
 	
 	#function to move frame and head together using PID control
-	def move_frame_and_head(self, pos_frame ,pos_head):
+	def move_frame_and_head(self, target_pos_frame ,target_pos_head):
+		target_pos_head = -target_pos_head
+		_count = 0
+
+        # PID parameters
 		kp=3
 		kd=10
 		ki=0.005
-		i=0
-		t=0
 		total_error=0
-		pos_head = -pos_head
-		init, ori = p.getBasePositionAndOrientation(self.bot)
-		j = 0
-		if(1):
-			last_error=0
-			error=0
-			counter=0
+		last_error = 0
 
-			while(1):
-				error=init[1]-pos_frame
-				total_error=total_error+error
-				#PID control equation for frame
-				j=kp*error+kd*(error-last_error)+ki*total_error
-				j = np.clip(j, -10, 10) # Clipping velocity to prevent frame toppling
-				p.setJointMotorControl2(self.bot, 38,p.VELOCITY_CONTROL, targetVelocity = j)
-				p.setJointMotorControl2(self.bot, 41,p.VELOCITY_CONTROL, targetVelocity = -j)
-				p.setJointMotorControl2(self.bot, 44,p.VELOCITY_CONTROL, targetVelocity = j)
-				p.setJointMotorControl2(self.bot, 47,p.VELOCITY_CONTROL, targetVelocity = -j)
+		# Initializing PLOTTING LISTs:
+		target_list_x = []
+		actual_list_x = []
 
-				p.setJointMotorControl2(self.bot, 73,p.VELOCITY_CONTROL, targetVelocity = -j)
-				p.setJointMotorControl2(self.bot, 76,p.VELOCITY_CONTROL, targetVelocity = +j)
-				p.setJointMotorControl2(self.bot, 79,p.VELOCITY_CONTROL, targetVelocity = +j)
-				p.setJointMotorControl2(self.bot, 82,p.VELOCITY_CONTROL, targetVelocity = -j)
-				init, ori = p.getBasePositionAndOrientation(self.bot)
-				increment=0.01
-				
-				currentPos = p.getJointState(self.bot, self.head)
-				if currentPos[0]>pos_head:
-					increment=-0.01
-				if currentPos[0] < pos_head+0.01 and currentPos[0] > pos_head-0.01:
-					i=0
-				#if head is in between 1 cm of the required pos set targetPosition equal to current Position
-				p.setJointMotorControl2(self.bot, self.head,p.POSITION_CONTROL, targetPosition = currentPos[0]+(i/100))
-				i=i+increment
-				p.stepSimulation()
-				last_error=error
-				if init[1]>pos_frame-0.01 and init[1]<pos_frame+0.01:
-					counter+=1
-				else:
-					counter=0
-				t=t+1
-				if counter > 5:
-					j=0
+		while True:
+			_count += 1
+			(_, current_pos_frame, _), _ = p.getBasePositionAndOrientation(self.bot)
+			(current_pos_head, _, _, _) = p.getJointState(self.bot, self.head)
+			# If inside a threshold
+			if abs(target_pos_frame - current_pos_frame) <= 0.01 and abs(target_pos_head - current_pos_head) < 0.01:
+				break
+			#PID control frame
+			error = current_pos_frame - target_pos_frame
+			last_error = error if _count == 1 else last_error
+			target_velocity = kp*error + kd*(error-last_error) + ki*total_error
+			last_error = error
+			total_error += error
+			# Clipping velocity to prevent frame toppling
+			target_velocity = np.clip(target_velocity, -8, 8) 
+			p.setJointMotorControl2(self.bot, 38,p.VELOCITY_CONTROL, targetVelocity = target_velocity)
+			p.setJointMotorControl2(self.bot, 41,p.VELOCITY_CONTROL, targetVelocity = -target_velocity)
+			p.setJointMotorControl2(self.bot, 44,p.VELOCITY_CONTROL, targetVelocity = target_velocity)
+			p.setJointMotorControl2(self.bot, 47,p.VELOCITY_CONTROL, targetVelocity = -target_velocity)
 
-				if counter > 5 and currentPos[0] < pos_head+0.02 and currentPos[0] > pos_head -0.02:
-					break
-			pos,orn=p.getBasePositionAndOrientation(self.bot)	
-			k = 0
-			while(k<100):
-				p.setJointMotorControl2(self.bot, 38,p.VELOCITY_CONTROL, targetVelocity =0)
-				p.setJointMotorControl2(self.bot, 41,p.VELOCITY_CONTROL, targetVelocity =0)
-				p.setJointMotorControl2(self.bot, 44,p.VELOCITY_CONTROL, targetVelocity =0)
-				p.setJointMotorControl2(self.bot, 47,p.VELOCITY_CONTROL, targetVelocity =0)
-				p.setJointMotorControl2(self.bot, 73,p.VELOCITY_CONTROL, targetVelocity =0)
-				p.setJointMotorControl2(self.bot, 76,p.VELOCITY_CONTROL, targetVelocity =0)
-				p.setJointMotorControl2(self.bot, 79,p.VELOCITY_CONTROL, targetVelocity =0)
-				p.setJointMotorControl2(self.bot, 82,p.VELOCITY_CONTROL, targetVelocity =0)
-				p.resetBasePositionAndOrientation(self.bot,pos,orn)
-				p.stepSimulation()
-				time.sleep(1./240.)
-				k = k+1
-			return None
+			p.setJointMotorControl2(self.bot, 73,p.VELOCITY_CONTROL, targetVelocity = -target_velocity)
+			p.setJointMotorControl2(self.bot, 76,p.VELOCITY_CONTROL, targetVelocity = +target_velocity)
+			p.setJointMotorControl2(self.bot, 79,p.VELOCITY_CONTROL, targetVelocity = +target_velocity)
+			p.setJointMotorControl2(self.bot, 82,p.VELOCITY_CONTROL, targetVelocity = -target_velocity)
+
+			#if head is in between 1 cm of the required pos set targetPosition equal to current Position
+			p.setJointMotorControl2(self.bot, self.head,p.VELOCITY_CONTROL, targetVelocity = target_pos_head - current_pos_head)
+			p.stepSimulation()
+			
+			# Accumulating values for plotting:
+			actual_list_x.append(target_pos_frame)
+			target_list_x.append(current_pos_frame)
+
+		# PLOT VALUES
+		plt.figure(figsize=[12, 9])
+		plt.subplot(1, 1, 1)
+		plt.title('PID plot')
+		plt.xlabel('Steps:')
+		plt.ylabel('Values: ')
+		plt.plot(target_list_x, color='green',  label='target_list_x')
+		plt.plot(actual_list_x, color='red',  label='actual_list_x')
+		plt.grid()
+		plt.legend()
+
+		# plt.show()
+		plt.savefig('plot.png')
+		plt.close()
+
+		# FUNCTION TO STOP.
+		pos, orn = p.getBasePositionAndOrientation(self.bot)	
+		for _ in range (100):
+			p.setJointMotorControl2(self.bot, 38,p.VELOCITY_CONTROL, targetVelocity =0)
+			p.setJointMotorControl2(self.bot, 41,p.VELOCITY_CONTROL, targetVelocity =0)
+			p.setJointMotorControl2(self.bot, 44,p.VELOCITY_CONTROL, targetVelocity =0)
+			p.setJointMotorControl2(self.bot, 47,p.VELOCITY_CONTROL, targetVelocity =0)
+			p.setJointMotorControl2(self.bot, 73,p.VELOCITY_CONTROL, targetVelocity =0)
+			p.setJointMotorControl2(self.bot, 76,p.VELOCITY_CONTROL, targetVelocity =0)
+			p.setJointMotorControl2(self.bot, 79,p.VELOCITY_CONTROL, targetVelocity =0)
+			p.setJointMotorControl2(self.bot, 82,p.VELOCITY_CONTROL, targetVelocity =0)
+			p.setJointMotorControl2(self.bot, self.head, p.VELOCITY_CONTROL, targetVelocity =0)
+			p.resetBasePositionAndOrientation(self.bot,pos,orn)
+			p.stepSimulation()
+			time.sleep(1./240.)
+		return None
 	
 	#function to rotate gripper
 	def rotate_gripper(self, angle):
@@ -624,8 +635,8 @@ class robot:
 			p.stepSimulation()
 
 	#function to move suction cup towards the object
-	def move_suction_cup(self, pos_frame, pos_head):
-		self.move_frame_and_head(pos_frame+0.06, pos_head-0.17)
+	def move_suction_cup(self, target_pos_frame, target_pos_head):
+		self.move_frame_and_head(target_pos_frame+0.06, target_pos_head-0.17)
 
 	#function to get the list of random objects -- not used in sim
 	def _get_random_object(self):
@@ -677,7 +688,6 @@ class robot:
 		ypos = -0.45
 		count = 0
 		count2 = 0
-		counter = 0
 		x = 0
 		y = 0 
 		for urdf_name in urdfList:
