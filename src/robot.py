@@ -636,7 +636,7 @@ class robot:
 
 	#function to move suction cup towards the object
 	def move_suction_cup(self, target_pos_frame, target_pos_head):
-		self.move_frame_and_head(target_pos_frame+0.06, target_pos_head-0.17)
+		self.move_frame_and_head(target_pos_frame+0.06, target_pos_head-0.19)
 
 	#function to get the list of random objects -- not used in sim
 	def _get_random_object(self):

@@ -77,7 +77,12 @@ class GridEnvironment():
                 print(z_error)
                 self.Robot.extend_wrist(zpos+self.calib*z_error)
             p.resetDebugVisualizerCamera(0.4, angle, -20, [xpos, ypos, p.getBasePositionAndOrientation(object)[0][2]])
-            self.Robot.suction_down()
+            suction_z_error = max(0.9534781 - top_pos, 0)
+            if suction_z_error > 0:
+                suction_z_error = min(suction_z_error, 0.09)
+                self.Robot.suction_down(0.09 - suction_z_error)
+            else:
+                self.Robot.suction_down()
             cons = self.Robot.suction_force(object)
             self.Robot.suction_up()
             p.resetDebugVisualizerCamera(2 , 0, -41, [0, -1.4, 1])
