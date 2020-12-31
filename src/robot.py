@@ -441,22 +441,10 @@ class robot:
 
 			while(1):
 				error=init[1]-pos_frame
-				#if error is very large it will cause speed to increase and frame will topple
-				#so reduce the error by dividing by a constant
-				#different constant in different cases
-				if error>3 or error<-3:
-					error = error/4.5
-				elif error>2.2 or error<-2.2:
-					error = error/3.5
-				elif error>1.4 or error<-1.4:
-					error = error/2.5
-				elif error>0.8 or error<-0.8:
-					error = error/2
-				else:
-					error = error
 				total_error=total_error+error
 				#PID control equation for frame
 				j=kp*error+kd*(error-last_error)+ki*total_error
+				j = np.clip(j, -10, 10) # Clipping velocity to prevent frame toppling
 				p.setJointMotorControl2(self.bot, 38,p.VELOCITY_CONTROL, targetVelocity = j)
 				p.setJointMotorControl2(self.bot, 41,p.VELOCITY_CONTROL, targetVelocity = -j)
 				p.setJointMotorControl2(self.bot, 44,p.VELOCITY_CONTROL, targetVelocity = j)
