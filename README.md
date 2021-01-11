@@ -70,6 +70,7 @@ MANIPULATOR](https://pdfs.semanticscholar.org/e5f8/d98ce96b1dfcce05966bed52a85a2
 * [Amazon picking challenge - Cartman - Robot using 3D printer system](https://arxiv.org/pdf/1709.06283.pdf)
 * [Amazon picking challenge - MIT and Princeton](https://vision.princeton.edu/projects/2017/arc/)
 * Grasp Prediction on RGB-D images [[Paper](https://arxiv.org/abs/1909.04810)] [[Code](https://github.com/skumra/robotic-grasping)]
+* High Quality Monocular Depth Estimation via Transfer Learning [[Paper](https://arxiv.org/pdf/1812.11941.pdf)] [[Code](https://github.com/ialhashim/DenseDepth)]
 
 
 ## Papers on Grasping and Pose estimation
