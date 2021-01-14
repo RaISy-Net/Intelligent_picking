@@ -30,9 +30,9 @@ class GridEnvironment():
         p.resetDebugVisualizerCamera(2 , 0, -41, [0, -1.4, 1])
         
         #setting objects to be picked and where to be dropped
-        self.object_indices = [7, 2, 8, 6, 24]  
+        self.object_indices = np.arange(25)
         self.count=0
-        self.placing = [[0, 0.8], [0.8, 0.4], [0.8, 0.8]]
+        self.placing = [[-0.8 + (i//5)*(0.4), 2.0 - 0.4 * (i%5)] for i in self.object_indices]
 
         #calibration metric from depth estimation while grasp planning
         self.calib = 3.7 
@@ -62,7 +62,7 @@ class GridEnvironment():
         return x,y,angle,score,top_pos
 
     #function to pick an object autonomously
-    def pick(self, xpos, ypos, object, threshold=0.1):# change threshold later to 0.9
+    def pick(self, xpos, ypos, object, threshold=0.9):# change threshold later to 0.9
         self.Robot.overhead_camera(0)
         self.Robot.move_frame_and_head(ypos+0.06, xpos-0.03)
         z_init = self.Robot.end_effector()[0][2]
@@ -125,7 +125,7 @@ class GridEnvironment():
     def grab_drop_suck(self, xpos, ypos, object):
         self.Robot.move_frame_and_head(ypos+0.06, xpos-0.03)
         z_init = self.Robot.end_effector()[0][2]
-        x,y,angle,score = self.get_real_world_coord()
+        x,y,angle,score,z_score = self.get_real_world_coord()
         self.Robot.rotate_gripper(angle)
         self.Robot.move_frame_and_head(y+0.06, x-0.03)
         z_init = self.Robot.end_effector()[0][2]
@@ -173,5 +173,5 @@ class GridEnvironment():
             self.count+=1
             self.place(x, y, suction, cons)
             for j in range(181):
-                p.resetDebugVisualizerCamera(2 , 180-j, -41, [0, 1.4 - (2.8*j)/180, 0.2 + j*0.8/180])
+                p.resetDebugVisualizerCamera(2 , -180+j, -41, [0, 1.4 - (2.8*j)/180, 0.2 + j*0.8/180])
                 time.sleep(0.01)

@@ -659,7 +659,7 @@
       <collision name="Cube.008">
         <origin xyz="0 0 0.01" rpy="-1.5708 0 0"/>
         <geometry>
-          <box size="0.04 0.005 0.1"/>
+          <box size="0.06 0.005 0.1"/>
         </geometry>
       </collision>
     </link>
@@ -680,7 +680,7 @@
       <collision name="Cube.009">
         <origin xyz="0 0 0.01" rpy="-1.5708 0 0"/>
         <geometry>
-          <box size="0.04 0.005 0.1"/>
+          <box size="0.06 0.005 0.1"/>
         </geometry>
       </collision>
     </link>
@@ -905,14 +905,14 @@
         <inertia ixx="1.00174" ixy="0" ixz="0" iyy="0.00057" iyz="0" izz="0.92057"/>
       </inertial>
       <visual name="horizantal rod">
-        <origin xyz="0 0 0" rpy="0 -0.01396 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
           <mesh filename="horizantal rod.stl" scale="1.02128 1.00001 1.0"/>
         </geometry>
         <material name="Material.030"/>
       </visual>
       <collision name="horizantal rod.000">
-        <origin xyz="0 0 0" rpy="0 -0.01396 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
           <mesh filename="horizantal rod.001.stl" scale="1.0 1.0 1.0"/>
         </geometry>
@@ -1843,6 +1843,36 @@
       </visual>
     </link>
 
+    <link name="Untitled.118">
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="0.001"/>
+        <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+      </inertial>
+      <visual name="12">
+        <origin xyz="-7e-05 0.003 0.001" rpy="-1.5708 0 0"/>
+        <geometry>
+          <mesh filename="12.stl" scale="0.00724 0.00677 0.00094"/>
+        </geometry>
+        <material name="Material.054"/>
+      </visual>
+    </link>
+
+    <link name="Untitled.119">
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="0.001"/>
+        <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+      </inertial>
+      <visual name="12.001">
+        <origin xyz="-7e-05 -0.003 0.001" rpy="1.5708 0 0"/>
+        <geometry>
+          <mesh filename="12.001.stl" scale="0.00724 0.00677 0.00094"/>
+        </geometry>
+        <material name="Material.053"/>
+      </visual>
+    </link>
+
     <joint name="Untitled" type="fixed">
       <origin xyz="-0.11 0.06 0" rpy="1.5708 0 0"/>
       <parent link="Untitled.004"/>
@@ -1906,7 +1936,7 @@
     </joint>
 
     <joint name="Untitled.009" type="fixed">
-      <origin xyz="0.00279 -0.00399 -1.56" rpy="0 0 0"/>
+      <origin xyz="0.00279 -0.00399 -1.57241" rpy="0 0 0"/>
       <parent link="Untitled.111"/>
       <child link="Untitled.009"/>
     </joint>
@@ -2496,7 +2526,7 @@
     </joint>
 
     <joint name="Untitled.111" type="fixed">
-      <origin xyz="1.24899 0.00279 -0.03241" rpy="0 0 -1.5708"/>
+      <origin xyz="1.24899 0.00279 -0.00759" rpy="0 0 -1.5708"/>
       <parent link="Untitled.052"/>
       <child link="Untitled.111"/>
     </joint>
@@ -2526,7 +2556,7 @@
     </joint>
 
     <joint name="Untitled.116" type="fixed">
-      <origin xyz="0 -0.039 -0.00345" rpy="0 0 0"/>
+      <origin xyz="0 -0.039 0.10655" rpy="0 0 0"/>
       <parent link="Untitled.115"/>
       <child link="Untitled.116"/>
     </joint>
@@ -2535,6 +2565,18 @@
       <origin xyz="0 -0.025 -0.07" rpy="0 0 0"/>
       <parent link="Untitled.116"/>
       <child link="Untitled.117"/>
+    </joint>
+
+    <joint name="Untitled.118" type="fixed">
+      <origin xyz="0 -0.02859 0.00917" rpy="-1.5708 0 0"/>
+      <parent link="Untitled.037"/>
+      <child link="Untitled.118"/>
+    </joint>
+
+    <joint name="Untitled.119" type="fixed">
+      <origin xyz="-0.00067 -0.08027 0" rpy="-1.5708 -1.5708 0"/>
+      <parent link="Untitled.096"/>
+      <child link="Untitled.119"/>
     </joint>
 
     <material name="Material.001">
@@ -2735,6 +2777,14 @@
 
     <material name="Material.052">
       <color rgba="0.64 0.64 0.64 1.0"/>
+    </material>
+
+    <material name="Material.053">
+      <color rgba="0.16 0.16 0.16 1.0"/>
+    </material>
+
+    <material name="Material.054">
+      <color rgba="0.16 0.16 0.16 1.0"/>
     </material>
 
   </robot>

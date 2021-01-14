@@ -1,5 +1,6 @@
 import argparse
 import logging
+import time
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -82,6 +83,7 @@ class GraspEstimation:
                             no_grasps=self.n_grasps,
                             grasp_width_img=width_img)
                 fig.savefig('./src/prediction results/img_result.pdf')
+                time.sleep(2)
                 plt.close()
                 for g in gs:
                     print(g.center)

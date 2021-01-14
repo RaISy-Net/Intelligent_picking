@@ -33,15 +33,15 @@ class robot:
 		self.mid_arm = 8
 		self.upper_arm = 5
 		self.head = 0
-		self.plate_left = 15
+		self.plate_left = 16
 		self.plate_right = 14
 		self.servo = 13
-		self.camera = 18
+		self.camera = 20
 		self.end_effect = 13
-		self.suction = 23
-		self.suction_cup = 23
-		self.cart2_link = 42
-		self.cart1_link = 68
+		self.suction = 25
+		self.suction_cup = 25
+		self.cart2_link = 44
+		self.cart1_link = 70
 		i = 0
 		
 		#constraining the rails to increase the stability of the bot
@@ -56,7 +56,7 @@ class robot:
 		self.n = p.getNumJoints(self.bot)
 
 		#changing the friction values of the wheels of the carts
-		wheels = [44,47,50,53,79,82,85,88]
+		wheels = [46,49,52,55,81,84,87,90]
 		for i in wheels:
 			p.changeDynamics(bodyUniqueId=self.bot,
 				             linkIndex=i,
@@ -122,15 +122,15 @@ class robot:
 		self.mid_arm = 8
 		self.upper_arm = 5
 		self.head = 0
-		self.plate_left = 15
+		self.plate_left = 16
 		self.plate_right = 14
 		self.servo = 13
-		self.camera = 18
+		self.camera = 20
 		self.end_effect = 13
-		self.suction = 23
-		self.suction_cup = 23
-		self.cart2_link = 42
-		self.cart1_link = 68
+		self.suction = 25
+		self.suction_cup = 25
+		self.cart2_link = 44
+		self.cart1_link = 70
 		i = 0
 		
 		#constraining the rails to increase the stability of the bot
@@ -145,7 +145,7 @@ class robot:
 		self.n = p.getNumJoints(self.bot)
 
 		#changing the friction values of the wheels of the carts
-		wheels = [44,47,50,53,79,82,85,88]
+		wheels = [46,49,52,55,81,84,87,90]
 		for i in wheels:
 			p.changeDynamics(bodyUniqueId=self.bot,
 				             linkIndex=i,
@@ -455,15 +455,15 @@ class robot:
 			total_error += error
 			# Clipping velocity to prevent frame toppling
 			target_velocity = np.clip(target_velocity, -8, 8) 
-			p.setJointMotorControl2(self.bot, 44,p.VELOCITY_CONTROL, targetVelocity = target_velocity)
-			p.setJointMotorControl2(self.bot, 47,p.VELOCITY_CONTROL, targetVelocity = -target_velocity)
-			p.setJointMotorControl2(self.bot, 50,p.VELOCITY_CONTROL, targetVelocity = target_velocity)
-			p.setJointMotorControl2(self.bot, 53,p.VELOCITY_CONTROL, targetVelocity = -target_velocity)
+			p.setJointMotorControl2(self.bot, 46,p.VELOCITY_CONTROL, targetVelocity = target_velocity)
+			p.setJointMotorControl2(self.bot, 49,p.VELOCITY_CONTROL, targetVelocity = -target_velocity)
+			p.setJointMotorControl2(self.bot, 52,p.VELOCITY_CONTROL, targetVelocity = target_velocity)
+			p.setJointMotorControl2(self.bot, 55,p.VELOCITY_CONTROL, targetVelocity = -target_velocity)
 
-			p.setJointMotorControl2(self.bot, 79,p.VELOCITY_CONTROL, targetVelocity = -target_velocity)
-			p.setJointMotorControl2(self.bot, 82,p.VELOCITY_CONTROL, targetVelocity = +target_velocity)
-			p.setJointMotorControl2(self.bot, 85,p.VELOCITY_CONTROL, targetVelocity = +target_velocity)
-			p.setJointMotorControl2(self.bot, 88,p.VELOCITY_CONTROL, targetVelocity = -target_velocity)
+			p.setJointMotorControl2(self.bot, 81,p.VELOCITY_CONTROL, targetVelocity = -target_velocity)
+			p.setJointMotorControl2(self.bot, 84,p.VELOCITY_CONTROL, targetVelocity = +target_velocity)
+			p.setJointMotorControl2(self.bot, 87,p.VELOCITY_CONTROL, targetVelocity = +target_velocity)
+			p.setJointMotorControl2(self.bot, 90,p.VELOCITY_CONTROL, targetVelocity = -target_velocity)
 
 			#if head is in between 1 cm of the required pos set targetPosition equal to current Position
 			p.setJointMotorControl2(self.bot, self.head,p.VELOCITY_CONTROL, targetVelocity = target_pos_head - current_pos_head)
@@ -491,14 +491,14 @@ class robot:
 		# FUNCTION TO STOP.
 		pos, orn = p.getBasePositionAndOrientation(self.bot)	
 		for _ in range (100):
-			p.setJointMotorControl2(self.bot, 44,p.VELOCITY_CONTROL, targetVelocity =0)
-			p.setJointMotorControl2(self.bot, 47,p.VELOCITY_CONTROL, targetVelocity =0)
-			p.setJointMotorControl2(self.bot, 50,p.VELOCITY_CONTROL, targetVelocity =0)
-			p.setJointMotorControl2(self.bot, 53,p.VELOCITY_CONTROL, targetVelocity =0)
-			p.setJointMotorControl2(self.bot, 79,p.VELOCITY_CONTROL, targetVelocity =0)
-			p.setJointMotorControl2(self.bot, 82,p.VELOCITY_CONTROL, targetVelocity =0)
-			p.setJointMotorControl2(self.bot, 85,p.VELOCITY_CONTROL, targetVelocity =0)
-			p.setJointMotorControl2(self.bot, 88,p.VELOCITY_CONTROL, targetVelocity =0)
+			p.setJointMotorControl2(self.bot, 46,p.VELOCITY_CONTROL, targetVelocity =0)
+			p.setJointMotorControl2(self.bot, 49,p.VELOCITY_CONTROL, targetVelocity =0)
+			p.setJointMotorControl2(self.bot, 52,p.VELOCITY_CONTROL, targetVelocity =0)
+			p.setJointMotorControl2(self.bot, 55,p.VELOCITY_CONTROL, targetVelocity =0)
+			p.setJointMotorControl2(self.bot, 81,p.VELOCITY_CONTROL, targetVelocity =0)
+			p.setJointMotorControl2(self.bot, 84,p.VELOCITY_CONTROL, targetVelocity =0)
+			p.setJointMotorControl2(self.bot, 87,p.VELOCITY_CONTROL, targetVelocity =0)
+			p.setJointMotorControl2(self.bot, 90,p.VELOCITY_CONTROL, targetVelocity =0)
 			p.setJointMotorControl2(self.bot, self.head, p.VELOCITY_CONTROL, targetVelocity =0)
 			p.resetBasePositionAndOrientation(self.bot,pos,orn)
 			p.stepSimulation()
@@ -649,7 +649,7 @@ class robot:
 
 	#function to get the list of objects used in sim
 	def get_objects(self):
-		selected_objects_filenames = ['lego/lego.urdf',
+		selected_objects_filenames = ['random_urdfs/008/008.urdf',
 									  'random_urdfs/934/934.urdf',
 									  'random_urdfs/507/507.urdf',
 									  'random_urdfs/622/622.urdf',
